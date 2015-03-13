@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Bert Van Vreckem
+  description: This role installs and configures Samba as a file server.
+  company:
+  license: BSD
+  min_ansible_version: 1.7
+  platforms:
+  - name: EL
+    versions:
+      - 7
+  categories:
+    - system
+    - networking
+dependencies: []
+

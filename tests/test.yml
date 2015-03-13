@@ -1,0 +1,7 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    samba_netbios_name: SAMBA_TEST
+  roles:
+    - samba

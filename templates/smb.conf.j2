@@ -1,0 +1,64 @@
+# Samba configuration -- Managed by Ansible, please don't edit manually
+# vim: ft=samba
+#
+# {{ ansible_managed }}
+
+[global]
+  # Server information
+  netbios name = {{ samba_netbios_name }}
+  workgroup = {{ samba_workgroup }}
+  server string = {{ samba_server_string }}
+
+  # Logging
+{% if samba_log is defined %}
+  log file = {{ samba_log }}
+  max log size = {{ samba_log_size }}
+{% else %}
+  syslog only = yes
+  syslog = 1
+{% endif %}
+
+  # Authentication
+  security = {{ samba_security }}
+  passdb backend = {{ samba_passdb_backend }}
+  map to guest = {{ samba_map_to_guest }}
+
+  # Name resolution: make sure \\NETBIOS_NAME\ works
+  wins support = yes
+  local master = yes
+  domain master = yes
+  preferred master = yes
+
+{% if samba_load_printers == 'no' %}
+  # Don't load printers
+  load printers = no
+  printing = bsd
+  printcap name = /dev/null
+  disable spoolss = yes
+{% endif %}
+
+{% if samba_load_homes == 'yes' %}
+## Make home directories accessible
+[homes]
+  comment = Home Directories
+  browseable = no
+  writable = yes
+{% endif %}
+
+{% if samba_shares is defined %}
+{% for share in samba_shares %}
+[{{ share.name }}]
+   comment = {{ share.comment }}
+   path = {{ share.path }}
+   public = {{ share.public }}
+   write list = {{ share.write_list }}
+
+   force group = +{{ share.force_group }}
+   create mask = {{ share.create_mask }}
+   create mode = {{ share.create_mode }}
+   force create mode = {{ share.force_create_mode }}
+   directory mask = {{ share.directory_mask }}
+   directory mode = {{ share.directory_mode }}
+   force directory mode = {{ share.force_directory_mode }}
+{% endfor %}
+{% endif%}

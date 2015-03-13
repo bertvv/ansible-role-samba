@@ -1,0 +1,91 @@
+# File: roles/fileserver/tasks/main.yml
+---
+
+- name: Install Samba packages
+  yum:
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - libsemanage-python
+    - samba-common
+    - samba
+    - samba-client
+  tags: samba
+
+- name: Make sure SELinux boolean settings are correct
+  seboolean:
+    name: "{{ item }}"
+    state: yes
+    persistent: yes
+  with_items:
+    - samba_enable_home_dirs
+    - samba_export_all_rw
+  tags: samba
+
+- name: Create share directories
+  with_items: samba_shares
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    owner: root
+    group: "{{ item.force_group }}"
+    mode: "{{ item.directory_mode }}"
+    setype: "{{ item.setype|default('samba_share_t') }}"
+  when: samba_shares is defined
+  tags: samba
+
+- name: Check if /var/www/html exists
+  when: samba_create_varwww_symlinks is defined and samba_create_varwww_symlinks == true
+  stat: path=/var/www/html
+  register: var_www_html
+  tags: samba
+
+- name: Create link to shares in /var/www/html
+  when: var_www_html.stat.isdir is defined and var_www_html.stat.isdir == true
+  file:
+    state: link
+    path: "/var/www/html/{{ item.name }}"
+    src: "{{ item.path }}"
+  with_items: samba_shares
+  tags: samba
+
+- name: Samba configuration
+  template:
+    dest: /etc/samba/smb.conf
+    src: smb.conf.j2
+    validate: 'testparm -s %s'
+  notify: Restart Samba
+  tags: samba
+
+- name: Start Samba service
+  service:
+    name: smb
+    state: started
+    enabled: yes
+  tags: samba
+
+- name: Start WindBind service
+  service:
+    name: nmb
+    state: started
+    enabled: yes
+  tags: samba
+
+- name: Firewall rules for Samba file share
+  firewalld:
+    service: "{{ item[0] }}"
+    permanent: "{{ item[1] }}"
+    state: enabled
+  with_nested:
+    - [ samba ]
+    - [ true, false ]
+  tags: samba
+
+- name: Create Samba users if they don't exist yet
+  shell: >
+    (pdbedit -L | grep {{ item.name }} 2>&1 > /dev/null) \
+    || (echo {{ item.password }}; echo {{ item.password }}) \
+    | smbpasswd -s -a {{ item.name }}
+  with_items: samba_users
+  when: samba_users is defined
+  tags: samba

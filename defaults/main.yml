@@ -1,0 +1,11 @@
+# roles/samba/defaults/main.yml
+---
+
+samba_workgroup: 'WORKGROUP'
+samba_server_string: 'Fileserver %m'
+samba_log_size: 5000
+samba_security: 'user'
+samba_passdb_backend: 'tdbsam'
+samba_map_to_guest: 'bad user'
+samba_load_printers: 'no'
+samba_load_homes: 'no'
