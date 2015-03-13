@@ -48,17 +48,23 @@
 {% if samba_shares is defined %}
 {% for share in samba_shares %}
 [{{ share.name }}]
-   comment = {{ share.comment }}
-   path = {{ share.path }}
-   public = {{ share.public }}
-   write list = {{ share.write_list }}
+  {% if share.comment is defined %}
+  comment = {{ share.comment }}
+  {% endif %}
+  path = {{ samba_shares_root }}/{{ share.name }}
+  public = {{ share.public|default('no') }}
+  {% if share.write_list is defined %}
+  write list = {{ share.write_list }}
+  {% endif %}
 
-   force group = +{{ share.force_group }}
-   create mask = {{ share.create_mask }}
-   create mode = {{ share.create_mode }}
-   force create mode = {{ share.force_create_mode }}
-   directory mask = {{ share.directory_mask }}
-   directory mode = {{ share.directory_mode }}
-   force directory mode = {{ share.force_directory_mode }}
+  {% if share.force_group is defined %}
+  force group = {{ share.force_group }}
+  {% endif %}
+  create mask = {{ share.create_mask|default('0664') }}
+  create mode = {{ share.create_mode|default('0664') }}
+  force create mode = {{ share.force_create_mode|default('0664') }}
+  directory mask = {{ share.directory_mask|default('0775') }}
+  directory mode = {{ share.directory_mode|default('0775') }}
+  force directory mode = {{ share.force_directory_mode|default('0775') }}
 {% endfor %}
 {% endif%}

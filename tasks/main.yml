@@ -26,10 +26,10 @@
   with_items: samba_shares
   file:
     state: directory
-    path: "{{ item.path }}"
+    path: "{{ samba_shares_root}}/{{ item.name }}"
     owner: root
-    group: "{{ item.force_group }}"
-    mode: "{{ item.directory_mode }}"
+    group: "{{ item.force_group|default('users') }}"
+    mode: "{{ item.directory_mode|default('0775') }}"
     setype: "{{ item.setype|default('samba_share_t') }}"
   when: samba_shares is defined
   tags: samba
@@ -45,7 +45,7 @@
   file:
     state: link
     path: "/var/www/html/{{ item.name }}"
-    src: "{{ item.path }}"
+    src: "{{ samba_shares_root }}/{{ item.name }}"
   with_items: samba_shares
   tags: samba
 
