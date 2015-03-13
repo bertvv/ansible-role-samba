@@ -1,0 +1,40 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    samba_netbios_name: SAMBA_TEST
+    samba_server_string: 'Welcome to the test file server'
+    samba_workgroup: TESTGROUP
+
+    samba_load_homes: yes
+    samba_load_printers: yes
+
+    samba_log: /var/log/samba.log
+    samba_log_size: 60000
+
+    samba_map_to_guest: Never
+    samba_users:
+      - name: vagrant
+        password: vagrant
+
+    samba_shares_root: /srv/samba
+    samba_shares:
+      - name: restrictedshare
+      - name: privateshare
+        comment: 'Only readable/writeable by vagrant'
+        write_list: vagrant
+        force_group: vagrant
+      - name: protectedshare
+        public: yes
+        comment: 'Public, but only writeable by vagrant'
+        write_list: vagrant
+        force_group: vagrant
+      - name: publicshare
+        comment: 'Public share, writeable by all members of group ‘users’'
+        public: yes
+        write_list: +users
+        force_group: users
+        setype: public_content_t
+    samba_create_varwww_symlinks: yes
+  roles:
+    - samba
