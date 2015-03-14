@@ -87,7 +87,7 @@ A complete overview of share options follows below. Only `name` is required, the
 | `public`               | `no`    | Controls read access for guest users                                                           |
 | `valid_users`          | -       | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
 | `write_list`           | -       | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
-| `group`                | -       | The user group files in the share will be added to.                                            |
+| `group`                | `users` | The user group files in the share will be added to.                                            |
 | `create_mask`          | `0664`  | See the Samba documentation for details.                                                       |
 | `create_mode`          | `0664`  | See the Samba documentation for details.                                                       |
 | `force_create_mode`    | `0664`  | See the Samba documentation for details.                                                       |
