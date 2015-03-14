@@ -54,7 +54,48 @@ Unfortunately, passwords have to be in plain text for now.
 
 ### Defining shares
 
+Defining Samba shares and configuring access control can be challenging, since it involves not only getting the Samba configuration right, but also user and file permissions, and SELinux settings. This role attempts to simplify the process.
 
+To specify a share, you should at least give it a name:
+
+```Yaml
+samba_shares:
+  - name: readonlyshare
+```
+
+This will create a share with only read access for registered users. Guests will not be able to see the contents of the share.
+
+
+A good way to configure write access for a share is to create a system user group, add users to that group, and make sure they have write access to the directory of the share. This role assumes groups are already set up and users are members of the groups that control write access. Let's assume you have two users `jack` and `teach`, members of the group `pirates`. This share definition will give both read and write access to the `pirates`:
+
+```Yaml
+samba_shares:
+  - name: piratecove
+    comment: 'A place for pirates to hang out'
+    group: pirates
+    write_list: +pirates
+```
+
+Guests have no access to this share, registered users can read. You can further tweak access control. Read access can be extended to guests (add `public: yes`) or restricted to specified users or groups (add `valid_users: +pirates`). Write access can be restricted to individual pirates (e.g. `write_list: jack`). Files added to the share will be added to the specified group and group write access will be granted by default.
+
+A complete overview of share options follows below. Only `name` is required, the rest is optional.
+
+| Option                 | Default | Comment                                                                                        |
+| "---                   | :---    | :---                                                                                           |
+| `name`                 | -       | The name of the share.                                                                         |
+| `comment`              | -       | A comment string for the share                                                                 |
+| `public`               | `no`    | Controls read access for guest users                                                           |
+| `valid_users`          | -       | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
+| `write_list`           | -       | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
+| `group`                | -       | The user group files in the share will be added to.                                            |
+| `create_mask`          | `0664`  | See the Samba documentation for details.                                                       |
+| `create_mode`          | `0664`  | See the Samba documentation for details.                                                       |
+| `force_create_mode`    | `0664`  | See the Samba documentation for details.                                                       |
+| `directory_mask`       | `0775`  | See the Samba documentation for details.                                                       |
+| `directory_mode`       | `0775`  | See the Samba documentation for details.                                                       |
+| `force_directory_mode` | `0775`  | See the Samba documentation for details.                                                       |
+
+The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
 
 ## Dependencies
 
