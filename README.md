@@ -81,7 +81,7 @@ Guests have no access to this share, registered users can read. You can further 
 A complete overview of share options follows below. Only `name` is required, the rest is optional.
 
 | Option                 | Default | Comment                                                                                        |
-| "---                   | :---    | :---                                                                                           |
+| :---                   | :---    | :---                                                                                           |
 | `name`                 | -       | The name of the share.                                                                         |
 | `comment`              | -       | A comment string for the share                                                                 |
 | `public`               | `no`    | Controls read access for guest users                                                           |
