@@ -57,8 +57,8 @@
   write list = {{ share.write_list }}
   {% endif %}
 
-  {% if share.force_group is defined %}
-  force group = {{ share.force_group }}
+  {% if share.group is defined %}
+  force group = {{ share.group }}
   {% endif %}
   create mask = {{ share.create_mask|default('0664') }}
   create mode = {{ share.create_mode|default('0664') }}

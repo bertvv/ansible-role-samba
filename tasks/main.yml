@@ -28,7 +28,7 @@
     state: directory
     path: "{{ samba_shares_root}}/{{ item.name }}"
     owner: root
-    group: "{{ item.force_group|default('users') }}"
+    group: "{{ item.group|default('users') }}"
     mode: "{{ item.directory_mode|default('0775') }}"
     setype: "{{ item.setype|default('samba_share_t') }}"
   when: samba_shares is defined
