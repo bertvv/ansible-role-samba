@@ -23,17 +23,17 @@
       - name: privateshare
         comment: 'Only readable/writeable by vagrant'
         write_list: vagrant
-        force_group: vagrant
+        group: vagrant
       - name: protectedshare
         public: yes
         comment: 'Public, but only writeable by vagrant'
         write_list: vagrant
-        force_group: vagrant
+        group: vagrant
       - name: publicshare
         comment: 'Public share, writeable by all members of group ‘users’'
         public: yes
         write_list: +users
-        force_group: users
+        group: users
         setype: public_content_t
     samba_create_varwww_symlinks: yes
   roles:
