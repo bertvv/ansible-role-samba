@@ -53,6 +53,9 @@
   {% endif %}
   path = {{ samba_shares_root }}/{{ share.name }}
   public = {{ share.public|default('no') }}
+  {% if share.valid_users is defined %}
+  valid users= {{ share.valid_users }}
+  {% endif %}
   {% if share.write_list is defined %}
   write list = {{ share.write_list }}
   {% endif %}
