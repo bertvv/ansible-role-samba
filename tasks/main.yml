@@ -73,16 +73,6 @@
     enabled: yes
   tags: samba
 
-- name: Firewall rules for Samba file share
-  firewalld:
-    service: "{{ item[0] }}"
-    permanent: "{{ item[1] }}"
-    state: enabled
-  with_nested:
-    - [ samba ]
-    - [ true, false ]
-  tags: samba
-
 - name: Create Samba users if they don't exist yet
   shell: >
     (pdbedit -L | grep {{ item.name }} 2>&1 > /dev/null) \
