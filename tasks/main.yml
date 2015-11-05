@@ -1,4 +1,4 @@
-# File: roles/fileserver/tasks/main.yml
+# File: roles/samba/tasks/main.yml
 ---
 
 - name: Install Samba packages
@@ -54,7 +54,9 @@
     dest: /etc/samba/smb.conf
     src: smb.conf.j2
     validate: 'testparm -s %s'
-  notify: Restart Samba
+  notify:
+    - Restart Samba
+    - Restart WinBind
   tags: samba
 
 - name: Start Samba service
