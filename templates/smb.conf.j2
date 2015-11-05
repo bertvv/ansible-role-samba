@@ -5,7 +5,8 @@
 
 [global]
   # Server information
-  netbios name = {{ samba_netbios_name }}
+  netbios name = {% if samba_netbios_name is defined %}{{ samba_netbios_name }}{% else %}{{ ansible_hostname }}{% endif %}
+
   workgroup = {{ samba_workgroup }}
   server string = {{ samba_server_string }}
 
