@@ -35,7 +35,7 @@
   tags: samba
 
 - name: Check if /var/www/html exists
-  when: samba_create_varwww_symlinks is defined and samba_create_varwww_symlinks == true
+  when: samba_create_varwww_symlinks
   stat: path=/var/www/html
   register: var_www_html
   tags: samba
