@@ -1,6 +1,6 @@
 # Ansible role `bertvv.samba`
 
-An Ansible role for setting up Samba as a file server. Specifically, the responsibilities of this role are to:
+An Ansible role for setting up Samba as a file server on CentOS/RHEL 7. Specifically, the responsibilities of this role are to:
 
 - Install the necessary packages
 - Configure SELinux settings
