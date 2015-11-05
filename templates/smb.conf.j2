@@ -46,28 +46,29 @@
 {% endif %}
 
 {% if samba_shares is defined %}
+## Shared directories
 {% for share in samba_shares %}
 [{{ share.name }}]
-  {% if share.comment is defined %}
+{% if share.comment is defined %}
   comment = {{ share.comment }}
-  {% endif %}
+{% endif %}
   path = {{ samba_shares_root }}/{{ share.name }}
   public = {{ share.public|default('no') }}
-  {% if share.valid_users is defined %}
+{% if share.valid_users is defined %}
   valid users= {{ share.valid_users }}
-  {% endif %}
-  {% if share.write_list is defined %}
+{% endif %}
+{% if share.write_list is defined %}
   write list = {{ share.write_list }}
-  {% endif %}
-
-  {% if share.group is defined %}
+{% endif %}
+{% if share.group is defined %}
   force group = {{ share.group }}
-  {% endif %}
+{% endif %}
   create mask = {{ share.create_mask|default('0664') }}
   create mode = {{ share.create_mode|default('0664') }}
   force create mode = {{ share.force_create_mode|default('0664') }}
   directory mask = {{ share.directory_mask|default('0775') }}
   directory mode = {{ share.directory_mode|default('0775') }}
   force directory mode = {{ share.force_directory_mode|default('0775') }}
+
 {% endfor %}
 {% endif%}
