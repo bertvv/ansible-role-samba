@@ -7,7 +7,7 @@
     samba_workgroup: TESTGROUP
 
     samba_load_homes: true
-    samba_load_printers: true
+    samba_load_printers: false
 
     samba_log: /var/log/samba.log
     samba_log_size: 60000
