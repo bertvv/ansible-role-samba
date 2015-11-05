@@ -19,22 +19,22 @@ Setting the firewall is not a concern of this role, so you should configure this
 
 Variables are not required, unless specified.
 
-| Variable                       | Default         | Comments                                                                          |
-| :---                           | :---            | :---                                                                              |
-| `samba_create_varwww_symlinks` | -               | When this is set to `yes`, symlinks are created in `/var/www/html` to the shares. |
-| `samba_load_homes`             | false           | When true, user home directories are accessible.                                  |
-| `samba_load_printers`          | false           | When true, printers attached to the host are shared                               |
-| `samba_log`                    | -               | Set the log file. If left undefined, logging is done through syslog.              |
-| `samba_log_size`               | 5000            | Set the maximum size of the log file.                                             |
-| `samba_map_to_guest`           | `bad user`      | Behaviour when unregistered users access the shares.                              |
-| `samba_netbios_name`           | -               | **Required.** The NetBIOS name of this server.                                    |
-| `samba_passdb_backend`         | `tdbsam`        | Password database backend.                                                        |
-| `samba_security`               | `user`          | Samba security setting                                                            |
-| `samba_server_string`          | `fileserver %m` | Comment string for the server.                                                    |
-| `samba_shares`                 | -               | List of dicts containing share definitions. See below for details.                |
-| `samba_shares_root`            | `/srv/shares`   | Directories for the shares are created under this directory.                      |
-| `samba_users`                  | -               | List of dicts defining users that can access shares.                              |
-| `samba_workgroup`              | `WORKGROUP`     | Name of the server workgroup.                                                     |
+| Variable                       | Default                  | Comments                                                             |
+| :---                           | :---                     | :---                                                                 |
+| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in `/var/www/html` to the shares.    |
+| `samba_load_homes`             | false                    | When true, user home directories are accessible.                     |
+| `samba_load_printers`          | false                    | When true, printers attached to the host are shared                  |
+| `samba_log`                    | -                        | Set the log file. If left undefined, logging is done through syslog. |
+| `samba_log_size`               | 5000                     | Set the maximum size of the log file.                                |
+| `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                 |
+| `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                     |
+| `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                           |
+| `samba_security`               | `user`                   | Samba security setting                                               |
+| `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                       |
+| `samba_shares`                 | -                        | List of dicts containing share definitions. See below for details.   |
+| `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.         |
+| `samba_users`                  | -                        | List of dicts defining users that can access shares.                 |
+| `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                        |
 
 ### Defining users
 
@@ -63,6 +63,8 @@ el7_users:
     groups:
       [...]
 ```
+
+This user is not allowed to log in on the system (e.g. with SSH) and would only get access to the Samba shares.
 
 ### Defining shares
 
