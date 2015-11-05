@@ -29,7 +29,7 @@
   domain master = yes
   preferred master = yes
 
-{% if samba_load_printers == 'no' %}
+{% if not samba_load_printers %}
   # Don't load printers
   load printers = no
   printing = bsd
@@ -37,7 +37,7 @@
   disable spoolss = yes
 {% endif %}
 
-{% if samba_load_homes == 'yes' %}
+{% if samba_load_homes %}
 ## Make home directories accessible
 [homes]
   comment = Home Directories
