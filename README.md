@@ -102,10 +102,8 @@ A complete overview of share options follows below. Only `name` is required, the
 | `valid_users`          | -       | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
 | `write_list`           | -       | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
 | `group`                | `users` | The user group files in the share will be added to.                                            |
-| `create_mask`          | `0664`  | See the Samba documentation for details.                                                       |
 | `create_mode`          | `0664`  | See the Samba documentation for details.                                                       |
 | `force_create_mode`    | `0664`  | See the Samba documentation for details.                                                       |
-| `directory_mask`       | `0775`  | See the Samba documentation for details.                                                       |
 | `directory_mode`       | `0775`  | See the Samba documentation for details.                                                       |
 | `force_directory_mode` | `0775`  | See the Samba documentation for details.                                                       |
 
@@ -152,3 +150,6 @@ BSD
 
 Bert Van Vreckem (bert.vanvreckem@gmail.com)
 
+Contributions by:
+
+- [@birgitcroux](https://github.com/birgitcroux)

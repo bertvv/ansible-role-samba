@@ -4,6 +4,16 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue on the Github project.
 
+## 2.0.2 - 2015-12-01
+
+### Changed
+
+- The directory `samba_shares_root` is now created befor creating the directories of the shares, with sane permissions set. This fixes GH-3. Contributed by @birgitcroux.
+
+### Removed
+
+- The role variables `create_mask` and `create_directory_mask` were removed. Samba settings `create mask` and `create directory mask` are synonyms for `create mode` and `create directory mode`, respectively. The former name is misleading, because it suggests they work like the Linux command `umask`.
+
 ## 2.0.1 - 2015-11-05
 
 ### Changed
