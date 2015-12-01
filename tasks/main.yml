@@ -29,6 +29,8 @@
     owner: root
     group: root
     mode: '0755'
+  when: samba_shares is defined
+  tags: samba
 
 - name: Create share directories
   with_items: samba_shares
