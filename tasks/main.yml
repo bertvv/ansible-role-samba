@@ -22,6 +22,14 @@
     - samba_export_all_rw
   tags: samba
 
+- name: Create Samba shares root directory
+  file:
+    state: directory
+    path: "{{ samba_shares_root }}"
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Create share directories
   with_items: samba_shares
   file:
