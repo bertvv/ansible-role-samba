@@ -4,11 +4,14 @@
 - name: Install Samba packages
   action: "{{ ansible_pkg_mgr }} pkg={{ item }} state=installed"
   with_items:
-    - libsemanage-python
     - samba-common
     - samba
     - samba-client
   tags: samba
+
+- name: Install SELinux package
+  action: "{{ ansible_pkg_mgr }} pkg=libsemanage-python state=installed"
+  when: ansible_selinux
 
 - name: Make sure SELinux boolean settings are correct
   seboolean:
@@ -18,7 +21,7 @@
   with_items:
     - samba_enable_home_dirs
     - samba_export_all_rw
-  tags: samba
+  when: ansible_selinux
 
 - name: Create Samba shares root directory
   file:
