@@ -2,9 +2,7 @@
 ---
 
 - name: Install Samba packages
-  yum:
-    pkg: "{{ item }}"
-    state: installed
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }} state=installed"
   with_items:
     - libsemanage-python
     - samba-common
