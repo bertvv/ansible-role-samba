@@ -53,7 +53,7 @@
 {% if share.comment is defined %}
   comment = {{ share.comment }}
 {% endif %}
-  path = {{ samba_shares_root }}/{{ share.name }}
+  path = {{ share.path|default([samba_shares_root,share.name]|join('/')) }}
   public = {{ share.public|default('no') }}
 {% if share.valid_users is defined %}
   valid users= {{ share.valid_users }}
