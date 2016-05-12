@@ -11,3 +11,5 @@ samba_load_printers: false
 samba_load_homes: false
 samba_create_varwww_symlinks: false
 samba_shares_root: '/srv/shares'
+samba_shares: []
+samba_users: []

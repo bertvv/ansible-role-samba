@@ -35,11 +35,11 @@
     owner: root
     group: root
     mode: '0755'
-  when: samba_shares is defined
+  when: samba_shares
   tags: samba
 
 - name: Create share directories
-  with_items: samba_shares
+  with_items: "{{ samba_shares }}"
   file:
     state: directory
     path: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
@@ -47,7 +47,7 @@
     group: "{{ item.group|default('users') }}"
     mode: "{{ item.directory_mode|default('0775') }}"
     setype: "{{ item.setype|default('samba_share_t') }}"
-  when: samba_shares is defined
+  when: samba_shares
   tags: samba
 
 - name: Check if /var/www/html exists
@@ -62,7 +62,7 @@
     state: link
     path: "/var/www/html/{{ item.name }}"
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
-  with_items: samba_shares
+  with_items: "{{ samba_shares }}"
   tags: samba
 
 - name: Samba configuration
@@ -94,6 +94,6 @@
     (pdbedit -L | grep {{ item.name }} 2>&1 > /dev/null) \
     || (echo {{ item.password }}; echo {{ item.password }}) \
     | smbpasswd -s -a {{ item.name }}
-  with_items: samba_users
-  when: samba_users is defined
+  with_items: "{{ samba_users }}"
+  when: samba_users
   tags: samba
