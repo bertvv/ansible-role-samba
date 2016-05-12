@@ -1,0 +1,4 @@
+---
+
+samba_service: smbd
+winbind_service: nmbd

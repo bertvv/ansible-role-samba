@@ -1,16 +1,23 @@
 # File: roles/samba/tasks/main.yml
 ---
 
+- include_vars: "{{ item }}"
+  with_first_found:
+   - "os_{{ ansible_distribution }}.yml"
+   - "os_{{ ansible_os_family }}.yml"
+   - "default.yml"
+
 - name: Install Samba packages
-  yum:
-    pkg: "{{ item }}"
-    state: installed
+  action: "{{ ansible_pkg_mgr }} pkg={{ item }} state=installed"
   with_items:
-    - libsemanage-python
     - samba-common
     - samba
     - samba-client
   tags: samba
+
+- name: Install SELinux package
+  action: "{{ ansible_pkg_mgr }} pkg=libsemanage-python state=installed"
+  when: ansible_selinux
 
 - name: Make sure SELinux boolean settings are correct
   seboolean:
@@ -20,7 +27,7 @@
   with_items:
     - samba_enable_home_dirs
     - samba_export_all_rw
-  tags: samba
+  when: ansible_selinux
 
 - name: Create Samba shares root directory
   file:
@@ -71,14 +78,14 @@
 
 - name: Start Samba service
   service:
-    name: smb
+    name: "{{ samba_service }}"
     state: started
     enabled: yes
   tags: samba
 
 - name: Start WindBind service
   service:
-    name: nmb
+    name: "{{ winbind_service }}"
     state: started
     enabled: yes
   tags: samba

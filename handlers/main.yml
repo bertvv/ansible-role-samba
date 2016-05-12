@@ -2,10 +2,10 @@
 ---
 - name: Restart Samba
   service:
-    name: smb
+    name: "{{ samba_service }}"
     state: restarted
 
 - name: Restart WinBind
   service:
-    name: nmb
+    name: "{{ winbind_service }}"
     state: restarted
