@@ -9,3 +9,5 @@
 # Vagrant base boxes (you never know when someone puts one in the repository)
 *.box
 
+# Ignore tests directory
+tests
