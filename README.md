@@ -97,6 +97,7 @@ A complete overview of share options follows below. Only `name` is required, the
 | Option                 | Default | Comment                                                                                        |
 | :---                   | :---    | :---                                                                                           |
 | `name`                 | -       | The name of the share.                                                                         |
+| `path`                 | /{{samba_shares_root}}/{{name}}       | The path to the share directory.                                   |
 | `comment`              | -       | A comment string for the share                                                                 |
 | `public`               | `no`    | Controls read access for guest users                                                           |
 | `valid_users`          | -       | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
