@@ -6,5 +6,8 @@ samba_packages:
   - samba
   - samba-client
 
+samba_selinux_packages: []
+samba_selinux_booleans: []
+
 samba_service: smbd
 winbind_service: nmbd
