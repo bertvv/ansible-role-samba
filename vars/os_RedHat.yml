@@ -1,4 +1,13 @@
+# roles/samba/vars/os_RedHat.yml
 ---
+
+samba_packages:
+  - samba-common
+  - samba
+  - samba-client
+
+samba_selinux_packages:
+  - libselinux-python
 
 samba_service: smb
 winbind_service: nmb

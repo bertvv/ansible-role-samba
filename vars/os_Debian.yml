@@ -1,4 +1,10 @@
+# roles/samba/vars/os_Debian.yml
 ---
+
+samba_packages:
+  - samba-common
+  - samba
+  - samba-client
 
 samba_service: smbd
 winbind_service: nmbd
