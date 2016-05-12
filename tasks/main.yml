@@ -47,7 +47,6 @@
     group: "{{ item.group|default('users') }}"
     mode: "{{ item.directory_mode|default('0775') }}"
     setype: "{{ item.setype|default('samba_share_t') }}"
-  when: samba_shares
   tags: samba
 
 - name: Ensute webserver document root exists
@@ -94,5 +93,4 @@
     || (echo {{ item.password }}; echo {{ item.password }}) \
     | smbpasswd -s -a {{ item.name }}
   with_items: "{{ samba_users }}"
-  when: samba_users
   tags: samba
