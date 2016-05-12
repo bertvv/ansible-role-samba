@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: true
+  become: true
   pre_tasks:
     - name: Ensure /var/www/html exists
       file:
