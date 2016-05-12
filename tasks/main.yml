@@ -25,9 +25,7 @@
     name: "{{ item }}"
     state: yes
     persistent: yes
-  with_items:
-    - samba_enable_home_dirs
-    - samba_export_all_rw
+  with_items: "{{ samba_selinux_booleans }}"
   when: ansible_selinux
 
 - name: Create Samba shares root directory
