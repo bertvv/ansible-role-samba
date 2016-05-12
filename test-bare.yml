@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+    - name: Ensure package database is up-to-date
+      apt:
+        update-cache: yes
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - samba
