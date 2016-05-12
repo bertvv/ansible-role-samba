@@ -11,3 +11,5 @@ samba_selinux_booleans: []
 
 samba_service: smbd
 winbind_service: nmbd
+
+samba_www_documentroot: /var/www

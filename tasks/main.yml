@@ -50,17 +50,18 @@
   when: samba_shares
   tags: samba
 
-- name: Check if /var/www/html exists
+- name: Check if webserver document root exists
   when: samba_create_varwww_symlinks
-  stat: path=/var/www/html
-  register: var_www_html
+  stat:
+    path: "{{ samba_www_documentroot }}"
+  register: documentroot
   tags: samba
 
-- name: Create link to shares in /var/www/html
-  when: var_www_html.stat.isdir is defined and var_www_html.stat.isdir == true
+- name: Create link to shares in webserver document root
+  when: documentroot.stat.isdir is defined and documentroot.stat.isdir == true
   file:
     state: link
-    path: "/var/www/html/{{ item.name }}"
+    path: "{{ samba_www_documentroot }}/{{ item.name }}"
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
   with_items: "{{ samba_shares }}"
   tags: samba
