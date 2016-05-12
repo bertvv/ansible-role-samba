@@ -1,21 +1,21 @@
 ---
 galaxy_info:
   author: Bert Van Vreckem
-  description: This role installs and configures Samba as a file server.
-  company:
+  description: This role installs and configures Samba as a file server on RedHat- or Debian-based Linux distros.
   license: BSD
-  min_ansible_version: 1.7
+  min_ansible_version: 2.0
   platforms:
-  - name: EL
-    versions:
-      - 7
-  - name: Ubuntu
-    versions:
-      - all
-  - name: Debian
-    versions:
-      - all
-  categories:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+  galaxy_tags:
     - system
     - networking
 dependencies: []

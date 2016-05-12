@@ -4,6 +4,23 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue on the Github project.
 
+## 2.1.0 - 2016-05-12
+
+### Added
+
+- (GH-7) Support for Debian/Ubuntu (credit: [Ian Young](https://github.com/iangreenleaf)) and Fedora.
+- Vagrant test environment for all supported platforms
+
+### Changed
+
+- Moved test code to a separate branch
+- (GH-8) Fixed deprecation warnings in Ansible 2.0 (partial credit: [Ian Young](https://github.com/iangreenleaf))
+- Use the generic `package:` module introduced in Ansible 2.0.
+
+### Removed
+
+- The `version:` field in `meta/main.yml` was removed because it is no longer accepted in Ansible 2.0. Unfortunately, this change breaks compatibility with `librarian-ansible`. For more info on this issue, see [ansible/ansible#](https://github.com/ansible/ansible/issues/13496).
+
 ## 2.0.2 - 2015-12-01
 
 ### Changed
@@ -18,7 +35,7 @@ This file adheres to the guidelines of [http://keepachangelog.com/](http://keepa
 
 ### Changed
 
-- The variable type of `samba_create_varwww_symlinks` is now boolean instead of string (GH-1)
+- (GH-1) The variable type of `samba_create_varwww_symlinks` is now boolean instead of string
 - The variable `samba_netbios_name` is no longer required and defaults to `ansible_hostname`.
 
 ## 2.0.0 - 2015-11-05
@@ -27,8 +44,8 @@ Bugfix release with changes that are not backwards compatible
 
 ### Changed
 
-- The variable type of `samba_load_*` is now boolean instead of string, which makes more sense. However, this change is **not backwards compatible**. (GH-1)
-- Restart WinBind when changing the configuration (GH-2)
+- (GH-1) The variable type of `samba_load_*` is now boolean instead of string, which makes more sense. However, this change is **not backwards compatible**.
+- (GH-2) Restart WinBind when changing the configuration
 - Updated the base box for the test environment to CentOS 7.1 ([bertvv/centos71](https://atlas.hashicorp.com/bertvv/boxes/centos71/))
 - Cleaned up indentation and spaces in the configuration file template
 
