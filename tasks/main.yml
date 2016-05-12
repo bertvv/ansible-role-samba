@@ -49,7 +49,7 @@
     setype: "{{ item.setype|default('samba_share_t') }}"
   tags: samba
 
-- name: Ensute webserver document root exists
+- name: Ensure webserver document root exists
   file:
     name: "{{ samba_www_documentroot }}"
     state: directory
@@ -61,16 +61,6 @@
     path: "{{ samba_www_documentroot }}/{{ item.name }}"
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
   with_items: "{{ samba_shares }}"
-  tags: samba
-
-- name: Samba configuration
-  template:
-    dest: "{{ samba_configuration }}"
-    src: smb.conf.j2
-    validate: 'testparm -s %s'
-  notify:
-    - Restart Samba
-    - Restart WinBind
   tags: samba
 
 - name: Start Samba service
@@ -85,6 +75,16 @@
     name: "{{ winbind_service }}"
     state: started
     enabled: yes
+  tags: samba
+
+- name: Samba configuration
+  template:
+    dest: "{{ samba_configuration }}"
+    src: smb.conf.j2
+    validate: 'testparm -s %s'
+  notify:
+    - Restart Samba
+    - Restart WinBind
   tags: samba
 
 - name: Create Samba users if they don't exist yet
