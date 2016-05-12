@@ -7,7 +7,7 @@ samba_packages:
   - samba-client
 
 samba_selinux_packages:
-  - libselinux-python
+  - libsemanage-python
 
 samba_selinux_booleans:
   - samba_enable_home_dirs
