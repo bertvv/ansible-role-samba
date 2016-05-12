@@ -1,7 +1,0 @@
----
-- hosts: all
-  become: true
-  vars:
-    samba_netbios_name: SAMBA_TEST
-  roles:
-    - samba
