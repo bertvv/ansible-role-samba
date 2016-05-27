@@ -62,6 +62,7 @@
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
   with_items: "{{ samba_shares }}"
   tags: samba
+  when:  samba_create_varwww_symlinks
 
 - name: Start Samba service
   service:
