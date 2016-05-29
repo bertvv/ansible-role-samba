@@ -52,7 +52,7 @@ samba_users:
     password: eilrahc
 ```
 
-Unfortunately, passwords have to be in plain text for now.
+Unfortunately, passwords have to be in plain text for now. Also, remark that this role will not change the password of an existing user.
 
 These users should already have an account on the host! Creating system users is not a concern of this role, so you should do this separately. A possibility is my role [bertvv.el7](https://galaxy.ansible.com/bertvv/el7/). An example:
 
@@ -155,11 +155,9 @@ Issues, feature requests, ideas are appreciated and can be posted in the Issues 
 
 BSD
 
-## Author Information
+## Contributors
 
-Bert Van Vreckem (bert.vanvreckem@gmail.com)
-
-Contributions by:
-
+- [Bert Van Vreckem](https://github.com/bertvv) (maintainer)
 - [Birgit Croux](https://github.com/birgitcroux)
+- [DarkStar1973](https://github.com/DarkStar1973)
 - [Ian Young](https://github.com/iangreenleaf)

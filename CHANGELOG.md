@@ -4,6 +4,15 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue on the Github project.
 
+## 2.1.1 - 2016-05-29
+
+This is a bugfix release.
+
+### Changed
+
+- (GH-6) Made creation of Samba users idempotent. The task "Create Samba users [...]" will now only indicate it has changed when it actually created a user.
+- (GH-9) Fixed forgotten `when: samba_create_varwww_symlinks` (credit: [DarkStar1973](https://github.com/DarkStar1973))
+
 ## 2.1.0 - 2016-05-12
 
 ### Added
