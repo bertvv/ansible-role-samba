@@ -6,6 +6,14 @@
       apt:
         update-cache: yes
       when: ansible_os_family == 'Debian'
+    - name: Create users
+      user:
+        name: "{{ item }}"
+        groups: users
+        append: true
+      with_items:
+        - usr1
+        - usr2
 
   vars:
     #samba_netbios_name: SAMBA_TEST
@@ -23,19 +31,23 @@
     samba_users:
       - name: vagrant
         password: vagrant
+      - name: usr1
+        password: usr1
+      - name: usr2
+        password: usr2
 
     samba_shares_root: /srv/samba
     samba_shares:
       - name: restrictedshare
       - name: privateshare
-        comment: 'Only readable/writeable by vagrant'
-        write_list: vagrant
-        group: vagrant
+        comment: 'Only readable/writeable by usr1'
+        write_list: usr1
+        group: usr1
       - name: protectedshare
         public: yes
-        comment: 'Public, but only writeable by vagrant'
-        write_list: vagrant
-        group: vagrant
+        comment: 'Public, but only writeable by usr2'
+        write_list: usr2
+        group: users
       - name: publicshare
         comment: 'Public share, writeable by all members of group ‘users’'
         public: yes
