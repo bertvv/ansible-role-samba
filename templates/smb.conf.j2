@@ -24,6 +24,10 @@
   passdb backend = {{ samba_passdb_backend }}
   map to guest = {{ samba_map_to_guest }}
 
+{% if samba_interfaces is defined %}
+  interfaces = {{ samba_interfaces }}
+{% endif %}
+
   # Name resolution: make sure \\NETBIOS_NAME\ works
   wins support = yes
   local master = yes
