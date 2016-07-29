@@ -2,7 +2,14 @@
 
 This file contains al notable changes to the bertvv.samba Ansible role.
 
-This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue on the Github project.
+This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
+
+## 2.2.0 - 2016-07-29
+
+### Added
+
+- (GH-11) Introduced variable `samba_interfaces` (credit: [Jonas Heinrich](https://github.com/onny))
+- (GH-11) Added support for Arch Linux (credit: [Jonas Heinrich](https://github.com/onny))
 
 ## 2.1.1 - 2016-05-29
 

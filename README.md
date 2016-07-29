@@ -21,22 +21,23 @@ No specific requirements
 
 ## Role Variables
 
-| Variable                       | Default                  | Comments                                                             |
-| :---                           | :---                     | :---                                                                 |
-| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in `/var/www/html` to the shares.    |
-| `samba_load_homes`             | false                    | When true, user home directories are accessible.                     |
-| `samba_load_printers`          | false                    | When true, printers attached to the host are shared                  |
-| `samba_log`                    | -                        | Set the log file. If left undefined, logging is done through syslog. |
-| `samba_log_size`               | 5000                     | Set the maximum size of the log file.                                |
-| `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                 |
-| `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                     |
-| `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                           |
-| `samba_security`               | `user`                   | Samba security setting                                               |
-| `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                       |
-| `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.   |
-| `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.         |
-| `samba_users`                  | []                       | List of dicts defining users that can access shares.                 |
-| `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                        |
+| Variable                       | Default                  | Comments                                                              |
+| :---                           | :---                     | :---                                                                  |
+| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in `/var/www/html` to the shares.     |
+| `samba_interfaces`             | []                       | List of network interfaces used for browsing, name registration, etc. |
+| `samba_load_homes`             | false                    | When true, user home directories are accessible.                      |
+| `samba_load_printers`          | false                    | When true, printers attached to the host are shared                   |
+| `samba_log`                    | -                        | Set the log file. If left undefined, logging is done through syslog.  |
+| `samba_log_size`               | 5000                     | Set the maximum size of the log file.                                 |
+| `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                  |
+| `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                      |
+| `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                            |
+| `samba_security`               | `user`                   | Samba security setting                                                |
+| `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                        |
+| `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.    |
+| `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.          |
+| `samba_users`                  | []                       | List of dicts defining users that can access shares.                  |
+| `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                         |
 
 ### Defining users
 
@@ -147,17 +148,16 @@ The workaround is waiting a bit and running `vagrant provision` again.
 
 If you are looking for a Samba role for Debian or Ubuntu, take a look at this [comprehensive role](https://galaxy.ansible.com/list#/roles/1597) by Debops. Jeff Geerling also has written a [Samba role for EL](https://galaxy.ansible.com/list#/roles/438), but at the time of writing this, it is very basic.
 
-## Contributing
-
-Issues, feature requests, ideas are appreciated and can be posted in the Issues section. Pull requests are also very welcome.
-
 ## License
 
 BSD
 
 ## Contributors
 
+Issues, feature requests, ideas are appreciated and can be posted in the Issues section. Pull requests are also very welcome.
+
 - [Bert Van Vreckem](https://github.com/bertvv) (maintainer)
 - [Birgit Croux](https://github.com/birgitcroux)
 - [DarkStar1973](https://github.com/DarkStar1973)
 - [Ian Young](https://github.com/iangreenleaf)
+- [Jonas Heinrich](https://github.com/onny)
