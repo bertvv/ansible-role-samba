@@ -64,6 +64,16 @@
   tags: samba
   when:  samba_create_varwww_symlinks
 
+- name: Samba configuration
+  template:
+    dest: "{{ samba_configuration }}"
+    src: smb.conf.j2
+    validate: 'testparm -s %s'
+  notify:
+    - Restart Samba
+    - Restart WinBind
+  tags: samba
+
 - name: Start Samba service
   service:
     name: "{{ samba_service }}"
@@ -76,16 +86,6 @@
     name: "{{ winbind_service }}"
     state: started
     enabled: yes
-  tags: samba
-
-- name: Samba configuration
-  template:
-    dest: "{{ samba_configuration }}"
-    src: smb.conf.j2
-    validate: 'testparm -s %s'
-  notify:
-    - Restart Samba
-    - Restart WinBind
   tags: samba
 
 - name: Create Samba users if they don't exist yet
