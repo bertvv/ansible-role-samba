@@ -24,7 +24,7 @@
   passdb backend = {{ samba_passdb_backend }}
   map to guest = {{ samba_map_to_guest }}
 
-{% if samba_interfaces is defined %}
+{% if samba_interfaces|length > 0 %}
   interfaces = {{ samba_interfaces }}
 {% endif %}
 
@@ -50,7 +50,7 @@
   writable = yes
 {% endif %}
 
-{% if samba_shares is defined %}
+{% if samba_shares|length > 0 %}
 ## Shared directories
 {% for share in samba_shares %}
 [{{ share.name }}]
