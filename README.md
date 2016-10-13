@@ -100,9 +100,10 @@ A complete overview of share options follows below. Only `name` is required, the
 | Option                 | Default | Comment                                                                                        |
 | :---                   | :---    | :---                                                                                           |
 | `name`                 | -       | The name of the share.                                                                         |
-| `path`                 | /{{samba_shares_root}}/{{name}}       | The path to the share directory.                                   |
+| `path`                 | /{{samba_shares_root}}/{{name}}       | The path to the share directory.                                 |
 | `comment`              | -       | A comment string for the share                                                                 |
 | `public`               | `no`    | Controls read access for guest users                                                           |
+| `path_owner`           | `root`  | Set the owner of the path                                                                      |
 | `valid_users`          | -       | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
 | `write_list`           | -       | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
 | `group`                | `users` | The user group files in the share will be added to.                                            |

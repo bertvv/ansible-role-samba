@@ -43,7 +43,7 @@
   file:
     state: directory
     path: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
-    owner: root
+    owner: "{{ item.path_owner|default('root') }}"
     group: "{{ item.group|default('users') }}"
     mode: "{{ item.directory_mode|default('0775') }}"
     setype: "{{ item.setype|default('samba_share_t') }}"
