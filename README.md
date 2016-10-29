@@ -162,3 +162,4 @@ Issues, feature requests, ideas are appreciated and can be posted in the Issues 
 - [DarkStar1973](https://github.com/DarkStar1973)
 - [Ian Young](https://github.com/iangreenleaf)
 - [Jonas Heinrich](https://github.com/onny)
+- [Paul Montero](https://github.com/lpaulmp)

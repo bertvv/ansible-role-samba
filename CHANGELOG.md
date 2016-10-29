@@ -4,6 +4,16 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.2.1 - 2016-10-29
+
+### Added
+
+- (GH-12) Add the ability to set owner to the path (credit: [Paul Montero](https://github.com/lpaulmp))
+
+### Changes
+
+- Added tags to all tasks
+
 ## 2.2.0 - 2016-07-29
 
 ### Added
