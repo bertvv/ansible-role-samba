@@ -5,6 +5,7 @@
   with_first_found:
    - "os_{{ ansible_distribution }}.yml"
    - "os_{{ ansible_os_family }}.yml"
+  tags: samba
 
 - name: Install Samba packages
   package:
@@ -19,6 +20,7 @@
     state: present
   with_items: "{{ samba_selinux_packages }}"
   when: ansible_selinux
+  tags: samba
 
 - name: Make sure SELinux boolean settings are correct
   seboolean:
@@ -27,6 +29,7 @@
     persistent: yes
   with_items: "{{ samba_selinux_booleans }}"
   when: ansible_selinux
+  tags: samba
 
 - name: Create Samba shares root directory
   file:
@@ -61,8 +64,8 @@
     path: "{{ samba_www_documentroot }}/{{ item.name }}"
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
   with_items: "{{ samba_shares }}"
-  tags: samba
   when:  samba_create_varwww_symlinks
+  tags: samba
 
 - name: Samba configuration
   template:
