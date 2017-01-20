@@ -42,6 +42,7 @@ main() {
   run_idempotence_test
 
   log "Container IP: $(get_container_ip)"
+  sleep 3
 
   # Uncomment the following line if you want to clean up the
   # container(s) after running the tests. *Not* cleaning up may be
