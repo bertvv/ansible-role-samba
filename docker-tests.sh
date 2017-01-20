@@ -41,6 +41,8 @@ main() {
   run_test_playbook
   run_idempotence_test
 
+  log "Container IP: $(get_container_ip)"
+
   # Uncomment the following line if you want to clean up the
   # container(s) after running the tests. *Not* cleaning up may be
   # useful for troubleshooting
@@ -105,11 +107,11 @@ get_container_id() {
 #
 # Prints the IP address of the specified container.
 get_container_ip() {
-  local container_id="${1}"
+  id="$(get_container_id)"
 
   docker inspect \
     --format '{{ .NetworkSettings.IPAddress }}' \
-    "${container_id}"
+    "${id}"
 }
 
 # Usage: exec_container COMMAND
