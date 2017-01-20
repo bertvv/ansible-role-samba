@@ -93,7 +93,7 @@
 
 - name: Create Samba users if they don't exist yet
   shell: >
-    (pdbedit -L | grep {{ item.name }} 2>&1 > /dev/null) \
+    (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
     || (echo {{ item.password }}; echo {{ item.password }}) \
     | smbpasswd -s -a {{ item.name }}
   with_items: "{{ samba_users }}"
