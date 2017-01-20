@@ -1,0 +1,7 @@
+# Test playbook for Ansible role bertvv.samba
+---
+
+- hosts: all
+  become: true
+  roles:
+    - role_under_test
