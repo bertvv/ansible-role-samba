@@ -55,10 +55,10 @@ samba_users:
 
 Unfortunately, passwords have to be in plain text for now. Also, remark that this role will not change the password of an existing user.
 
-These users should already have an account on the host! Creating system users is not a concern of this role, so you should do this separately. A possibility is my role [bertvv.el7](https://galaxy.ansible.com/bertvv/el7/). An example:
+These users should already have an account on the host! Creating system users is not a concern of this role, so you should do this separately. A possibility is my role [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base/). An example:
 
 ```Yaml
-el7_users:
+rhbase_users:
   - name: alice
     comment: 'Alice'
     password: !!
@@ -97,20 +97,21 @@ Guests have no access to this share, registered users can read. You can further 
 
 A complete overview of share options follows below. Only `name` is required, the rest is optional.
 
-| Option                 | Default | Comment                                                                                        |
-| :---                   | :---    | :---                                                                                           |
-| `name`                 | -       | The name of the share.                                                                         |
-| `path`                 | /{{samba_shares_root}}/{{name}}       | The path to the share directory.                                 |
-| `comment`              | -       | A comment string for the share                                                                 |
-| `public`               | `no`    | Controls read access for guest users                                                           |
-| `owner`                | `root`  | Set the owner of the path                                                                      |
-| `valid_users`          | -       | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
-| `write_list`           | -       | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
-| `group`                | `users` | The user group files in the share will be added to.                                            |
-| `create_mode`          | `0664`  | See the Samba documentation for details.                                                       |
-| `force_create_mode`    | `0664`  | See the Samba documentation for details.                                                       |
-| `directory_mode`       | `0775`  | See the Samba documentation for details.                                                       |
-| `force_directory_mode` | `0775`  | See the Samba documentation for details.                                                       |
+| Option                 | Default                         | Comment                                                                                        |
+| :---                   | :---                            | :---                                                                                           |
+| `comment`              | -                               | A comment string for the share                                                                 |
+| `create_mode`          | `0664`                          | See the Samba documentation for details.                                                       |
+| `directory_mode`       | `0775`                          | See the Samba documentation for details.                                                       |
+| `force_create_mode`    | `0664`                          | See the Samba documentation for details.                                                       |
+| `force_directory_mode` | `0775`                          | See the Samba documentation for details.                                                       |
+| `group`                | `users`                         | The user group files in the share will be added to.                                            |
+| `name` (required)      | -                               | The name of the share.                                                                         |
+| `owner`                | `root`                          | Set the owner of the path                                                                      |
+| `path`                 | /{{samba_shares_root}}/{{name}} | The path to the share directory.                                                               |
+| `public`               | `no`                            | Controls read access for guest users                                                           |
+| `setype`               | `samba_share_t`                 | The SELinux type of the share directory                                                        |
+| `valid_users`          | -                               | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
+| `write_list`           | -                               | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
 
 The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
 
@@ -149,17 +150,23 @@ The workaround is waiting a bit and running `vagrant provision` again.
 
 If you are looking for a Samba role for Debian or Ubuntu, take a look at this [comprehensive role](https://galaxy.ansible.com/list#/roles/1597) by Debops. Jeff Geerling also has written a [Samba role for EL](https://galaxy.ansible.com/list#/roles/438), but at the time of writing this, it is very basic.
 
+## Contributing
+
+Issues, feature requests, ideas are appreciated and can be posted in the Issues section.
+
+Pull requests are also very welcome. The best way to submit a PR is by first creating a fork of this Github project, then creating a topic branch for the suggested change and pushing that branch to your own fork. Github can then easily create a PR based on that branch.
+
 ## License
 
-BSD
+2-clause BSD license, see [LICENSE.md](LICENSE.md)
 
 ## Contributors
 
-Issues, feature requests, ideas are appreciated and can be posted in the Issues section. Pull requests are also very welcome.
-
-- [Bert Van Vreckem](https://github.com/bertvv) (maintainer)
+- [Bert Van Vreckem](https://github.com/bertvv/) (maintainer)
 - [Birgit Croux](https://github.com/birgitcroux)
 - [DarkStar1973](https://github.com/DarkStar1973)
 - [Ian Young](https://github.com/iangreenleaf)
 - [Jonas Heinrich](https://github.com/onny)
 - [Paul Montero](https://github.com/lpaulmp)
+- [Sven Eeckeman](https://github.com/SvenEeckeman)
+- [Tomohiko Ozawa](https://github.com/kota65535)
