@@ -4,6 +4,14 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.2.2 - 2017-01-20
+
+### Changed
+
+- (GH-13) Updated documentation, added `setype:`
+- (GH-14) Fixed an issue with creating users (credit: [Sven Eeckeman](https://github.com/SvenEeckeman))
+- (GH-15) Fixed the check for SELinux status (credit: [Tomohiko Ozawa](https://github.com/kota65535))
+
 ## 2.2.1 - 2016-10-29
 
 ### Added
