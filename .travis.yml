@@ -22,7 +22,7 @@ before_install:
   - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
     # Fetch the branch with test code
   - git fetch origin docker-tests
-  - git worktree add tests origin/docker-tests
+  - git worktree add docker-tests origin/docker-tests
 
 script:
   # Create container and apply test playbook
