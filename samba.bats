@@ -37,6 +37,9 @@ assert_read_access() {
   run smbclient "//${SUT_IP}/${share}" \
     --user=${user}%${password} \
     --command='ls'
+
+  echo "${output}"
+
   [ "${status}" -eq "0" ]
 }
 
@@ -50,6 +53,9 @@ assert_no_read_access() {
   run smbclient "//${SUT_IP}/${share}" \
     --user=${user}%${password} \
     --command='ls'
+
+  echo "${output}"
+
   [ "${status}" -eq "1" ]
 }
 
@@ -63,6 +69,9 @@ assert_write_access() {
   run smbclient "//${SUT_IP}/${share}" \
     --user=${user}%${password} \
     --command="mkdir ${test_dir};rmdir ${test_dir}"
+
+  echo "${output}"
+
   # Output should NOT contain any error message. Checking on exit status is
   # not reliable, it can be 0 when the command failed...
   [ -z "$(echo ${output} | grep NT_STATUS_)" ]
@@ -78,6 +87,9 @@ assert_no_write_access() {
   run smbclient "//${SUT_IP}/${share}" \
     --user=${user}%${password} \
     --command="mkdir ${test_dir};rmdir ${test_dir}"
+
+  echo "${output}"
+
   # Output should contain an error message (beginning with NT_STATUS, usually
   # NT_STATUS_MEDIA_WRITE_PROTECTED
   [ -n "$(echo ${output} | grep NT_STATUS_)" ]
