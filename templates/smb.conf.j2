@@ -23,7 +23,9 @@
   security = {{ samba_security }}
   passdb backend = {{ samba_passdb_backend }}
   map to guest = {{ samba_map_to_guest }}
+{% if samba_guest_account  is defined %}
   guest account = {{ samba_guest_account }}
+{% endif %}
 
 {% if samba_interfaces|length > 0 %}
   interfaces = {{ samba_interfaces }}
