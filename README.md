@@ -38,6 +38,7 @@ No specific requirements
 | `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.          |
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                  |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                         |
+| `samba_guest_account`          | -                        | Guest account for unknown users                                       |
 
 ### Defining users
 
@@ -112,6 +113,8 @@ A complete overview of share options follows below. Only `name` is required, the
 | `setype`               | `samba_share_t`                 | The SELinux type of the share directory                                                        |
 | `valid_users`          | -                               | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
 | `write_list`           | -                               | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
+| `guest_ok`             | -                               | Allow guest access.                                                                            |
+| `writable`             | -                               | Writable for guests.                                                                           |
 
 The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
 

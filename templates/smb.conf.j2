@@ -23,6 +23,7 @@
   security = {{ samba_security }}
   passdb backend = {{ samba_passdb_backend }}
   map to guest = {{ samba_map_to_guest }}
+  guest account = {{ samba_guest_account }}
 
 {% if samba_interfaces|length > 0 %}
   interfaces = {{ samba_interfaces }}
@@ -67,6 +68,12 @@
 {% endif %}
 {% if share.group is defined %}
   force group = {{ share.group }}
+{% endif %}
+{% if share.guest_ok is defined %}
+  force guest_ok = {{ share.guest_ok }}
+{% endif %}
+{% if share.writable is defined %}
+  force writable = {{ share.writable }}
 {% endif %}
   create mode = {{ share.create_mode|default('0664') }}
   force create mode = {{ share.force_create_mode|default('0664') }}
