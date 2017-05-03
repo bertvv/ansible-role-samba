@@ -142,6 +142,7 @@ A complete overview of share options follows below. Only `name` is required, the
 | `setype`               | `samba_share_t`                 | The SELinux type of the share directory                                                        |
 | `valid_users`          | -                               | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
 | `write_list`           | -                               | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
+| `vfs_objects`          |  -                              | See the Samba documentation for details.                                                       |
 
 The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
 
