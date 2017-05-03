@@ -95,6 +95,36 @@ samba_shares:
 
 Guests have no access to this share, registered users can read. You can further tweak access control. Read access can be extended to guests (add `public: yes`) or restricted to specified users or groups (add `valid_users: +pirates`). Write access can be restricted to individual pirates (e.g. `write_list: jack`). Files added to the share will be added to the specified group and group write access will be granted by default.
 
+This is an example of configuring multiple vfs object modules to share a glusterfs volume. VFS object options are optional. The necessary VFS object modules must be present/installed outside this role. In this case samba-glusterfs was installed on centos. See samba documentation for how to install or what the default VFS object modules are.
+
+```Yaml
+samba_shares:
+  - name: gluster-app_deploys
+    comment: 'For samba share of volume app_deploys'
+    vfs_objects:
+      - name: audit
+        options:
+          - name: facility
+            value: LOCAL1
+          - name: priority
+            value: NOTICE
+      - name: glusterfs
+        options:
+          - name: volume
+            value: app_deploys
+          - name: logfile
+            value: /var/log/samba/glusterfs-app_deploys.%M.log
+          - name: loglevel
+            value: 7
+    path: /
+    read_only: no
+    guest_ok: yes
+    write_list: tomcat
+    group: tomcat
+```
+
+
+
 A complete overview of share options follows below. Only `name` is required, the rest is optional.
 
 | Option                 | Default                         | Comment                                                                                        |
@@ -136,7 +166,7 @@ Tests for this role are provided in the form of a Vagrant environment that is ke
 
 ### Issues
 
-On Ubuntu 16.04, setting up the VM may fail while running the test playbook because a background process is running the package manager. The output looks like: 
+On Ubuntu 16.04, setting up the VM may fail while running the test playbook because a background process is running the package manager. The output looks like:
 
 ```
 ...
