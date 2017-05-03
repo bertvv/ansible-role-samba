@@ -61,10 +61,12 @@
   vfs objects = {% for obj in share.vfs_objects %}{{obj.name}} {% endfor %}
 
 {% for obj in share.vfs_objects %}
+{% if obj.options is defined %}
 {% if obj.options|length > 0 %}
 {% for opt in obj.options %}
   {{ obj.name }}:{{ opt.name }} = {{ opt.value }}
 {% endfor %}
+{% endif %}
 {% endif %}
 {% endfor %}{% endif %}
   path = {{ share.path|default([samba_shares_root,share.name]|join('/')) }}
