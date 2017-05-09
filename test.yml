@@ -5,6 +5,7 @@
     - name: Ensure package database is up-to-date
       apt:
         update-cache: yes
+      failed_when: false
       when: ansible_os_family == 'Debian'
     - name: Create users
       user:
