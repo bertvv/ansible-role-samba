@@ -4,6 +4,17 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.3.0 - 2017-05-09
+
+### Changed
+
+- Fix service names & start services in a single task
+
+### Added
+
+- (GH-16) Added global option `guest_account`, share options `writable` and `guest_ok` (credit: [morbidick](https://github.com/morbidick))
+- (GH-17) Added support for vfs options (credit: [Slavek Jurkowski](https://github.com/slavekjurkowski2))
+
 ## 2.2.2 - 2017-01-20
 
 ### Changed
