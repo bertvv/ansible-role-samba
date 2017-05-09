@@ -73,8 +73,7 @@
     src: smb.conf.j2
     validate: 'testparm -s %s'
   notify:
-    - Restart Samba
-    - Restart WinBind
+    - Restart Samba services
   tags: samba
 
 - name: Start Samba service(s)
