@@ -201,6 +201,7 @@ Pull requests are also very welcome. The best way to submit a PR is by first cre
 - [DarkStar1973](https://github.com/DarkStar1973)
 - [Ian Young](https://github.com/iangreenleaf)
 - [Jonas Heinrich](https://github.com/onny)
+- [morbidick][https://github.com/morbidick]
 - [Paul Montero](https://github.com/lpaulmp)
 - [Slavek Jurkowski](https://github.com/slavekjurkowski2)
 - [Sven Eeckeman](https://github.com/SvenEeckeman)
