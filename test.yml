@@ -53,5 +53,9 @@
         write_list: +users
         group: users
         setype: public_content_t
+      - name: guestshare
+        comment: 'Share accessible for guests'
+        guest_ok: yes
+        writable: yes
   roles:
     - role_under_test

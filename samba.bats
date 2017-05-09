@@ -27,6 +27,20 @@ assert_cannot_login() {
   [ "0" -ne "${status}" ]
 }
 
+# Check that the guest account has read access
+# Usage: assert_guest_read SHARE
+assert_guest_read() {
+  local share="${1}"
+
+  run smbclient "//${SUT_IP}/${share}" \
+    --user=% \
+    --command='ls'
+
+  echo "${output}"
+
+  [ "${status}" -eq "0" ]
+}
+
 # Check that a user has read acces to a share
 # Usage: read_access SHARE USER PASSWORD
 assert_read_access() {
@@ -132,12 +146,12 @@ assert_group_write_dir() {
 
 #}}}
 
-#@test 'NetBIOS name resolution should work' {
+@test 'NetBIOS name resolution should work' {
   # Look up the Samba server’s NetBIOS name under the specified workgroup
   # The result should contain the IP followed by NetBIOS name
-#  nmblookup -U ${SUT_IP} --workgroup ${workgroup} ${sut_wins_name} \
-#    | grep "^${SUT_IP} ${sut_wins_name}"
-#}
+  nmblookup -U ${SUT_IP} --workgroup ${workgroup} ${sut_wins_name} \
+    | grep "^${SUT_IP} ${sut_wins_name}"
+}
 
 # Read / write access to shares
 
@@ -189,3 +203,6 @@ assert_group_write_dir() {
   assert_write_access    publicshare  usr2  usr2
 }
 
+@test 'Guest access in share ‘guestshare’' {
+  assert_guest_read guestshare
+}
