@@ -1,11 +1,7 @@
 # File: roles/samba/handlers/main.yml
 ---
-- name: Restart Samba
+- name: Restart Samba services
   service:
-    name: "{{ samba_service }}"
+    name: "{{ item }}"
     state: restarted
-
-- name: Restart WinBind
-  service:
-    name: "{{ winbind_service }}"
-    state: restarted
+  with_items: "{{ samba_service }}"
