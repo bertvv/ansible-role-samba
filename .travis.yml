@@ -18,6 +18,7 @@ before_install:
     # Install latest Git
   - sudo apt-get update
   - sudo apt-get install --only-upgrade git
+  - sudo apt-get install samba4-clients
     # Allow fetching other branches than master
   - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
     # Fetch the branch with test code
