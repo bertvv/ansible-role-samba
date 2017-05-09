@@ -77,18 +77,12 @@
     - Restart WinBind
   tags: samba
 
-- name: Start Samba service
+- name: Start Samba service(s)
   service:
-    name: "{{ samba_service }}"
+    name: "{{ item }}"
     state: started
     enabled: yes
-  tags: samba
-
-- name: Start WindBind service
-  service:
-    name: "{{ winbind_service }}"
-    state: started
-    enabled: yes
+  with_items: "{{ samba_services }}"
   tags: samba
 
 - name: Create Samba users if they don't exist yet

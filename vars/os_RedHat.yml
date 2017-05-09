@@ -15,7 +15,8 @@ samba_selinux_booleans:
 
 samba_configuration: /etc/samba/smb.conf
 
-samba_service: smb
-winbind_service: nmb
+samba_services:
+  - smb
+  - nmb
 
 samba_www_documentroot: /var/www/html
