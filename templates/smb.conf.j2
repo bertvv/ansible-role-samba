@@ -57,7 +57,7 @@
 {% if share.comment is defined %}
   comment = {{ share.comment }}
 {% endif %}
-{% if share.vfs_objects|length > 0 %}
+{% if share.vfs_objects is defined and share.vfs_objects|length > 0 %}
   vfs objects = {% for obj in share.vfs_objects %}{{obj.name}} {% endfor %}
 
 {% for obj in share.vfs_objects %}
