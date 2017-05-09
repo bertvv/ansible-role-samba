@@ -38,6 +38,7 @@ No specific requirements
 | `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.          |
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                  |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                         |
+| `samba_guest_account`          | -                        | Guest account for unknown users                                       |
 
 ### Defining users
 
@@ -135,14 +136,16 @@ A complete overview of share options follows below. Only `name` is required, the
 | `force_create_mode`    | `0664`                          | See the Samba documentation for details.                                                       |
 | `force_directory_mode` | `0775`                          | See the Samba documentation for details.                                                       |
 | `group`                | `users`                         | The user group files in the share will be added to.                                            |
+| `guest_ok`             | -                               | Allow guest access.                                                                            |
 | `name` (required)      | -                               | The name of the share.                                                                         |
 | `owner`                | `root`                          | Set the owner of the path                                                                      |
 | `path`                 | /{{samba_shares_root}}/{{name}} | The path to the share directory.                                                               |
 | `public`               | `no`                            | Controls read access for guest users                                                           |
 | `setype`               | `samba_share_t`                 | The SELinux type of the share directory                                                        |
 | `valid_users`          | -                               | Controls read access for registered users. Use the syntax of the corresponding Samba setting.  |
+| `vfs_objects`          | -                               | See the Samba documentation for details.                                                       |
+| `writable`             | -                               | Writable for guests.                                                                           |
 | `write_list`           | -                               | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
-| `vfs_objects`          |  -                              | See the Samba documentation for details.                                                       |
 
 The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
 
