@@ -10,6 +10,10 @@ env:
       VERSION: 14.04
     - DISTRIBUTION: ubuntu
       VERSION: 16.04
+    - DISTRIBUTION: debian
+      VERSION: 8
+    - DISTRIBUTION: fedora
+      VERSION: 25
 
 services:
   - docker
