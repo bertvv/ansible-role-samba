@@ -15,5 +15,6 @@ samba_configuration: /etc/samba/smb.conf
 # Debian <8) is "samba".
 samba_services:
   - smbd
+  - nmbd
 
 samba_www_documentroot: /var/www
