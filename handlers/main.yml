@@ -4,4 +4,4 @@
   service:
     name: "{{ item }}"
     state: restarted
-  with_items: "{{ samba_service }}"
+  with_items: "{{ samba_services }}"
