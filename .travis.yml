@@ -7,9 +7,11 @@ env:
     - DISTRIBUTION: centos
       VERSION: 7
     - DISTRIBUTION: ubuntu
-      VERSION: 14.04
-    - DISTRIBUTION: ubuntu
       VERSION: 16.04
+    - DISTRIBUTION: debian
+      VERSION: 8
+    - DISTRIBUTION: fedora
+      VERSION: 25
 
 services:
   - docker
@@ -18,7 +20,7 @@ before_install:
     # Install latest Git
   - sudo apt-get update
   - sudo apt-get install --only-upgrade git
-  - sudo apt-get install samba-client
+  - sudo apt-get install smbclient
     # Allow fetching other branches than master
   - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
     # Fetch the branch with test code
