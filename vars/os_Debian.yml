@@ -11,7 +11,9 @@ samba_selinux_booleans: []
 
 samba_configuration: /etc/samba/smb.conf
 
+# The name of the Samba service in older releases (Ubuntu 14.04,
+# Debian <8) is "samba".
 samba_services:
-  - samba
+  - smbd
 
 samba_www_documentroot: /var/www
