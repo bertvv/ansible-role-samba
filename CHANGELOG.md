@@ -4,14 +4,17 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
-## 2.3.0 - 2017-05-09
+## 2.3.0 - 2017-05-10
 
 ### Changed
 
-- Fix service names & start services in a single task
+- Fix service names for Ubuntu/Debian
+- Start services in a single task
+- Fix issue with NetBIOS name resolution not working on Ubuntu and Debian
 - Updated list of supported platforms
     - Added Fedora 25
     - Removed Ubuntu 14.04 (the name of the `samba` service was changed to `smbd` in more recent versions, supporting both would become cumbersome)
+    - Removed older versions of EL. The role should still be working on EL6, but the test environment doesn't work.
 
 ### Added
 
