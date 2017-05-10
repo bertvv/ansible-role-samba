@@ -10,7 +10,7 @@ An Ansible role for setting up Samba as a file server. It is tested on CentOS, D
 - Manage Samba users and passwords
 - Manage access to shares
 
-The following are not considered concerns of this role, and you should configure these using another role (e.g. [bertvv.el7](https://galaxy.ansible.com/bertvv/el7/):
+The following are not considered concerns of this role, and you should configure these using another role (e.g. [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base/):
 
 - Managing firewall settings.
 - Creating system users. Samba users should already exist as system users.
