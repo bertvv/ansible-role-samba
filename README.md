@@ -196,13 +196,13 @@ Pull requests are also very welcome. The best way to submit a PR is by first cre
 
 ## Contributors
 
-- [Bert Van Vreckem](https://github.com/bertvv/) (maintainer)
-- [Birgit Croux](https://github.com/birgitcroux)
-- [DarkStar1973](https://github.com/DarkStar1973)
-- [Ian Young](https://github.com/iangreenleaf)
-- [Jonas Heinrich](https://github.com/onny)
-- [morbidick](https://github.com/morbidick)
-- [Paul Montero](https://github.com/lpaulmp)
-- [Slavek Jurkowski](https://github.com/slavekjurkowski2)
-- [Sven Eeckeman](https://github.com/SvenEeckeman)
-- [Tomohiko Ozawa](https://github.com/kota65535)
+[Bert Van Vreckem](https://github.com/bertvv/) (maintainer),
+[Birgit Croux](https://github.com/birgitcroux),
+[DarkStar1973](https://github.com/DarkStar1973),
+[Ian Young](https://github.com/iangreenleaf),
+[Jonas Heinrich](https://github.com/onny),
+[morbidick](https://github.com/morbidick),
+[Paul Montero](https://github.com/lpaulmp),
+[Slavek Jurkowski](https://github.com/slavekjurkowski2),
+[Sven Eeckeman](https://github.com/SvenEeckeman),
+[Tomohiko Ozawa](https://github.com/kota65535),

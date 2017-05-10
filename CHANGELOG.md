@@ -9,6 +9,9 @@ This file adheres to the guidelines of [http://keepachangelog.com/](http://keepa
 ### Changed
 
 - Fix service names & start services in a single task
+- Updated list of supported platforms
+    - Added Fedora 25
+    - Removed Ubuntu 14.04 (the name of the `samba` service was changed to `smbd` in more recent versions, supporting both would become cumbersome)
 
 ### Added
 
