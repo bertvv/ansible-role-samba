@@ -1,5 +1,7 @@
 # Ansible role `bertvv.samba`
 
+[![Build Status](https://travis-ci.org/bertvv/ansible-role-samba.svg?branch=master)](https://travis-ci.org/bertvv/ansible-role-samba)
+
 An Ansible role for setting up Samba as a file server. It is tested on CentOS, Debian, Ubuntu and Arch Linux. Specifically, the responsibilities of this role are to:
 
 - Install the necessary packages
