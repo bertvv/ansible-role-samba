@@ -147,9 +147,7 @@ assert_group_write_dir() {
 #}}}
 
 @test 'NetBIOS name resolution should work' {
-  if [ "${DISTRIBUTION}" = 'debian' ] || [ "${DISTRIBUTION}" = 'ubuntu' ]; then
-    skip
-  fi
+  #skip
   # Look up the Samba server’s NetBIOS name under the specified workgroup
   # The result should contain the IP followed by NetBIOS name
   nmblookup -U ${SUT_IP} --workgroup ${workgroup} ${sut_wins_name} | grep "^${SUT_IP} ${sut_wins_name}"
