@@ -11,10 +11,10 @@ galaxy_info:
         - 7
     - name: Ubuntu
       versions:
-        - all
+        - xenial
     - name: Debian
       versions:
-        - all
+        - jessie
     - name: ArchLinux
       versions:
         - all
