@@ -157,7 +157,7 @@ No dependencies.
 
 ## Example Playbook
 
-See the [test playbook](https://github.com/bertvv/ansible-role-samba/blob/tests/test.yml)
+See the [test playbook](https://github.com/bertvv/ansible-role-samba/blob/docker-tests/test.yml)
 
 ## Testing
 
@@ -182,10 +182,6 @@ failed: [samba-ubuntu1604] (item=[u'samba-common', u'samba', u'samba-client']) =
 
 The workaround is waiting a bit and running `vagrant provision` again.
 
-## See also
-
-If you are looking for a Samba role for Debian or Ubuntu, take a look at this [comprehensive role](https://galaxy.ansible.com/list#/roles/1597) by Debops. Jeff Geerling also has written a [Samba role for EL](https://galaxy.ansible.com/list#/roles/438), but at the time of writing this, it is very basic.
-
 ## Contributing
 
 Issues, feature requests, ideas are appreciated and can be posted in the Issues section.
@@ -207,4 +203,4 @@ Pull requests are also very welcome. The best way to submit a PR is by first cre
 [Paul Montero](https://github.com/lpaulmp),
 [Slavek Jurkowski](https://github.com/slavekjurkowski2),
 [Sven Eeckeman](https://github.com/SvenEeckeman),
-[Tomohiko Ozawa](https://github.com/kota65535),
+[Tomohiko Ozawa](https://github.com/kota65535).
