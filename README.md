@@ -17,6 +17,16 @@ The following are not considered concerns of this role, and you should configure
 
 **If you like/use this role, please consider giving it a star! Thanks!**
 
+## CVE-2017-7494
+
+A recently discovered remote code execution vulnerability may affect your Samba server installation.
+
+If SELinux is enabled on your system, it is **NOT** vulnerable.
+
+Version 2.3.1 of this role has a fix for the vulnerability. Upgrade your system if necessary.
+
+More info: <https://access.redhat.com/security/cve/cve-2017-7494>
+
 ## Requirements
 
 No specific requirements

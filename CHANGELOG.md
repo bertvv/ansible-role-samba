@@ -4,6 +4,12 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.3.1 - 2017-05-29
+
+### Changed
+
+- Fix for remote code execution vulnerability CVE-2017-7494: <https://access.redhat.com/security/cve/cve-2017-7494>
+
 ## 2.3.0 - 2017-05-10
 
 ### Changed
