@@ -51,6 +51,10 @@ No specific requirements
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                  |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                         |
 | `samba_guest_account`          | -                        | Guest account for unknown users                                       |
+| `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                            |
+| `samba_local_master`           | true                     | When true, nmbd will try & become local master of the subnet          |
+| `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                |
+| `samba_preferred_master`       | true                     | When true, indicates nmbd is a preferred master browser for workgroup |
 
 ### Defining users
 
