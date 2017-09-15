@@ -4,6 +4,13 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.4.0 - 2017-09-15
+
+### Changed
+
+- (GH-19) Made WINS support configurable (credit: [Ben Tomasik](https://github.com/tomislacker))
+
+
 ## 2.3.1 - 2017-05-29
 
 ### Changed
