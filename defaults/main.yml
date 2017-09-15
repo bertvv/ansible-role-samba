@@ -14,3 +14,8 @@ samba_create_varwww_symlinks: false
 samba_shares_root: '/srv/shares'
 samba_shares: []
 samba_users: []
+
+samba_wins_support: yes
+samba_local_master: yes
+samba_domain_master: yes
+samba_preferred_master: yes

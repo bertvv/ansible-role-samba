@@ -32,10 +32,10 @@
 {% endif %}
 
   # Name resolution: make sure \\NETBIOS_NAME\ works
-  wins support = yes
-  local master = yes
-  domain master = yes
-  preferred master = yes
+  wins support = {{ samba_wins_support | ternary('yes', 'no') }}
+  local master = {{ samba_local_master | ternary('yes', 'no') }}
+  domain master = {{ samba_domain_master | ternary('yes', 'no') }}
+  preferred master = {{ samba_preferred_master | ternary('yes', 'no') }}
 
 {% if not samba_load_printers %}
   # Don't load printers
