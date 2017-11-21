@@ -4,6 +4,12 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.5.0 - 2017-11-21
+
+## Added
+
+- (GH-20) Added variable `ansible_realm`, which adds support for Realmd. This variable is only needed when the host is joined to an already existing domain by using realmd, and you want to configure this member server as a Samba file server. (credit: [Sven Eeckeman](https://github.com/SvenEeckeman))
+
 ## 2.4.0 - 2017-09-15
 
 ### Changed
