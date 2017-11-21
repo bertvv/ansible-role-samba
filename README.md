@@ -44,6 +44,7 @@ No specific requirements
 | `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                  |
 | `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                      |
 | `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                            |
+| `samba_realm`                  | -                        | Realm domain name                                                 |
 | `samba_security`               | `user`                   | Samba security setting                                                |
 | `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                        |
 | `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.    |
