@@ -166,6 +166,78 @@ A complete overview of share options follows below. Only `name` is required, the
 
 The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
 
+
+
+
+### Ldap Connection
+
+This is a simple guide to connect your samba server with a ldap server. NOTE this guide is not fully working and is only here to help you start! 
+
+first of all we need to set `samba_passdb_backend` to point at your ldap server (you can also set an ip address instead of your hostname).
+
+
+```Yaml
+
+samba_passdb_backend: ldapsam:ldap://<your-hostname>
+
+
+```
+
+Now we need to make sure that the samba server does not try to become local master subnet (unless you wish that) otherwise this may cause conflict with the ldap server.
+
+
+```Yaml
+
+samba_local_master: false
+
+```
+
+Because this is not a stand alone server we need to change the security to domain.
+
+```Yaml
+
+samba_security: domain
+
+```
+
+A overview of all variables used to make this connection (may not be complete).
+
+
+| Option                 | Default                         | Comment                                                                                        |
+| :---                   | :---                            | :---                                                                                           |
+| `samba_suffix`         | -                               | See the Samba documentation for details.  |
+| `samba_rootdn`         | `cn=admin`                      | defines the Distinguished Name (DN) name used by Samba to contact the ldap server when retreiving user account information.       |
+| `samba_user_suffix`    | `ou=People`                     | See the Samba documentation for details.                                                       |
+| `samba_machine_suffix` | `ou=Computers`                  | See the Samba documentation for details.                                                       |
+| `ldap group suffix`    | `ou=Groups`                     | See the Samba documentation for details.                                                       |
+| `ldap ssl`             | `off`                           | This option is used to define whether or not Samba should use SSL when connecting to the ldap server.   |
+| `samba_sync`           | `yes`                           | This option is used to define whether or not Samba should sync the LDAP password.              |
+| `samba_hosts_allow`    | -                               | This parameter is a comma, space, or tab delimited set of hosts which are permitted to access a service.|
+
+This is a example of how `samba_suffix` needs to be filled out.
+
+```Yaml
+
+samba_suffix: "dc=example,dc=com"
+
+```
+
+
+After you started your server you need to give `samba_rootdn` the password of the ldap admin user. You can also implement this as a script but note that it has te be done in a post task.
+
+```Yaml
+
+sudo smbpasswd  -w <Password>
+
+```
+
+
+
+
+Created by: David Gooskens, Tim Caudron and Ruben Bruggeman
+
+
+
 ## Dependencies
 
 No dependencies.
