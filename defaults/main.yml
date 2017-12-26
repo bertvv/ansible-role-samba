@@ -21,7 +21,7 @@ samba_domain_master: yes
 samba_preferred_master: yes
 
 
-samba_LDAP: true
+samba_LDAP: false
 samba_rootdn: 'cn=admin'
 samba_user_suffix: 'ou=People'
 samba_machine_suffix: 'ou=Computers'
