@@ -8,10 +8,7 @@
   netbios name = {% if samba_netbios_name is defined %}{{ samba_netbios_name }}{% else %}{{ ansible_hostname }}{% endif %}
 
   workgroup = {{ samba_workgroup }}
-{% if samba_realm is defined %}
-  realm = {{ samba_realm }}
-{% endif %}
-server string = {{ samba_server_string }}
+  server string = {{ samba_server_string }}
 
   # Logging
 {% if samba_log is defined %}
@@ -48,6 +45,28 @@ server string = {{ samba_server_string }}
   disable spoolss = yes
 {% endif %}
 
+{% if samba_LDAP %}
+  # LDAP Settings
+  ldap suffix = {{ samba_suffix }}
+  ldap user suffix = {{ samba_user_suffix }}
+  ldap admin dn = {{ samba_rootdn }}
+  ldap machine suffix = {{ samba_machine_suffix }}
+  ldap group suffix = {{ samba_group_suffix }}
+  ldap ssl = {{ samba_ssl }}
+  ldap passwd sync = {{ samba_sync }}
+  hosts allow = {{ samba_hosts_allow }}
+{% endif %}  
+  #For security
+  server signing = mandatory
+  smb encrypt = mandatory
+  client min protocol = smb3
+  client max protocol = smb3
+
+  
+
+  
+  
+
   # Fix for CVE-2017-7494
   # https://access.redhat.com/security/cve/cve-2017-7494
   nt pipe support = no
@@ -59,6 +78,7 @@ server string = {{ samba_server_string }}
   browseable = no
   writable = yes
 {% endif %}
+  
 
 {% if samba_shares|length > 0 %}
 ## Shared directories
@@ -89,6 +109,9 @@ server string = {{ samba_server_string }}
 {% endif %}
 {% if share.group is defined %}
   force group = {{ share.group }}
+{% endif %}
+{% if share.browseable is defined %}
+  browseable = {{ share.browseable }}
 {% endif %}
 {% if share.guest_ok is defined %}
   guest ok = {{ share.guest_ok }}

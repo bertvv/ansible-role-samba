@@ -19,3 +19,12 @@ samba_wins_support: yes
 samba_local_master: yes
 samba_domain_master: yes
 samba_preferred_master: yes
+
+
+samba_LDAP: true
+samba_rootdn: 'cn=admin'
+samba_user_suffix: 'ou=People'
+samba_machine_suffix: 'ou=Computers'
+samba_group_suffix: 'ou=Groups'
+samba_ssl: 'off'
+samba_sync: "yes"
