@@ -174,7 +174,7 @@ The values for `valid_users` and `write_list` should be a comma separated list o
 This is a simple guide to connect your samba server with a ldap server. NOTE this guide is not fully working and is only here to help you start! 
 
 
-first of all we need to set `samba_passdb_backend` to point at your ldap server (you can also set an ip address instead of your hostname).
+First of all we need to set `samba_passdb_backend` to point at your ldap server (you can also set an ip address instead of your hostname).
 
 
 ```Yaml
@@ -200,13 +200,13 @@ samba_security: domain
 
 ```
 
-A overview of all variables used to make this connection (may not be complete). Note to iniate the variables set `samba_LDAP: true`.  
+A overview of all variables used to make this connection (may not be complete). To initiate the variables => `samba_LDAP: true`.  
 
 
 | Option                 | Default                         | Comment                                                                                        |
 | :---                   | :---                            | :---                                                                                           |
 | `samba_suffix`         | -                               | See the Samba documentation for details.  |
-| `samba_rootdn`         | `cn=admin`                      | defines the Distinguished Name (DN) name used by Samba to contact the ldap server when retreiving user account information.       |
+| `samba_rootdn`         | `cn=admin`                      | defines the Distinguished Name (DN) name used by Samba to contact the ldap server when retrieving user account information.       |
 | `samba_user_suffix`    | `ou=People`                     | See the Samba documentation for details.                                                       |
 | `samba_machine_suffix` | `ou=Computers`                  | See the Samba documentation for details.                                                       |
 | `ldap group suffix`    | `ou=Groups`                     | See the Samba documentation for details.                                                       |
@@ -223,7 +223,7 @@ samba_suffix: "dc=example,dc=com"
 ```
 
 
-After you started your server you need to give `samba_rootdn` the password of the ldap admin user. You can also implement this as a script but note that it has te be done in a post task.
+After you started your server you need to give `samba_rootdn` the password of the ldap admin user. You can also implement this as a script but note that it has the be done in a post task.
 
 ```Yaml
 
@@ -235,8 +235,6 @@ sudo smbpasswd  -w <Password>
 
 
 Created by: David Gooskens, Tim Caudron and Ruben Bruggeman
-
-
 
 ## Dependencies
 
