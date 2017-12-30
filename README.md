@@ -173,13 +173,13 @@ The values for `valid_users` and `write_list` should be a comma separated list o
 
 This is a simple guide to connect your samba server with a ldap server. NOTE this guide is not fully working and is only here to help you start! 
 
+
 first of all we need to set `samba_passdb_backend` to point at your ldap server (you can also set an ip address instead of your hostname).
 
 
 ```Yaml
 
 samba_passdb_backend: ldapsam:ldap://<your-hostname>
-
 
 ```
 
@@ -200,7 +200,7 @@ samba_security: domain
 
 ```
 
-A overview of all variables used to make this connection (may not be complete).
+A overview of all variables used to make this connection (may not be complete). Note to iniate the variables set `samba_LDAP: true`.  
 
 
 | Option                 | Default                         | Comment                                                                                        |
