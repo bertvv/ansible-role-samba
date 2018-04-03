@@ -12,6 +12,8 @@ galaxy_info:
     - name: Fedora
       versions:
         - 25
+        - 26
+        - 27
     - name: Ubuntu
       versions:
         - xenial
