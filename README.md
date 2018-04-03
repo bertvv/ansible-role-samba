@@ -46,6 +46,7 @@ No specific requirements
 | `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                            |
 | `samba_realm`                  | -                        | Realm domain name                                                     |
 | `samba_security`               | `user`                   | Samba security setting                                                |
+| `samba_server_min_protocol`    | -                        | Specify a minimum protocol version offered by the server.             |
 | `samba_server_max_protocol`    | -                        | Specify a maximum protocol version offered by the server.             |
 | `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                        |
 | `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.    |
@@ -220,4 +221,5 @@ Pull requests are also very welcome. The best way to submit a PR is by first cre
 [Paul Montero](https://github.com/lpaulmp),
 [Slavek Jurkowski](https://github.com/slavekjurkowski2),
 [Sven Eeckeman](https://github.com/SvenEeckeman),
-[Tomohiko Ozawa](https://github.com/kota65535).
+[Tomohiko Ozawa](https://github.com/kota65535),
+[Jonathan Underwood](https://github.com/jonathanunderwood).
