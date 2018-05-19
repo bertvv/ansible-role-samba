@@ -7,7 +7,7 @@ env:
     - DISTRIBUTION: centos
       VERSION: 7
     - DISTRIBUTION: ubuntu
-      VERSION: 16.04
+      VERSION: 18.04
     - DISTRIBUTION: debian
       VERSION: 9
     - DISTRIBUTION: fedora
