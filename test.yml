@@ -4,7 +4,7 @@
   pre_tasks:
     - name: Ensure package database is up-to-date
       apt:
-        update-cache: yes
+        update-cache: true
       failed_when: false
       changed_when: false
       when: ansible_os_family == 'Debian'
@@ -29,12 +29,18 @@
     samba_log: /var/log/samba.log
     samba_log_size: 60000
 
+    samba_server_min_protocol: SMB2
+    samba_server_max_protocol: SMB3
+
     samba_map_to_guest: Never
     samba_users:
       - name: usr1
         password: usr1
       - name: usr2
         password: usr2
+    samba_username_map:
+      - from: 'User Two'
+        to: usr2
 
     samba_shares_root: /srv/samba
     samba_shares:
@@ -45,19 +51,19 @@
         write_list: usr1
         group: usr1
       - name: protectedshare
-        public: yes
+        public: 'yes'
         comment: 'Public, but only writeable by usr2'
         write_list: usr2
         group: users
       - name: publicshare
         comment: 'Public share, writeable by all members of group ‘users’'
-        public: yes
+        public: 'yes'
         write_list: +users
         group: users
         setype: public_content_t
       - name: guestshare
         comment: 'Share accessible for guests'
-        guest_ok: yes
-        writable: yes
+        guest_ok: 'yes'
+        writable: 'yes'
   roles:
     - role_under_test
