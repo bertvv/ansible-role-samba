@@ -33,30 +33,31 @@ No specific requirements
 
 ## Role Variables
 
-| Variable                       | Default                  | Comments                                                                 |
-| :---                           | :---                     | :---                                                                     |
-| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in `/var/www/html` to the shares.        |
-| `samba_interfaces`             | []                       | List of network interfaces used for browsing, name registration, etc.    |
-| `samba_load_homes`             | false                    | When true, user home directories are accessible.                         |
-| `samba_load_printers`          | false                    | When true, printers attached to the host are shared                      |
-| `samba_log`                    | -                        | Set the log file. If left undefined, logging is done through syslog.     |
-| `samba_log_size`               | 5000                     | Set the maximum size of the log file.                                    |
-| `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                     |
-| `samba_mitigate_cve_2017_7494` | true                     | CVE-2017-7494 mitigation breaks some clients, such as macOS High Sierra. |
-| `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                         |
-| `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                               |
-| `samba_realm`                  | -                        | Realm domain name                                                        |
-| `samba_security`               | `user`                   | Samba security setting                                                   |
-| `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                           |
-| `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.       |
-| `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.             |
-| `samba_users`                  | []                       | List of dicts defining users that can access shares.                     |
-| `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                            |
-| `samba_guest_account`          | -                        | Guest account for unknown users                                          |
-| `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                               |
-| `samba_local_master`           | true                     | When true, nmbd will try & become local master of the subnet             |
-| `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                   |
-| `samba_preferred_master`       | true                     | When true, indicates nmbd is a preferred master browser for workgroup    |
+| Variable                       | Default                  | Comments                                                              |
+| :---                           | :---                     | :---                                                                  |
+| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in `/var/www/html` to the shares.     |
+| `samba_interfaces`             | []                       | List of network interfaces used for browsing, name registration, etc. |
+| `samba_load_homes`             | false                    | When true, user home directories are accessible.                      |
+| `samba_load_printers`          | false                    | When true, printers attached to the host are shared                   |
+| `samba_log`                    | -                        | Set the log file. If left undefined, logging is done through syslog.  |
+| `samba_log_size`               | 5000                     | Set the maximum size of the log file.                                 |
+| `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                  |
+| `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                      |
+| `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                            |
+| `samba_realm`                  | -                        | Realm domain name                                                     |
+| `samba_security`               | `user`                   | Samba security setting                                                |
+| `samba_server_min_protocol`    | -                        | Specify a minimum protocol version offered by the server.             |
+| `samba_server_max_protocol`    | -                        | Specify a maximum protocol version offered by the server.             |
+| `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                        |
+| `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.    |
+| `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.          |
+| `samba_users`                  | []                       | List of dicts defining users that can access shares.                  |
+| `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                         |
+| `samba_guest_account`          | -                        | Guest account for unknown users                                       |
+| `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                            |
+| `samba_local_master`           | true                     | When true, nmbd will try & become local master of the subnet          |
+| `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                |
+| `samba_preferred_master`       | true                     | When true, indicates nmbd is a preferred master browser for workgroup |
 
 ### Defining users
 
@@ -220,4 +221,5 @@ Pull requests are also very welcome. The best way to submit a PR is by first cre
 [Paul Montero](https://github.com/lpaulmp),
 [Slavek Jurkowski](https://github.com/slavekjurkowski2),
 [Sven Eeckeman](https://github.com/SvenEeckeman),
-[Tomohiko Ozawa](https://github.com/kota65535).
+[Tomohiko Ozawa](https://github.com/kota65535),
+[Jonathan Underwood](https://github.com/jonathanunderwood).

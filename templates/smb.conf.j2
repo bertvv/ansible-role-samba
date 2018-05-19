@@ -33,6 +33,16 @@ server string = {{ samba_server_string }}
   username map = {{ samba_username_map_file }}
 {% endif %}
 
+{% if samba_server_min_protocol is defined %}
+  # Minimum protocol version offered by the server
+  server min protocol = {{ samba_server_min_protocol }}
+{% endif %}
+
+{% if samba_server_max_protocol is defined %}
+  # Maximum protocol version offered by the server
+  server max protocol = {{ samba_server_max_protocol }}
+{% endif %}
+
 {% if samba_interfaces|length > 0 %}
   interfaces = {{ samba_interfaces }}
 {% endif %}
