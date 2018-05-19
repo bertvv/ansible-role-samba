@@ -4,12 +4,12 @@ VAGRANTFILE_API_VERSION = '2'
 ROLE_NAME = 'samba'
 
 hosts = [
-  { maintainer: 'geerlingguy', distro: 'ubuntu1404', ip: '192.168.56.21' },
-  { maintainer: 'geerlingguy', distro: 'ubuntu1604', ip: '192.168.56.22' },
-  { maintainer: 'geerlingguy', distro: 'centos6',    ip: '192.168.56.23' },
-  { maintainer: 'bertvv',      distro: 'centos71',   ip: '192.168.56.24' },
-  { maintainer: 'bertvv',      distro: 'centos72',   ip: '192.168.56.25' },
-  { maintainer: 'bertvv',      distro: 'fedora23',   ip: '192.168.56.26' }
+  { maintainer: 'bento', distro: 'debian-9.4',   ip: '192.168.56.10' },
+  { maintainer: 'bento', distro: 'ubuntu-16.04', ip: '192.168.56.15' },
+  { maintainer: 'bento', distro: 'ubuntu-18.04', ip: '192.168.56.16' },
+  { maintainer: 'bento', distro: 'centos-6.9',   ip: '192.168.56.20' },
+  { maintainer: 'bento', distro: 'centos-7.4',   ip: '192.168.56.21' },
+  { maintainer: 'bento', distro: 'fedora-27',    ip: '192.168.56.25' }
 ]
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
