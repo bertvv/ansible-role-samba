@@ -11,7 +11,7 @@
 {% if samba_realm is defined %}
   realm = {{ samba_realm }}
 {% endif %}
-server string = {{ samba_server_string }}
+  server string = {{ samba_server_string }}
 
   # Logging
 {% if samba_log is defined %}
@@ -36,17 +36,17 @@ server string = {{ samba_server_string }}
 {% if samba_server_min_protocol is defined %}
   # Minimum protocol version offered by the server
   server min protocol = {{ samba_server_min_protocol }}
-{% endif %}
 
+{% endif %}
 {% if samba_server_max_protocol is defined %}
   # Maximum protocol version offered by the server
   server max protocol = {{ samba_server_max_protocol }}
-{% endif %}
 
+{% endif %}
 {% if samba_interfaces|length > 0 %}
   interfaces = {{ samba_interfaces }}
-{% endif %}
 
+{% endif %}
   # Name resolution: make sure \\NETBIOS_NAME\ works
   wins support = {{ samba_wins_support | ternary('yes', 'no') }}
   local master = {{ samba_local_master | ternary('yes', 'no') }}
