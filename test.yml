@@ -4,7 +4,7 @@
   pre_tasks:
     - name: Ensure package database is up-to-date
       apt:
-        update-cache: yes
+        update-cache: true
       when: ansible_os_family == 'Debian'
     - name: Create users
       user:
@@ -16,7 +16,6 @@
         - usr2
 
   vars:
-    #samba_netbios_name: SAMBA_TEST
     samba_server_string: 'Welcome to the test file server'
     samba_workgroup: TESTGROUP
 
@@ -44,13 +43,13 @@
         write_list: usr1
         group: usr1
       - name: protectedshare
-        public: yes
+        public: 'yes'
         comment: 'Public, but only writeable by usr2'
         write_list: usr2
         group: users
       - name: publicshare
         comment: 'Public share, writeable by all members of group ‘users’'
-        public: yes
+        public: 'yes'
         write_list: +users
         group: users
         setype: public_content_t
