@@ -29,6 +29,9 @@ server string = {{ samba_server_string }}
 {% if samba_guest_account  is defined %}
   guest account = {{ samba_guest_account }}
 {% endif %}
+{% if samba_username_map is defined %}
+  username map = {{ samba_username_map_file }}
+{% endif %}
 
 {% if samba_interfaces|length > 0 %}
   interfaces = {{ samba_interfaces }}

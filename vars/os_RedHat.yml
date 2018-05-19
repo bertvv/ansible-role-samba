@@ -14,6 +14,7 @@ samba_selinux_booleans:
   - samba_export_all_rw
 
 samba_configuration: /etc/samba/smb.conf
+samba_username_map_file: /etc/samba/smbusers
 
 samba_services:
   - smb
