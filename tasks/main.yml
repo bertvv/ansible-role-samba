@@ -4,8 +4,8 @@
 - name: Include OS specific variables
   include_vars: "{{ item }}"
   with_first_found:
-   - "os_{{ ansible_distribution }}.yml"
-   - "os_{{ ansible_os_family }}.yml"
+    - "os_{{ ansible_distribution }}.yml"
+    - "os_{{ ansible_os_family }}.yml"
   tags: samba
 
 - name: Install Samba packages
@@ -26,8 +26,8 @@
 - name: Make sure SELinux boolean settings are correct
   seboolean:
     name: "{{ item }}"
-    state: yes
-    persistent: yes
+    state: true
+    persistent: true
   with_items: "{{ samba_selinux_booleans }}"
   when: ansible_selinux is defined and ansible_selinux.status == 'enabled'
   tags: samba
@@ -65,7 +65,7 @@
     path: "{{ samba_www_documentroot }}/{{ item.name }}"
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
   with_items: "{{ samba_shares }}"
-  when:  samba_create_varwww_symlinks
+  when: samba_create_varwww_symlinks
   tags: samba
 
 - name: Samba configuration
@@ -90,15 +90,15 @@
   service:
     name: "{{ item }}"
     state: started
-    enabled: yes
+    enabled: true
   with_items: "{{ samba_services }}"
   tags: samba
 
 - name: Create Samba users if they don't exist yet
   shell: >
-    (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
+    (pdbedit --user="{{ item.name }}" 2>&1 > /dev/null) \
     || (echo {{ item.password }}; echo {{ item.password }}) \
-    | smbpasswd -s -a {{ item.name }}
+    | smbpasswd -s -a "{{ item.name }}"
   with_items: "{{ samba_users }}"
   register: create_user_output
   changed_when: "'Added user' in create_user_output.stdout"
