@@ -29,6 +29,9 @@ server string = {{ samba_server_string }}
 {% if samba_guest_account  is defined %}
   guest account = {{ samba_guest_account }}
 {% endif %}
+{% if samba_username_map is defined %}
+  username map = {{ samba_username_map_file }}
+{% endif %}
 
 {% if samba_server_min_protocol is defined %}
   # Minimum protocol version offered by the server
@@ -58,9 +61,11 @@ server string = {{ samba_server_string }}
   disable spoolss = yes
 {% endif %}
 
+{% if samba_mitigate_cve_2017_7494 %}
   # Fix for CVE-2017-7494
   # https://access.redhat.com/security/cve/cve-2017-7494
   nt pipe support = no
+{% endif %}
 
 {% if samba_load_homes %}
 ## Make home directories accessible

@@ -76,6 +76,15 @@
     - Restart Samba services
   tags: samba
 
+- name: Create username map file if needed
+  template:
+    dest: "{{ samba_username_map_file }}"
+    src: smbusers.j2
+  notify:
+    - Restart Samba services
+  tags: samba
+  when: samba_username_map is defined
+
 - name: Start Samba service(s)
   service:
     name: "{{ item }}"
