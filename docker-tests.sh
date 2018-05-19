@@ -60,17 +60,17 @@ main() {
 configure_environment() {
 
   case "${DISTRIBUTION}_${VERSION}" in
-    'centos_7'|'fedora_25')
+    centos_7|fedora_2[5-7])
       init=/usr/lib/systemd/systemd
       run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
       ;;
-    'ubuntu_14.04')
+    ubuntu_14.04)
       # Workaround for issue when the host operating system has SELinux
       if [ -x '/usr/sbin/getenforce' ]; then
         run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
       fi
       ;;
-    'ubuntu_16.04'|'debian_8')
+    ubuntu_1[68].04|debian_[89])
       run_opts=('--volume=/run' '--volume=/run/lock' '--volume=/tmp' '--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro' '--cap-add=SYS_ADMIN' '--cap-add=SYS_RESOURCE')
 
       if [ -x '/usr/sbin/getenforce' ]; then
