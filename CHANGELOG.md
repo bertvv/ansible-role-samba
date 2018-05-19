@@ -4,6 +4,16 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.5.1 - 2018-05-20
+
+## Added
+
+- (GH-21) Add config flag to disable CVE-2017-7494 mitigation (credit: [Tiemo Kieft](https://github.com/blubber))
+- (GH-23) Added username map configuration (credit: [Tomohiko Ozawa](https://github.com/kota65535))
+- (GH-24) Add samba_server_max_protocol parameter (credit: [Jonathan Underwood](https://github.com/jonathanunderwood))
+- (GH-25) Add Fedora 26 and 27 support explicitly in meta (credit: [Jonathan Underwood](https://github.com/jonathanunderwood))
+- (GH-26) Name the include_vars task (credit: [Tobias Wolter](https://github.com/towo))
+
 ## 2.5.0 - 2017-11-21
 
 ## Added
