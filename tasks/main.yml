@@ -1,7 +1,8 @@
 # File: roles/samba/tasks/main.yml
 ---
 
-- include_vars: "{{ item }}"
+- name: Include OS specific variables
+  include_vars: "{{ item }}"
   with_first_found:
    - "os_{{ ansible_distribution }}.yml"
    - "os_{{ ansible_os_family }}.yml"
