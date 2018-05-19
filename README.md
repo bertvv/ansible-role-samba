@@ -19,11 +19,9 @@ The following are not considered concerns of this role, and you should configure
 
 ## CVE-2017-7494
 
-A recently discovered remote code execution vulnerability may affect your Samba server installation.
+A recently discovered remote code execution vulnerability may affect your Samba server installation. If SELinux is enabled on your system, it is **NOT** vulnerable. Version 2.3.1 of this role has a fix for the vulnerability. Upgrade your system if necessary.
 
-If SELinux is enabled on your system, it is **NOT** vulnerable.
-
-Version 2.3.1 of this role has a fix for the vulnerability. Upgrade your system if necessary.
+You can disable the fix if necessary, by setting the role variable `samba_mitigate_cve_2017_7494` to `false`.
 
 More info: <https://access.redhat.com/security/cve/cve-2017-7494>
 
@@ -33,31 +31,32 @@ No specific requirements
 
 ## Role Variables
 
-| Variable                       | Default                  | Comments                                                              |
-| :---                           | :---                     | :---                                                                  |
-| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in `/var/www/html` to the shares.     |
-| `samba_interfaces`             | []                       | List of network interfaces used for browsing, name registration, etc. |
-| `samba_load_homes`             | false                    | When true, user home directories are accessible.                      |
-| `samba_load_printers`          | false                    | When true, printers attached to the host are shared                   |
-| `samba_log`                    | -                        | Set the log file. If left undefined, logging is done through syslog.  |
-| `samba_log_size`               | 5000                     | Set the maximum size of the log file.                                 |
-| `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                  |
-| `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                      |
-| `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                            |
-| `samba_realm`                  | -                        | Realm domain name                                                     |
-| `samba_security`               | `user`                   | Samba security setting                                                |
-| `samba_server_min_protocol`    | -                        | Specify a minimum protocol version offered by the server.             |
-| `samba_server_max_protocol`    | -                        | Specify a maximum protocol version offered by the server.             |
-| `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                        |
-| `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.    |
-| `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.          |
-| `samba_users`                  | []                       | List of dicts defining users that can access shares.                  |
-| `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                         |
-| `samba_guest_account`          | -                        | Guest account for unknown users                                       |
-| `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                            |
-| `samba_local_master`           | true                     | When true, nmbd will try & become local master of the subnet          |
-| `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                |
-| `samba_preferred_master`       | true                     | When true, indicates nmbd is a preferred master browser for workgroup |
+| Variable                       | Default                  | Comments                                                                 |
+| :---                           | :---                     | :---                                                                     |
+| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in `/var/www/html` to the shares.        |
+| `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                   |
+| `samba_guest_account`          | -                        | Guest account for unknown users                                          |
+| `samba_interfaces`             | []                       | List of network interfaces used for browsing, name registration, etc.    |
+| `samba_load_homes`             | false                    | When true, user home directories are accessible.                         |
+| `samba_load_printers`          | false                    | When true, printers attached to the host are shared                      |
+| `samba_local_master`           | true                     | When true, nmbd will try & become local master of the subnet             |
+| `samba_log_size`               | 5000                     | Set the maximum size of the log file.                                    |
+| `samba_log`                    | -                        | Set the log file. If left undefined, logging is done through syslog.     |
+| `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                     |
+| `samba_mitigate_cve_2017_7494` | true                     | CVE-2017-7494 mitigation breaks some clients, such as macOS High Sierra. |
+| `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                         |
+| `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                               |
+| `samba_preferred_master`       | true                     | When true, indicates nmbd is a preferred master browser for workgroup    |
+| `samba_realm`                  | -                        | Realm domain name                                                        |
+| `samba_security`               | `user`                   | Samba security setting                                                   |
+| `samba_server_max_protocol`    | -                        | Specify a maximum protocol version offered by the server.                |
+| `samba_server_min_protocol`    | -                        | Specify a minimum protocol version offered by the server.                |
+| `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                           |
+| `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.             |
+| `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.       |
+| `samba_users`                  | []                       | List of dicts defining users that can access shares.                     |
+| `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                               |
+| `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                            |
 
 ### Defining users
 
@@ -102,7 +101,6 @@ samba_shares:
 
 This will create a share with only read access for registered users. Guests will not be able to see the contents of the share.
 
-
 A good way to configure write access for a share is to create a system user group, add users to that group, and make sure they have write access to the directory of the share. This role assumes groups are already set up and users are members of the groups that control write access. Let's assume you have two users `jack` and `teach`, members of the group `pirates`. This share definition will give both read and write access to the `pirates`:
 
 ```Yaml
@@ -143,8 +141,6 @@ samba_shares:
     group: tomcat
 ```
 
-
-
 A complete overview of share options follows below. Only `name` is required, the rest is optional.
 
 | Option                 | Default                         | Comment                                                                                        |
@@ -178,26 +174,10 @@ See the [test playbook](https://github.com/bertvv/ansible-role-samba/blob/docker
 
 ## Testing
 
-### Setting up the test environment
+Two test environments are provided for this role: one set up with Vagrant, one with Docker. The Docker test environment is also used for the Travis-CI tests. Each test environment is stored in a separate orphan branch. See the README of each for details on how to set it up locally.
 
-Tests for this role are provided in the form of a Vagrant environment that is kept in a separate branch, `tests`. I use [git-worktree(1)](https://git-scm.com/docs/git-worktree) to include the test code into the working directory. Instructions for running the tests:
-
-1. Fetch the tests branch: `git fetch origin tests`
-2. Create a Git worktree for the test code: `git worktree add tests tests` (remark: this requires at least Git v2.5.0). This will create a directory `tests/`.
-3. `cd tests/`
-4. `vagrant up` will then create test VMs for all supported distros and apply a test playbook (`test.yml`) to each one.
-
-### Issues
-
-On Ubuntu 16.04, setting up the VM may fail while running the test playbook because a background process is running the package manager. The output looks like:
-
-```
-...
-TASK [samba : Install Samba packages] ******************************************
-failed: [samba-ubuntu1604] (item=[u'samba-common', u'samba', u'samba-client']) => {"cache_update_time": 0, "cache_updated": false, "failed": true, "item": ["samba-common", "samba", "samba-client"], "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"   install 'samba-common' 'samba' 'samba-client'' failed: E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)\nE: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?\n", "stderr": "E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)\nE: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?\n", "stdout": "", "stdout_lines": []}
-```
-
-The workaround is waiting a bit and running `vagrant provision` again.
+- [Docker tests](https://github.com/bertvv/ansible-role-samba/blob/docker-tests/README.md)
+- [Vagrant tests](https://github.com/bertvv/ansible-role-samba/blob/vagrant-tests/README.md)
 
 ## Contributing
 
@@ -211,15 +191,23 @@ Pull requests are also very welcome. The best way to submit a PR is by first cre
 
 ## Contributors
 
-[Ben Tomasik](https://github.com/tomislacker)
+This role could only have been realized thanks to the contributions of the people listed below. If you have an idea to improve it even further, don't hesitate to pitch in!
+
+Issues, feature requests, ideas, suggestions, etc. can be posted in the Issues section.
+
+Pull requests are also very welcome. Please create a topic branch for your proposed changes. If you don't, this will create conflicts in your fork after the merge. Don't hesitate to add yourself to the contributor list below in your PR!
+
+[Ben Tomasik](https://github.com/tomislacker),
 [Bert Van Vreckem](https://github.com/bertvv/) (maintainer),
 [Birgit Croux](https://github.com/birgitcroux),
 [DarkStar1973](https://github.com/DarkStar1973),
 [Ian Young](https://github.com/iangreenleaf),
 [Jonas Heinrich](https://github.com/onny),
+[Jonathan Underwood](https://github.com/jonathanunderwood),
 [morbidick](https://github.com/morbidick),
 [Paul Montero](https://github.com/lpaulmp),
 [Slavek Jurkowski](https://github.com/slavekjurkowski2),
 [Sven Eeckeman](https://github.com/SvenEeckeman),
-[Tomohiko Ozawa](https://github.com/kota65535),
-[Jonathan Underwood](https://github.com/jonathanunderwood).
+[Tiemo Kieft](https://github.com/blubber),
+[Tobias Wolter](https://github.com/towo),
+[Tomohiko Ozawa](https://github.com/kota65535).
