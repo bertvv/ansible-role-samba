@@ -63,7 +63,7 @@
   load printers = yes
   printing = {{ samba_printer_type }}
   printcap name = {{ samba_printer_type }}
-  {% if not samba_printer_type == 'cups' %}
+  {% if samba_printer_type == 'cups' %}
     cups server = {{ samba_cups_server }}
   {% endif %}
 {% endif %}
