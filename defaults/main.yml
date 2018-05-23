@@ -1,4 +1,4 @@
-# roles/samba/defaults/main.yml
+#i roles/samba/defaults/main.yml
 ---
 
 samba_workgroup: 'WORKGROUP'
@@ -9,6 +9,8 @@ samba_security: 'user'
 samba_passdb_backend: 'tdbsam'
 samba_map_to_guest: 'bad user'
 samba_load_printers: false
+samba_printer_type: 'cups'
+samba_cups_server: 'localhost:631'
 samba_load_homes: false
 samba_create_varwww_symlinks: false
 samba_shares_root: '/srv/shares'
