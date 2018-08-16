@@ -29,8 +29,13 @@
     samba_log: /var/log/samba.log
     samba_log_size: 60000
 
-    samba_server_min_protocol: SMB2
-    samba_server_max_protocol: SMB3
+    # The smbclient version of the Travis CI environment crashes when `min
+    # protocol' is set:
+    #    protocol negotiation failed: NT_STATUS_INVALID_NETWORK_RESPONSE
+    # Uncomment the following lines if you want to test this setting locally.
+    #
+    # samba_server_min_protocol: SMB2
+    # samba_server_max_protocol: SMB3
 
     samba_map_to_guest: Never
     samba_users:
