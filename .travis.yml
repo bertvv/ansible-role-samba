@@ -11,7 +11,7 @@ env:
     - DISTRIBUTION: debian
       VERSION: 9
     - DISTRIBUTION: fedora
-      VERSION: 27
+      VERSION: 28
 
 services:
   - docker
