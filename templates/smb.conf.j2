@@ -59,6 +59,13 @@
   printing = bsd
   printcap name = /dev/null
   disable spoolss = yes
+{% else %}
+  load printers = yes
+  printing = {{ samba_printer_type }}
+  printcap name = {{ samba_printer_type }}
+  {% if samba_printer_type == 'cups' %}
+    cups server = {{ samba_cups_server }}
+  {% endif %}
 {% endif %}
 
 {% if samba_mitigate_cve_2017_7494 %}
