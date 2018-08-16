@@ -4,9 +4,21 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.6.0 - 2018-08-16
+
+### Added
+
+- (GH-28) Enable a cups server to be used (credit: [Thiago Gomes Verissimo](https://github.com/thiagogomesverissimo))
+
+### Changed
+
+- (GH-30, GH-31) Improve handling of link to www_documentroot (credit: [Karl Goetz](https://github.com/goetzk))
+- Update supported versions of Fedora to 27 and 28. Fedora 25 and 26 are EOL. This role will probably still work (for a while) on these platforms, but we do no effort to test them.
+- (GH-29) Don't print passwords out to the log (credit: [George Hartzell](https://github.com/hartzell))
+
 ## 2.5.1 - 2018-05-20
 
-## Added
+### Added
 
 - (GH-21) Add config flag to disable CVE-2017-7494 mitigation (credit: [Tiemo Kieft](https://github.com/blubber))
 - (GH-23) Added username map configuration (credit: [Tomohiko Ozawa](https://github.com/kota65535))
