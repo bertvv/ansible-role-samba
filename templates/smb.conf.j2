@@ -18,8 +18,7 @@
   log file = {{ samba_log }}
   max log size = {{ samba_log_size }}
 {% else %}
-  syslog only = yes
-  syslog = 1
+  logging = syslog
 {% endif %}
 
   # Authentication
