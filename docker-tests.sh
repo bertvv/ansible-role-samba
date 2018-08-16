@@ -2,11 +2,23 @@
 #
 # Author: Bert Van Vreckem <bert.vanvreckem@gmail.com>
 #
-# Runs tests for this Ansible role on a Docker container
-# Environment variables DISTRIBUTION and VERSION must be set
-# outside of the script, e.g.
+# Usage: DISTRIBUTION=<distro> VERSION=<version> ./docker-tests.sh
+#
+# Creates a Docker container for the specified Linux distribution and version,
+# available at https://hub.docker.com/r/bertvv/ansible-testing/; runs a syntax
+# check; applies this role to the container using a test playbook; and,
+# finally, runs an idempotence test.
+#
+# Environment variables DISTRIBUTION and VERSION must be set outside of the
+# script.
+#
+# EXAMPLES
 #
 # $ DISTRIBUTION=centos VERSION=7 docker-tests.sh
+# $ DISTRIBUTION=fedora VERSION=28 docker-tests.sh
+# $ DISTRIBUTION=debian VERSION=9 docker-tests.sh
+# $ DISTRIBUTION=ubuntu VERSION=18.04 docker-tests.sh
+#
 
 #{{{ Bash settings
 # abort on nonzero exitstatus
@@ -21,11 +33,18 @@ readonly script_name=$(basename "${0}")
 readonly script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 IFS=$'\t\n'   # Split on newlines and tabs (but not on spaces)
 
+# Color definitions
+readonly reset='\e[0m'
+readonly red='\e[0;31m'
+readonly yellow='\e[0;33m'
+
+# Test environment
 readonly container_id="$(mktemp)"
 readonly role_dir='/etc/ansible/roles/role_under_test'
 readonly test_playbook="${role_dir}/docker-tests/test.yml"
 
 readonly docker_image="bertvv/ansible-testing"
+readonly image_tag="${docker_image}:${DISTRIBUTION}_${VERSION}"
 
 # Distribution specific settings
 init="/sbin/init"
@@ -41,41 +60,45 @@ main() {
   run_test_playbook
   run_idempotence_test
 
-  log "Container IP: $(get_container_ip)"
-  sleep 3
-
-  # Uncomment the following line if you want to clean up the
-  # container(s) after running the tests. *Not* cleaning up may be
-  # useful for troubleshooting
+  # Uncomment the following line if you want to clean up the container(s) after
+  # running the tests. *Not* cleaning up may be useful for troubleshooting or
+  # running functional tests afterwards.
 
   # cleanup
 }
 
 #{{{ Helper functions
 
-# Usage: configure_environment.
+# Usage: configure_environment
 #
 # This function defines run options for Docker, depending on the
 # Linux $DISTRIBUTION and $VERSION.
 configure_environment() {
 
   case "${DISTRIBUTION}_${VERSION}" in
-    centos_7|fedora_2[5-7])
+    centos_6)
+      run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
+      ;;
+    centos_7|fedora_*)
       init=/usr/lib/systemd/systemd
       run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
       ;;
     ubuntu_14.04)
+      #run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
       # Workaround for issue when the host operating system has SELinux
       if [ -x '/usr/sbin/getenforce' ]; then
         run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
       fi
       ;;
-    ubuntu_1[68].04|debian_[89])
+    ubuntu_1[68].04|debian_*)
       run_opts=('--volume=/run' '--volume=/run/lock' '--volume=/tmp' '--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro' '--cap-add=SYS_ADMIN' '--cap-add=SYS_RESOURCE')
 
       if [ -x '/usr/sbin/getenforce' ]; then
         run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
       fi
+      ;;
+    *)
+      warn "Warning: no run options added for ${DISTRIBUTION} ${VERSION}"
       ;;
   esac
 }
@@ -84,7 +107,7 @@ configure_environment() {
 build_container() {
   log "Building container for ${DISTRIBUTION} ${VERSION}"
   set -x
-  docker build --tag="${docker_image}:${DISTRIBUTION}_${VERSION}" .
+  docker build --tag="${image_tag}" .
   set +x
 }
 
@@ -92,9 +115,9 @@ start_container() {
   log "Starting container"
   set -x
   docker run --detach \
-    --volume="${PWD}:${role_dir}:ro" \
     "${run_opts[@]}" \
-    "${docker_image}:${DISTRIBUTION}_${VERSION}" \
+    --volume="${PWD}:${role_dir}:ro" \
+    "${image_tag}" \
     "${init}" \
     > "${container_id}"
   set +x
@@ -108,6 +131,7 @@ get_container_id() {
 #
 # Prints the IP address of the specified container.
 get_container_ip() {
+  local id
   id="$(get_container_id)"
 
   docker inspect \
@@ -119,6 +143,7 @@ get_container_ip() {
 #
 # Run COMMAND on the Docker container
 exec_container() {
+  local id
   id="$(get_container_id)"
 
   set -x
@@ -163,6 +188,7 @@ run_idempotence_test() {
 
 cleanup() {
   log 'Cleaning up'
+  local id
   id="$(get_container_id)"
 
   docker stop "${id}"
@@ -170,15 +196,22 @@ cleanup() {
   rm "${container_id}"
 }
 
+# Usage: log [ARG]...
+#
+# Prints all arguments on the standard output stream
 log() {
-  local yellow='\e[0;33m'
-  local reset='\e[0m'
-
-  printf "${yellow}>>> %s${reset}\n" "${*}"
+  printf "${yellow}>>> %s${reset}\\n" "${*}"
 }
+
+# Usage: warn [ARG]...
+#
+# Prints all arguments on the standard error stream
+warn() {
+  printf "${red}!!! %s${reset}\\n" "${*}" 1>&2
+}
+
 
 #}}}
 
 main "${@}"
 
-#trap cleanup EXIT INT ERR HUP TERM
