@@ -33,7 +33,7 @@ No specific requirements
 
 | Variable                       | Default                  | Comments                                                                 |
 | :---                           | :---                     | :---                                                                     |
-| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in `/var/www/html` to the shares.        |
+| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in web docroot  to the shares.(`var/www/` or `/var/www/html` depending on platform) |
 | `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                   |
 | `samba_guest_account`          | -                        | Guest account for unknown users                                          |
 | `samba_interfaces`             | []                       | List of network interfaces used for browsing, name registration, etc.    |
