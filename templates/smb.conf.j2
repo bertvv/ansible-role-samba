@@ -73,12 +73,20 @@
   nt pipe support = no
 {% endif %}
 
+{% if samba_global_include is defined %}
+  include = {{ samba_global_include }}
+{% endif %}
+
 {% if samba_load_homes %}
 ## Make home directories accessible
 [homes]
   comment = Home Directories
   browseable = no
   writable = yes
+{% endif %}
+
+{% if samba_home_include is defined %}
+  include = {{ samba_home_include }}
 {% endif %}
 
 {% if samba_shares|length > 0 %}
@@ -121,6 +129,10 @@
   force create mode = {{ share.force_create_mode|default('0664') }}
   directory mode = {{ share.directory_mode|default('0775') }}
   force directory mode = {{ share.force_directory_mode|default('0775') }}
+{% if share.include_file is defined %}
+  include = {{ share.include_file }}
+{% endif %}
 
 {% endfor %}
 {% endif%}
+
