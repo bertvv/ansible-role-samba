@@ -33,6 +33,7 @@ No specific requirements
 
 | Variable                       | Default                  | Comments                                                                                                            |
 | :---                           | :---                     | :---                                                                                                                |
+| `samba_apple_extensions`       | no                       | When yes, enables support for Apple specific SMB extensions. Required for Time Machine support to work (see below)  |
 | `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in web docroot to the shares. (`var/www/` or `/var/www/html` depending on platform) |
 | `samba_cups_server`            | localhost:631            | Value for the global option `cups server` (only needed when `samba_printer_type` is "cups")                         |
 | `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                                                              |
@@ -57,6 +58,7 @@ No specific requirements
 | `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.                                                        |
 | `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.                                                  |
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                                                                |
+| `samba_vfs_packages`           | Varies by distribution   | List of packages required for Samba VFS support.                                                                    |
 | `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                                                                          |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                                                                       |
 

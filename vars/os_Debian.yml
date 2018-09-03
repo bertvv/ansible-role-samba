@@ -6,6 +6,9 @@ samba_packages:
   - samba
   - samba-client
 
+samba_vfs_packages:
+  - samba-vfs-modules
+
 samba_selinux_packages: []
 samba_selinux_booleans: []
 
