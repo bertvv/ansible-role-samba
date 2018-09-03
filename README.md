@@ -147,6 +147,7 @@ A complete overview of share options follows below. Only `name` is required, the
 
 | Option                 | Default                         | Comment                                                                                        |
 | :---                   | :---                            | :---                                                                                           |
+| `browseable`           | -                               | Controls whether this share appears in file browser.                                           |
 | `comment`              | -                               | A comment string for the share                                                                 |
 | `create_mode`          | `0664`                          | See the Samba documentation for details.                                                       |
 | `directory_mode`       | `0775`                          | See the Samba documentation for details.                                                       |
