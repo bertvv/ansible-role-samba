@@ -37,9 +37,9 @@ No specific requirements
 | `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in web docroot to the shares. (`var/www/` or `/var/www/html` depending on platform) |
 | `samba_cups_server`            | localhost:631            | Value for the global option `cups server` (only needed when `samba_printer_type` is "cups")                         |
 | `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                                                              |
-| `samba_global_include`         | -                        | Samba combatible configuration file with options to be loaded to [global] section                                   |
+| `samba_global_include`         | -                        | Samba-compatible configuration file with options to be loaded to [global] section (see below)                       |
 | `samba_guest_account`          | -                        | Guest account for unknown users                                                                                     |
-| `samba_home_include`           | -                        | Samba combatible configuration file with options to be loaded to [home] section                                     |
+| `samba_home_include`           | -                        | Samba-compatible configuration file with options to be loaded to [home] section (see below)                         |
 | `samba_interfaces`             | []                       | List of network interfaces used for browsing, name registration, etc.                                               |
 | `samba_load_homes`             | false                    | When true, user home directories are accessible.                                                                    |
 | `samba_load_printers`          | false                    | When true, printers attached to the host are shared                                                                 |
@@ -61,7 +61,6 @@ No specific requirements
 | `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.                                                        |
 | `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.                                                  |
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                                                                |
-| `samba_vfs_packages`           | Varies by distribution   | List of packages required for Samba VFS support.                                                                    |
 | `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                                                                          |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                                                                       |
 
@@ -156,7 +155,7 @@ A complete overview of share options follows below. Only `name` is required, the
 | `comment`              | -                               | A comment string for the share                                                                 |
 | `create_mode`          | `0664`                          | See the Samba documentation for details.                                                       |
 | `directory_mode`       | `0775`                          | See the Samba documentation for details.                                                       |
-| `include_file`         | -                               | Samba combatible configuration file with options to be included for this share.                |
+| `include_file`         | -                               | Samba combatible configuration file with options to be included for this share (see below).    |
 | `force_create_mode`    | `0664`                          | See the Samba documentation for details.                                                       |
 | `force_directory_mode` | `0775`                          | See the Samba documentation for details.                                                       |
 | `group`                | `users`                         | The user group files in the share will be added to.                                            |
@@ -172,6 +171,33 @@ A complete overview of share options follows below. Only `name` is required, the
 | `write_list`           | -                               | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
 
 The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
+
+## Adding arbitrary configuration files
+
+You can add settings that are not supported by this role out-of-the-box through custom configuration files that will be included from the main configuration file. There are three types of include files: for the global section, for the homes section, and for individual shares. Put your custom configuration files in a subdirectory `templates`, relative to your master playbook location. Then, specify them in the variables `samba_global_include`, `samba_home_include`, or `include_file` in the `samba_shares` definition.
+
+Your custom configuration files are considered to be Jinja templates, so you can use Ansible variables inside them. The configuration files will be validated to ensure they are syntactically correct.
+
+For example, to include `templates/global-include.conf`, set:
+
+```yaml
+samba_global_include: global-include.conf
+```
+
+Remark that is it not necessary to specify the `templates/` directory.
+
+Likewise, to include `templates/piratecove-include.conf`, specific for the `piratecove` share (see the example above); set:
+
+```yaml
+samba_shares:
+  - name: piratecove
+    comment: 'A place for pirates to hang out'
+    group: pirates
+    write_list: +pirates
+    include_file: piratecove-include.conf
+```
+
+The [test playbook](https://github.com/bertvv/ansible-role-samba/blob/docker-tests/test.yml) has some examples. The custom configuration files can be found in the [docker-tests](https://github.com/bertvv/ansible-role-samba/tree/docker-tests) branch.
 
 ## Dependencies
 
@@ -219,7 +245,6 @@ Pull requests are also very welcome. Please create a topic branch for your propo
 [Paul Montero](https://github.com/lpaulmp),
 [Slavek Jurkowski](https://github.com/slavekjurkowski2),
 [Sven Eeckeman](https://github.com/SvenEeckeman),
-https://github.com/hartzell,
 [Tiemo Kieft](https://github.com/blubber),
 [Tobias Wolter](https://github.com/towo),
 [Tomohiko Ozawa](https://github.com/kota65535).
