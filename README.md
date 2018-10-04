@@ -36,7 +36,9 @@ No specific requirements
 | `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in web docroot to the shares. (`var/www/` or `/var/www/html` depending on platform) |
 | `samba_cups_server`            | localhost:631            | Value for the global option `cups server` (only needed when `samba_printer_type` is "cups")                         |
 | `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                                                              |
+| `samba_global_include`         | -                        | Samba combatible configuration file with options to be loaded to [global] section                                   |
 | `samba_guest_account`          | -                        | Guest account for unknown users                                                                                     |
+| `samba_home_include`           | -                        | Samba combatible configuration file with options to be loaded to [home] section                                     |
 | `samba_interfaces`             | []                       | List of network interfaces used for browsing, name registration, etc.                                               |
 | `samba_load_homes`             | false                    | When true, user home directories are accessible.                                                                    |
 | `samba_load_printers`          | false                    | When true, printers attached to the host are shared                                                                 |
@@ -150,6 +152,7 @@ A complete overview of share options follows below. Only `name` is required, the
 | `comment`              | -                               | A comment string for the share                                                                 |
 | `create_mode`          | `0664`                          | See the Samba documentation for details.                                                       |
 | `directory_mode`       | `0775`                          | See the Samba documentation for details.                                                       |
+| `include_file`         | -                               | Samba combatible configuration file with options to be included for this share.                |
 | `force_create_mode`    | `0664`                          | See the Samba documentation for details.                                                       |
 | `force_directory_mode` | `0775`                          | See the Samba documentation for details.                                                       |
 | `group`                | `users`                         | The user group files in the share will be added to.                                            |
