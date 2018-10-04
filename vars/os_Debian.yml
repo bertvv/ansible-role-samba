@@ -12,8 +12,9 @@ samba_vfs_packages:
 samba_selinux_packages: []
 samba_selinux_booleans: []
 
-samba_configuration: /etc/samba/smb.conf
-samba_username_map_file: /etc/samba/smbusers
+samba_configuration_dir: /etc/samba
+samba_configuration: "{{ samba_configuration_dir }}/smb.conf"
+samba_username_map_file: "{{ samba_configuration_dir }}/smbusers"
 
 # The name of the Samba service in older releases (Ubuntu 14.04,
 # Debian <8) is "samba".
