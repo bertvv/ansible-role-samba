@@ -13,6 +13,10 @@
 {% endif %}
   server string = {{ samba_server_string }}
 
+{% if samba_apple_extensions is defined %}
+  fruit:aapl = yes
+{% endif %}
+
   # Logging
 {% if samba_log is defined %}
   log file = {{ samba_log }}

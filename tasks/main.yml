@@ -15,6 +15,14 @@
   with_items: "{{ samba_packages }}"
   tags: samba
 
+- name: Install Samba VFS extensions packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ samba_vfs_packages }}"
+  when: samba_vfs_packages is defined
+  tags: samba
+
 - name: Install SELinux package
   package:
     name: "{{ item }}"
