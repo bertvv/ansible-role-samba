@@ -4,6 +4,15 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.7.0 - 2018-10-04
+
+## Added
+
+- (GH-36) Control the Samba log level (credit: [Karl Goetz](https://github.com/goetzk))
+- (GH-35) Load arbitrary config files in every section (credit: [Karl Goetz](https://github.com/goetzk))
+- (GH-34) Control if shares are browseable or not (credit: [Karl Goetz](https://github.com/goetzk))
+- (GH-33) Support for enabling Apple SMB extensions (credit: [Karl Goetz](https://github.com/goetzk))
+
 ## 2.6.0 - 2018-08-16
 
 ### Added
