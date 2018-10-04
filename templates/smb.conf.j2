@@ -21,6 +21,7 @@
 {% if samba_log is defined %}
   log file = {{ samba_log }}
   max log size = {{ samba_log_size }}
+  log level = {{ samba_log_level }}
 {% else %}
   logging = syslog
 {% endif %}
