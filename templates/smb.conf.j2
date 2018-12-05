@@ -91,7 +91,7 @@
 {% endif %}
 
 {% if samba_home_include is defined %}
-  include = {{{ samba_configuration_dir }}/{ samba_home_include }}
+  include = {{ samba_configuration_dir }}/{{ samba_home_include }}
 {% endif %}
 
 {% if samba_shares|length > 0 %}
