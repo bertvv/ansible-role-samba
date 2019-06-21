@@ -41,11 +41,13 @@
   tags: samba
 
 - name: Create Samba shares root directory
+  vars: 
+    group: "{{ 'system' if ansible_facts['os_family'] == 'AIX' else 'root'  }}"
   file:
     state: directory
     path: "{{ samba_shares_root }}"
     owner: root
-    group: root
+    group: "{{ group }}"
     mode: '0755'
   when: samba_shares
   tags: samba
