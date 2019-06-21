@@ -125,13 +125,15 @@
   tags: samba
   when: samba_username_map is defined
 
-- name: Start Samba service(s)
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
-  with_items: "{{ samba_services }}"
-  tags: samba
+# Handled by previous notify; if nothing has changed we dont need to start.
+#  If we DO need to start here, AIX needs custom handling
+#- name: Start Samba service(s)
+#  service:
+#    name: "{{ item }}"
+#    state: started
+#   enabled: true
+#  with_items: "{{ samba_services }}"
+#  tags: samba
 
 - name: Create Samba users if they don't exist yet
   shell: >
