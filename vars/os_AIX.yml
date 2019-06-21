@@ -1,0 +1,22 @@
+# roles/samba/vars/os_AIX.yml
+---
+# Assumes that the server has yum package manager set up: 
+#  https://www.ibm.com/developerworks/community/blogs/aixpert/entry/AIX_and_yum_Get_those_Open_Source_apps_on_AIX_the_easy_way
+samba_packages:
+  - samba
+  - samba-client
+
+samba_configuration_dir: /etc/samba
+samba_configuration: "{{ samba_configuration_dir }}/smb.conf"
+samba_username_map_file: "{{ samba_configuration_dir }}/smbusers"
+
+samba_testparm: /opt/freeware/bin/testparm
+
+samba_services:
+  - smbd
+  - nmbd
+
+samba_www_documentroot: []
+
+# For information on Samba+AIX, an old document, but still valid: 
+#  https://developer.ibm.com/articles/au-aix_sc����
