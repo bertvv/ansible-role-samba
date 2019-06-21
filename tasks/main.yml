@@ -92,7 +92,7 @@
   template:
     src: "{{ samba_global_include }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: 'testparm -s %s'
+    validate: "{{ samba_testparm | default('testparm') }} -s %s"
   when: samba_global_include is defined
   notify:
     - Restart Samba services
@@ -101,7 +101,7 @@
   template:
     src: "{{ samba_homes_include }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: 'testparm -s %s'
+    validate: "{{ samba_testparm | default('testparm') }} -s %s"
   when: samba_homes_include is defined
   notify:
     - Restart Samba services
@@ -110,7 +110,7 @@
   template:
     src: "{{ item.include_file }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: 'testparm -s %s'
+    validate: "{{ samba_testparm | default('testparm') }} -s %s"
   when: item.include_file is defined
   notify:
     - Restart Samba services
