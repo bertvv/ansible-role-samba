@@ -58,7 +58,7 @@
     owner: root
     group: root
     mode: '0755'
-  when: samba_shares
+  when: samba_shares|length > 0
   tags: samba
 
 - name: Create share directories
@@ -76,7 +76,7 @@
   file:
     name: "{{ samba_www_documentroot }}"
     state: directory
-  when: samba_create_varwww_symlinks
+  when: samba_create_varwww_symlinks|bool
   tags: samba
 
 - name: Create link to shares in webserver document root
@@ -85,7 +85,7 @@
     path: "{{ samba_www_documentroot }}/{{ item.name }}"
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
   with_items: "{{ samba_shares }}"
-  when: samba_create_varwww_symlinks
+  when: samba_create_varwww_symlinks|bool
   tags: samba
 
 - name: Samba configuration
