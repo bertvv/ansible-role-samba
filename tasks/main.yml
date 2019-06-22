@@ -10,16 +10,14 @@
 
 - name: Install Samba packages
   package:
-    name: "{{ item }}"
+    name: "{{ samba_packages }}"
     state: present
-  with_items: "{{ samba_packages }}"
   tags: samba
 
 - name: Install Samba VFS extensions packages
   package:
-    name: "{{ item }}"
+    name: "{{ samba_vfs_packages }}"
     state: present
-  with_items: "{{ samba_vfs_packages }}"
   when: samba_vfs_packages is defined
   tags: samba
 
