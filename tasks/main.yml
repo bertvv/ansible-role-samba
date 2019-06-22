@@ -34,9 +34,8 @@
 
 - name: Install SELinux package
   package:
-    name: "{{ item }}"
+    name: "{{ samba_selinux_packages }}"
     state: present
-  with_items: "{{ samba_selinux_packages }}"
   when: ansible_selinux is defined and ansible_selinux.status == 'enabled'
   tags: samba
 
