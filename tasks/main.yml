@@ -23,6 +23,17 @@
   when: samba_vfs_packages is defined
   tags: samba
 
+- name: Register Samba version
+  shell: "smbd --version | sed 's/Version //'"
+  register: samba_version
+  changed_when: false
+  tags: samba
+
+# - name: "Installed Samba version:"
+#   debug:
+#     msg: "{{ samba_version }}"
+#   tags: samba
+
 - name: Install SELinux package
   package:
     name: "{{ item }}"

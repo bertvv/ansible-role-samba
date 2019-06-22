@@ -19,9 +19,11 @@ The following are not considered concerns of this role, and you should configure
 
 ## CVE-2017-7494
 
-A recently discovered remote code execution vulnerability may affect your Samba server installation. If SELinux is enabled on your system, it is **NOT** vulnerable. Version 2.3.1 of this role has a fix for the vulnerability. Upgrade your system if necessary.
+A remote code execution vulnerability may affect your Samba server installation. Samba versions 3.5.0 and before 4.6.4 are affected. If SELinux is enabled on your system, it is **NOT** vulnerable.
 
-You can disable the fix if necessary, by setting the role variable `samba_mitigate_cve_2017_7494` to `false`.
+This role will check if the installed version of Samba is affected by the vulnerability and apply the proposed workaround: adding `nt pipe support = no` to the `[global]` section of the configuration. Remark that this disables share browsing by Windows clients.
+
+You can explicitly disable the fix if necessary, by setting the role variable `samba_mitigate_cve_2017_7494` to `false`.
 
 More info: <https://access.redhat.com/security/cve/cve-2017-7494>
 
