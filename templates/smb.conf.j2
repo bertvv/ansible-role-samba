@@ -90,8 +90,8 @@
   writable = yes
 {% endif %}
 
-{% if samba_home_include is defined %}
-  include = {{ samba_configuration_dir }}/{{ samba_home_include }}
+{% if samba_homes_include is defined %}
+  include = {{ samba_configuration_dir }}/{{ samba_homes_include }}
 {% endif %}
 
 {% if samba_shares|length > 0 %}
