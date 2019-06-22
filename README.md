@@ -235,6 +235,7 @@ Issues, feature requests, ideas, suggestions, etc. can be posted in the Issues s
 Pull requests are also very welcome. Please create a topic branch for your proposed changes. If you don't, this will create conflicts in your fork after the merge. Don't hesitate to add yourself to the contributor list below in your PR!
 
 [Ben Tomasik](https://github.com/tomislacker),
+[Bengt Giger](https://github.com/BenGig),
 [Bert Van Vreckem](https://github.com/bertvv/) (maintainer),
 [Birgit Croux](https://github.com/birgitcroux),
 [DarkStar1973](https://github.com/DarkStar1973),

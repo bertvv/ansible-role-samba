@@ -4,6 +4,16 @@ This file contains al notable changes to the bertvv.samba Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
+## 2.7.1  - 2019-06-22
+
+## Changed
+
+- (GH-39) Have include_options use absolute paths (credit: [Bengt Giger](https://github.com/BenGig))
+- (GH-41) Change default of "map to guest" to "never"
+- (GH-42) Only apply mitigation of vulnerability CVE-2017-7494 to vulnerable Samba versions
+- Fix deprecation warnings for Ansible 2.8.x
+- Removed with_items loop from package tasks
+
 ## 2.7.0 - 2018-10-04
 
 ## Added
