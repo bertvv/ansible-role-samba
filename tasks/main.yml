@@ -25,6 +25,8 @@
   shell: >
     set -o nounset -o pipefail -o errexit &&
     smbd --version | sed 's/Version //'
+  args:
+    executable: /bin/bash
   register: samba_version
   changed_when: false
   tags: samba
@@ -150,6 +152,8 @@
     (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
     || (echo {{ item.password }}; echo {{ item.password }}) \
     | smbpasswd -s -a {{ item.name }}
+  args:
+    executable: /bin/bash
   with_items: "{{ samba_users }}"
   no_log: true
   register: create_user_output
