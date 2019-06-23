@@ -15,8 +15,8 @@ set -o nounset  # abort on unbound variable
 
 test_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-bats_archive="v0.4.0.tar.gz"
-bats_url="https://github.com/sstephenson/bats/archive/${bats_archive}"
+bats_archive="v1.1.0.tar.gz"
+bats_url="https://github.com/bats-core/bats-core/archive/${bats_archive}"
 bats_install_dir="/opt"
 bats_default_location="${bats_install_dir}/bats/libexec/bats"
 test_file_pattern="*.bats"
