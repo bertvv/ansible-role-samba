@@ -22,7 +22,9 @@
   tags: samba
 
 - name: Register Samba version
-  shell: "smbd --version | sed 's/Version //'"
+  shell: >
+    set -o nounset -o pipefail -o errexit &&
+    smbd --version | sed 's/Version //'
   register: samba_version
   changed_when: false
   tags: samba
@@ -144,6 +146,7 @@
 
 - name: Create Samba users if they don't exist yet
   shell: >
+    set -o nounset -o pipefail -o errexit &&
     (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
     || (echo {{ item.password }}; echo {{ item.password }}) \
     | smbpasswd -s -a {{ item.name }}
