@@ -202,6 +202,12 @@ The [test playbook](https://github.com/bertvv/ansible-role-samba/blob/docker-tes
 
 ## Dependencies
 
+### AIX
+
+This role assumes that the target AIX server is using the [AIX Toolbox for Linux](https://www.ibm.com/developerworks/aix/library/aix-toolbox) implementation of Yum with access to the `samba` and `samba-client` packages.
+
+### Other
+
 No dependencies.
 
 ## Example Playbook
