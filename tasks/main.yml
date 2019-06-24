@@ -24,7 +24,7 @@
 - name: Register Samba version
   shell: >
     set -o nounset -o pipefail -o errexit &&
-    smbd --version | sed 's/Version //'
+    {{ samba_bin_dir + '/' | default('') }}smbd --version | sed 's/Version //'
   args:
     executable: /bin/bash
   register: samba_version
@@ -95,7 +95,7 @@
   template:
     dest: "{{ samba_configuration }}"
     src: smb.conf.j2
-    validate: "{{ samba_testparm | default('testparm') }} -s %s"
+    validate: "{{ samba_bin_dir | default('') }}testparm -s %s"
   notify:
     - Restart Samba services
   tags: samba
@@ -104,7 +104,7 @@
   template:
     src: "{{ samba_global_include }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: "{{ samba_testparm | default('testparm') }} -s %s"
+    validate: "{{ samba_bin_dir | default('') }}testparm -s %s"
   when: samba_global_include is defined
   notify:
     - Restart Samba services
@@ -114,7 +114,7 @@
   template:
     src: "{{ samba_homes_include }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: "{{ samba_testparm | default('testparm') }} -s %s"
+    validate: "{{ samba_bin_dir | default('') }}testparm -s %s"
   when: samba_homes_include is defined
   notify:
     - Restart Samba services
@@ -124,7 +124,7 @@
   template:
     src: "{{ item.include_file }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: "{{ samba_testparm | default('testparm') }} -s %s"
+    validate: "{{ samba_bin_dir | default('') }}testparm -s %s"
   when: item.include_file is defined
   notify:
     - Restart Samba services
@@ -153,7 +153,7 @@
 - name: Create Samba users if they don't exist yet
   shell: >
     set -o nounset -o pipefail -o errexit &&
-    (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
+    ({{ samba_bin_dir|default('') }}pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
     || (echo {{ item.password }}; echo {{ item.password }}) \
     | smbpasswd -s -a {{ item.name }}
   args:

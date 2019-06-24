@@ -10,7 +10,7 @@ samba_configuration_dir: /etc/samba
 samba_configuration: "{{ samba_configuration_dir }}/smb.conf"
 samba_username_map_file: "{{ samba_configuration_dir }}/smbusers"
 
-samba_testparm: /opt/freeware/bin/testparm
+samba_bin_dir: /opt/freeware/sbin/ 
 
 samba_services:
   - smbd
