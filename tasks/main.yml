@@ -10,24 +10,36 @@
 
 - name: Install Samba packages
   package:
-    name: "{{ item }}"
+    name: "{{ samba_packages }}"
     state: present
-  with_items: "{{ samba_packages }}"
   tags: samba
 
 - name: Install Samba VFS extensions packages
   package:
-    name: "{{ item }}"
+    name: "{{ samba_vfs_packages }}"
     state: present
-  with_items: "{{ samba_vfs_packages }}"
   when: samba_vfs_packages is defined
   tags: samba
 
+- name: Register Samba version
+  shell: >
+    set -o nounset -o pipefail -o errexit &&
+    smbd --version | sed 's/Version //'
+  args:
+    executable: /bin/bash
+  register: samba_version
+  changed_when: false
+  tags: samba
+
+# - name: "Installed Samba version:"
+#   debug:
+#     msg: "{{ samba_version }}"
+#   tags: samba
+
 - name: Install SELinux package
   package:
-    name: "{{ item }}"
+    name: "{{ samba_selinux_packages }}"
     state: present
-  with_items: "{{ samba_selinux_packages }}"
   when: ansible_selinux is defined and ansible_selinux.status == 'enabled'
   tags: samba
 
@@ -49,7 +61,7 @@
     owner: root
     group: "{{ group }}"
     mode: '0755'
-  when: samba_shares
+  when: samba_shares|length > 0
   tags: samba
 
 - name: Create share directories
@@ -67,7 +79,7 @@
   file:
     name: "{{ samba_www_documentroot }}"
     state: directory
-  when: samba_create_varwww_symlinks
+  when: samba_create_varwww_symlinks|bool
   tags: samba
 
 - name: Create link to shares in webserver document root
@@ -76,7 +88,7 @@
     path: "{{ samba_www_documentroot }}/{{ item.name }}"
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
   with_items: "{{ samba_shares }}"
-  when: samba_create_varwww_symlinks
+  when: samba_create_varwww_symlinks|bool
   tags: samba
 
 - name: Samba configuration
@@ -87,7 +99,7 @@
   notify:
     - Restart Samba services
   tags: samba
-  
+
 - name: Install global include file
   template:
     src: "{{ samba_global_include }}"
@@ -96,8 +108,9 @@
   when: samba_global_include is defined
   notify:
     - Restart Samba services
-  
-- name: Install homes include file
+  tags: samba
+
+- name: Install home include file
   template:
     src: "{{ samba_homes_include }}"
     dest: "{{ samba_configuration_dir }}"
@@ -105,6 +118,7 @@
   when: samba_homes_include is defined
   notify:
     - Restart Samba services
+  tags: samba
 
 - name: Install share specific include files
   template:
@@ -115,6 +129,7 @@
   notify:
     - Restart Samba services
   with_items: "{{ samba_shares }}"
+  tags: samba
 
 - name: Create username map file if needed
   template:
@@ -122,8 +137,8 @@
     src: smbusers.j2
   notify:
     - Restart Samba services
-  tags: samba
   when: samba_username_map is defined
+  tags: samba
 
 # Handled by previous notify; if nothing has changed we dont need to start.
 #  If we DO need to start here, AIX needs custom handling
@@ -137,9 +152,12 @@
 
 - name: Create Samba users if they don't exist yet
   shell: >
+    set -o nounset -o pipefail -o errexit &&
     (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
     || (echo {{ item.password }}; echo {{ item.password }}) \
     | smbpasswd -s -a {{ item.name }}
+  args:
+    executable: /bin/bash
   with_items: "{{ samba_users }}"
   no_log: true
   register: create_user_output

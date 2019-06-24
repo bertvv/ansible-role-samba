@@ -8,7 +8,7 @@ samba_log_level: 0
 samba_interfaces: []
 samba_security: 'user'
 samba_passdb_backend: 'tdbsam'
-samba_map_to_guest: 'bad user'
+samba_map_to_guest: 'never'
 samba_load_printers: false
 samba_printer_type: 'cups'
 samba_cups_server: 'localhost:631'
