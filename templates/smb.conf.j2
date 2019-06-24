@@ -138,7 +138,7 @@
   directory mode = {{ share.directory_mode|default('0775') }}
   force directory mode = {{ share.force_directory_mode|default('0775') }}
 {% if share.include_file is defined %}
-  include = {{ share.include_file }}
+  include = /etc/samba/{{ share.include_file }}
 {% endif %}
 
 {% endfor %}
