@@ -16,13 +16,10 @@
   listen: "Restart Samba services"
 
 - name: Restart AIX Samba services
-  command:
-    name: "/etc/rc.d/init.d/{{ item }} restart"
+  command: "/etc/rc.d/init.d/{{ item }} restart"
   with_items: "{{ samba_services }}"
   when: ansible_facts['os_family'] == "AIX"
   listen: "Restart Samba services"
-
-
 
 - name: Start Linux Samba services
   vars:
@@ -41,8 +38,7 @@
   listen: "Start Samba services"
 
 - name: Start AIX Samba services
-  command:
-    name: "/etc/rc.d/init.d/{{ item }} start" 
+  command: "/etc/rc.d/init.d/{{ item }} start" 
   with_items: "{{ samba_services }}"
   when: ansible_facts['os_family'] == "AIX"
   listen: "Start Samba services"
