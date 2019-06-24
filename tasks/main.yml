@@ -83,7 +83,7 @@
   template:
     dest: "{{ samba_configuration }}"
     src: smb.conf.j2
-    validate: 'testparm -s %s'
+    validate: "{{ samba_testparm | default('testparm') }} -s %s"
   notify:
     - Restart Samba services
   tags: samba
