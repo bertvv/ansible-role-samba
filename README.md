@@ -50,7 +50,7 @@ No specific requirements
 | `samba_map_to_guest`           | `bad user`               | Behaviour when unregistered users access the shares.                                                                |
 | `samba_mitigate_cve_2017_7494` | true                     | CVE-2017-7494 mitigation breaks some clients, such as macOS High Sierra.                                            |
 | `samba_netbios_name`           | `{{ ansible_hostname }}` | The NetBIOS name of this server.                                                                                    |
-| `samba_passdb_backend`         | `tdbsam`                 | Password database backend.                                                                                          |
+| `samba_passdb_backend`         | `tdbsam`                 | Password database backend, use `false` if not required.                                                               |
 | `samba_preferred_master`       | true                     | When true, indicates nmbd is a preferred master browser for workgroup                                               |
 | `samba_realm`                  | -                        | Realm domain name                                                                                                   |
 | `samba_printer_type`           | cups                     | value for the global option `printing` and `printcap name`                                                          |
