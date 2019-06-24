@@ -60,6 +60,7 @@ No specific requirements
 | `samba_server_string`          | `fileserver %m`          | Comment string for the server.                                                                                      |
 | `samba_shares_root`            | `/srv/shares`            | Directories for the shares are created under this directory.                                                        |
 | `samba_shares`                 | []                       | List of dicts containing share definitions. See below for details.                                                  |
+| `samba_testparm`               | `testparm`               | OS Path to the Samba [testparm](https://www.samba.org/samba/docs/current/man-html/testparm.1.html) program.  |
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                                                                |
 | `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                                                                          |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                                                                       |
@@ -236,6 +237,7 @@ Pull requests are also very welcome. Please create a topic branch for your propo
 [Bert Van Vreckem](https://github.com/bertvv/) (maintainer),
 [Birgit Croux](https://github.com/birgitcroux),
 [DarkStar1973](https://github.com/DarkStar1973),
+[David Little](https://github.com/d-little),
 [George Hartzell](https://github.com/hartzell),
 [Ian Young](https://github.com/iangreenleaf),
 [Jonas Heinrich](https://github.com/onny),
