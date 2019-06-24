@@ -18,5 +18,5 @@ samba_services:
 
 samba_www_documentroot: []
 
-# For information on Samba+AIX, an old document, but still valid: 
-#  https://developer.ibm.com/articles/au-aix_sc����
+# For information on Samba+AIX, a very old document: 
+#  https://developer.ibm.com/articles/au-aix_samba
