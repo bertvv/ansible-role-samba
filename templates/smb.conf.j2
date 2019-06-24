@@ -81,7 +81,7 @@
 {% endif %}
 
 {% if samba_global_include is defined %}
-  include = {{ samba_global_include }}
+  include = {{ samba_configuration_dir }}/{{ samba_global_include }}
 {% endif %}
 
 {% if samba_load_homes %}
@@ -93,7 +93,7 @@
 {% endif %}
 
 {% if samba_home_include is defined %}
-  include = {{ samba_home_include }}
+  include = {{ samba_configuration_dir }}/{{ samba_home_include }}
 {% endif %}
 
 {% if samba_shares|length > 0 %}
@@ -140,7 +140,7 @@
   directory mode = {{ share.directory_mode|default('0775') }}
   force directory mode = {{ share.force_directory_mode|default('0775') }}
 {% if share.include_file is defined %}
-  include = /etc/samba/{{ share.include_file }}
+  include = {{ samba_configuration_dir }}/{{ share.include_file }}
 {% endif %}
 
 {% endfor %}
