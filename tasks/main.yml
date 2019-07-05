@@ -24,7 +24,7 @@
 - name: Register Samba version
   shell: >
     set -o nounset -o pipefail -o errexit &&
-    {{ samba_bin_dir + '/' | default('') }}smbd --version | sed 's/Version //'
+    {{ samba_sbin_dir + '/' | default('') }}smbd --version | sed 's/Version //'
   args:
     executable: /bin/bash
   register: samba_version
