@@ -151,7 +151,10 @@
     - ansible_os_family != 'AIX'
 
 - name: Start Samba services (AIX)
-  command: "/etc/rc.d/init.d/{{ item }} start" 
+  shell: >
+    ( /etc/rc.d/init.d/{{ item }} status| grep -q 'Samba {{ item }} daemon is not running.' ) && /etc/rc.d/init.d/{{ item }} start || true
+  register: status
+  changed_when: "' daemon... done.' in status.stdout"
   with_items: "{{ samba_services }}"
   when: 
     - ansible_os_family == 'AIX'
