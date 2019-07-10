@@ -35,8 +35,9 @@ No specific requirements
 
 | Variable                       | Default                  | Comments                                                                                                                     |
 | :---                           | :---                     | :---                                                                                                                         |
-| `samba_apple_extensions`       | no                       | When yes, enables support for Apple specific SMB extensions. Required for Time Machine support to work (see below)           |
-| `samba_bin_dir`                | -                        | Directory where samba is stored.  If not set will seach $PATH.                                                               |
+| `samba_apple_extensions`       | no                       | When yes, enables support for Apple specific SMB extensions. Required for Time Machine support to work (see below)        |
+| `samba_bin_dir`                | -                        | Directory where samba tools are stored.  If not set will seach $PATH.                                                        |
+| `samba_sbin_dir`               | -                        | Directory where samba daemons are stored.  If not set will seach $PATH.                                                      |
 | `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in web docroot to the shares. (`var/www/` or `/var/www/html` depending on platform)          |
 | `samba_cups_server`            | localhost:631            | Value for the global option `cups server` (only needed when `samba_printer_type` is "cups")                                  |
 | `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                                                                       |
