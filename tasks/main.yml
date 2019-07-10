@@ -54,7 +54,7 @@
 
 - name: Create Samba shares root directory
   vars: 
-    group: "{{ 'system' if ansible_facts['os_family'] == 'AIX' else 'root'  }}"
+    group: "{{ 'system' if ansible_os_family == 'AIX' else 'root'  }}"
   file:
     state: directory
     path: "{{ samba_shares_root }}"
