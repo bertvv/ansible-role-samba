@@ -24,3 +24,10 @@ samba_services:
   - nmb
 
 samba_www_documentroot: /var/www/html
+
+openldap_client_packages:
+  - openldap
+  - openldap-clients
+  - authconfig
+  - pam_ldap
+
