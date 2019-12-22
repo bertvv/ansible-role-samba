@@ -124,6 +124,9 @@
 {% if share.group is defined %}
   force group = {{ share.group }}
 {% endif %}
+{% if share.user is defined %}
+  force user = {{ share.user }}
+{% endif %}
 {% if share.guest_ok is defined %}
   guest ok = {{ share.guest_ok }}
 {% endif %}
