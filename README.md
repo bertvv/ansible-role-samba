@@ -68,12 +68,9 @@ No specific requirements
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                                                                         |
 | `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                                                                                   |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                                                                                |
-| `samba_ldap_auth`              | false                    | When true, openLDAP packages will be installed and authentication to LDAP server will be possible 
-    |
-| `samba_openldap_server_ip_address`              | -                        | LDAP server ip address (when samba_ldap_auth = true) for LDAP server authentication
-    |
-| `samba_openldap_server_domain_name`             | -                        | LDAP server domain name (when samba_ldap_auth = true) for LDAP server authentication
-    |
+| `samba_ldap_auth`              | false                    | When true, openLDAP packages will be installed and authentication to LDAP server will be possible                            |
+| `samba_openldap_server_ip_address`              | -                        | LDAP server ip address (when samba_ldap_auth = true) for LDAP server authentication                         |
+| `samba_openldap_server_domain_name`             | -                        | LDAP server domain name (when samba_ldap_auth = true) for LDAP server authentication                        |
 
 ### Defining users
 
