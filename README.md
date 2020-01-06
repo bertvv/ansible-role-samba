@@ -182,8 +182,8 @@ The values for `valid_users` and `write_list` should be a comma separated list o
 
 ### Authenticating with LDAP server
 
-Authenticating to an LDAP server, which has dfined system users en groups that you may want to use to create samba users and shares off, can be done by using the following variables. 
-When the first defined variable, `samba_ldap_auth` is set to true, OpenLDAP packages will be installed and a connection will try to be made.
+You may want to authenticate with an LDAP server that has defined system users and groups, so you could create samba users and shares from these system users and groups. Authenticating to an LDAP server, can be done by using the following variables. 
+When the first defined variable, `samba_ldap_auth` is set to true, the necessary OpenLDAP packages will be installed and a connection (when the other two variables are set as well) to an LDAP server will be made.
 
 ```Yaml
 samba_ldap_auth: true
@@ -191,6 +191,9 @@ samba_openldap_server_ip_address: 192.168.0.1
 samba_openldap_server_domain_name: example.local
 ```
 
+Use the following commands to check if you have access to the LDAP's server created users: `getent passwd`
+
+Use the following commands to check if you have access to the LDAP's server created group: `ldapsearch -x -LLL`
 
 ## Adding arbitrary configuration files
 
