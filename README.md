@@ -250,4 +250,5 @@ Pull requests are also very welcome. Please create a topic branch for your propo
 [Sven Eeckeman](https://github.com/SvenEeckeman),
 [Tiemo Kieft](https://github.com/blubber),
 [Tobias Wolter](https://github.com/towo),
-[Tomohiko Ozawa](https://github.com/kota65535).
+[Tomohiko Ozawa](https://github.com/kota65535),
+[Lasse Löfquist](https://github.com/tvartom).
