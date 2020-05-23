@@ -19,14 +19,13 @@ services:
 
 install:
   - sudo apt-get update
-  - sudo apt-get install bats curl
-  - sudo apt-get install smbclient
+  - sudo apt-get install bats curl smbclient
   # Install dependencies for Molecule test
   - python3 -m pip install molecule yamllint ansible-lint docker
-  # Check ansible and molecule version
+  # Check ansible, molecule and nmblookup version
   - ansible --version
   - molecule --version
-
+  - nmblookup --version
   # Create ansible.cfg with correct roles_path
   - printf '[defaults]\nroles_path=../' >ansible.cfg
 

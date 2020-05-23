@@ -9,8 +9,8 @@ lint: |
   ansible-lint --exclude=molecule/default/verify.yml
 platforms:
   #Set name and hostname
-  - name: sambaTest
-    hostname: sambaTest
+  - name: smb1
+    hostname: smb1
     #Specify which image should be used. Geerlingguys images are Ansible compatible and have Systemd installed
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
     #Command to execute when the container starts
