@@ -21,17 +21,13 @@
     samba_netbios_name: SAMBA_TEST
     samba_server_string: 'Welcome to the test file server'
     samba_workgroup: TESTGROUP
-    
     samba_global_include: global-include.conf
-
     samba_load_homes: true
     samba_load_printers: false
     samba_create_varwww_symlinks: true
-
     samba_log: /var/log/samba.log
     samba_log_size: 60000
     samba_log_level: '3 passdb:5 auth:10 winbind:2 '
-
     # The smbclient version of the Travis CI environment crashes when `min
     # protocol' is set:
     #    protocol negotiation failed: NT_STATUS_INVALID_NETWORK_RESPONSE
@@ -39,7 +35,6 @@
     #
     # samba_server_min_protocol: SMB2
     # samba_server_max_protocol: SMB3
-
     samba_map_to_guest: Never
     samba_users:
       - name: usr1
@@ -50,8 +45,7 @@
         password: timemachine
     samba_username_map:
       - from: 'User Two'
-        to: usr2
-        
+        to: usr2        
     samba_shares_root: /srv/samba
     samba_shares:
       - name: restrictedshare
@@ -96,4 +90,4 @@
         guest_ok: 'no'
         browseable: 'no'
   roles:
-    - role: bertvv.samba 
+    - role: bertvv.samba
