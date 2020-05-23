@@ -45,7 +45,7 @@
         password: timemachine
     samba_username_map:
       - from: 'User Two'
-        to: usr2       
+        to: usr2
     samba_shares_root: /srv/samba
     samba_shares:
       - name: restrictedshare
