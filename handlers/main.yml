@@ -5,3 +5,4 @@
     name: "{{ item }}"
     state: restarted
   with_items: "{{ samba_services }}"
+  become: yes
