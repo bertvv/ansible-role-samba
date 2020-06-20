@@ -211,10 +211,50 @@ See the [test playbook](https://github.com/bertvv/ansible-role-samba/blob/docker
 
 ## Testing
 
-Two test environments are provided for this role: one set up with Vagrant, one with Docker. The Docker test environment is also used for the Travis-CI tests. Each test environment is stored in a separate orphan branch. See the README of each for details on how to set it up locally.
+This role is tested using [Ansible Molecule](https://molecule.readthedocs.io/). Tests are launched automatically on [Travis CI](https://travis-ci.org/bertvv/ansible-role-samba) after each commit and PR.
 
-- [Docker tests](https://github.com/bertvv/ansible-role-samba/blob/docker-tests/README.md)
-- [Vagrant tests](https://github.com/bertvv/ansible-role-samba/blob/vagrant-tests/README.md)
+This Molecule configuration will:
+
+- Run Yamllint and Ansible Lint
+- Create a Docker container
+- Run a syntax check
+- Apply the role with a [test playbook](molecule/default/converge.yml)
+- Run acceptance tests with [BATS](https://github.com/bats-core/bats-core/)
+
+This process is repeated for the supported Linux distributions.
+
+### Local test environment
+
+If you want to set up a local test environment, you can use this reproducible setup based on Vagrant+VirtualBox: <https://github.com/bertvv/ansible-testenv>. Steps to install the necessary tools manually:
+
+1. Docker, BATS and smbclient should be installed on your machine (assumed to run Linux). No Docker containers should be running when you start the test.
+2. As recommended by Molecule, create a python virtual environment
+3. Install the software tools `python3 -m pip install molecule docker yamllint ansible-lint`
+4. Navigate to the root of the role directory and run `molecule test`
+
+Molecule automatically deletes the containers after a test. If you would like to check out the containers yourself, run `molecule converge` followed by `molecule login --host HOSTNAME`.
+
+The Docker containers are based on images created by [Jeff Geerling](https://hub.docker.com/u/geerlingguy), specifically for Ansible testing (look for images named `geerlingguy/docker-DISTRO-ansible`). You can use any of his images, but only the distributions mentioned in [meta/main.yml](meta/main.yml) are supported.
+
+The default config will start a Centos 7 container. Choose another distro by setting the `MOLECULE_DISTRO` variable with the command, e.g.:
+
+``` bash
+MOLECULE_DISTRO=debian9 molecule test
+```
+
+or
+
+``` bash
+MOLECULE_DISTRO=debian9 molecule converge
+```
+
+You can run the acceptance tests on both servers with `molecule verify` or manually with
+
+```console
+SUT_IP=172.17.0.2 bats molecule/default/files/samba.bats
+```
+
+You need to initialise the variable `SUT_IP`, the system under test's IP address. The server, `smb1`, should have IP address 172.17.0.2.
 
 ## Contributing
 
@@ -250,4 +290,5 @@ Pull requests are also very welcome. Please create a topic branch for your propo
 [Sven Eeckeman](https://github.com/SvenEeckeman),
 [Tiemo Kieft](https://github.com/blubber),
 [Tobias Wolter](https://github.com/towo),
-[Tomohiko Ozawa](https://github.com/kota65535).
+[Tomohiko Ozawa](https://github.com/kota65535),
+[Robin Ophalvens](https://github.com/RobinOphalvens).
