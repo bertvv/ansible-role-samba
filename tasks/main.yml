@@ -31,11 +31,6 @@
   changed_when: false
   tags: samba
 
-# - name: "Installed Samba version:"
-#   debug:
-#     msg: "{{ samba_version }}"
-#   tags: samba
-
 - name: Install SELinux package
   package:
     name: "{{ samba_selinux_packages }}"
@@ -146,16 +141,9 @@
   with_items: "{{ samba_services }}"
   tags: samba
 
-- name: Create Samba users if they don't exist yet
-  shell: >
-    set -o nounset -o pipefail -o errexit &&
-    (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
-    || (echo {{ item.password }}; echo {{ item.password }}) \
-    | smbpasswd -s -a {{ item.name }}
-  args:
-    executable: /bin/bash
-  with_items: "{{ samba_users }}"
-  no_log: true
-  register: create_user_output
-  changed_when: "'Added user' in create_user_output.stdout"
-  tags: samba
+- include_tasks: users.yml
+  vars:
+    user: "{{ samba_user }}"
+  loop: "{{ samba_users }}"
+  loop_control:
+    loop_var: samba_user
