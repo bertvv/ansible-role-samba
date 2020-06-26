@@ -23,3 +23,4 @@ samba_local_master: 'yes'
 samba_domain_master: 'yes'
 samba_preferred_master: 'yes'
 samba_mitigate_cve_2017_7494: true
+samba_python2: true
