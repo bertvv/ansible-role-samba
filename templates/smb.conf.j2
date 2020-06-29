@@ -72,7 +72,7 @@
   {% endif %}
 {% endif %}
 
-{% if samba_mitigate_cve_2017_7494 and samba_version.stdout >= "3.5.0" and samba_version.stdout < "4.6.4" %}
+{% if samba_mitigate_cve_2017_7494 and samba_version.stdout is version('3.5.0', '>=') and samba_version.stdout is version('4.6.4', '<') %}
   # Fix for CVE-2017-7494 in Samba versions from 3.5.0 and before 4.6.4
   # https://access.redhat.com/security/cve/cve-2017-7494
   nt pipe support = no
