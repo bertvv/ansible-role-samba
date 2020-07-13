@@ -18,6 +18,7 @@ samba_shares_root: '/srv/shares'
 samba_shares: []
 samba_users: []
 
+samba_ldap_auth: false
 samba_wins_support: 'yes'
 samba_local_master: 'yes'
 samba_domain_master: 'yes'
