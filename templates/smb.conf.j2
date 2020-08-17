@@ -28,9 +28,11 @@
 
   # Authentication
   security = {{ samba_security }}
+{% if not samba_passdb_backend is sameas false  %}
   passdb backend = {{ samba_passdb_backend }}
+{% endif %}
   map to guest = {{ samba_map_to_guest }}
-{% if samba_guest_account  is defined %}
+{% if samba_guest_account is defined %}
   guest account = {{ samba_guest_account }}
 {% endif %}
 {% if samba_username_map is defined %}

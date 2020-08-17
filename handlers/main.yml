@@ -1,7 +1,51 @@
 # File: roles/samba/handlers/main.yml
 ---
-- name: Restart Samba services
+- name: Restart Linux Samba services  
+  vars:
+    linux_family:
+      - Archlinux
+      - Debian
+      - Gentoo
+      - RedHat
+      - Suse
   service:
     name: "{{ item }}"
     state: restarted
   with_items: "{{ samba_services }}"
+  when: 
+    - ansible_os_family in linux_family
+  listen: "Restart Samba services"
+
+- name: Restart AIX Samba services
+  command: "/etc/rc.d/init.d/{{ item }} restart"
+  with_items: "{{ samba_services }}"
+  when: 
+    - ansible_os_family == "AIX"
+  listen: "Restart Samba services"
+
+- name: Start Linux Samba services
+  vars:
+    linux_family:
+      - Archlinux
+      - Debian
+      - Gentoo
+      - RedHat
+      - Suse
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  with_items: "{{ samba_services }}"
+  when: 
+    - ansible_os_family in linux_family
+  listen: "Start Samba services"
+
+- name: Start AIX Samba services
+  shell: >
+    ( /etc/rc.d/init.d/{{ item }} status| grep -q 'Samba {{ item }} daemon is not running.' ) && /etc/rc.d/init.d/{{ item }} start || true
+  register: status
+  changed_when: "' daemon... done.' in status.stdout"
+  with_items: "{{ samba_services }}"
+  when: 
+    - ansible_os_family == 'AIX'
+  listen: "Start Samba services"
