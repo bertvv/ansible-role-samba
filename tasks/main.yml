@@ -29,6 +29,7 @@
     executable: /bin/bash
   register: samba_version
   changed_when: false
+  check_mode: no
   tags: samba
 
 # - name: "Installed Samba version:"
