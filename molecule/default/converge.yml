@@ -1,0 +1,93 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Ensure package database is up-to-date
+      apt:
+        update-cache: true
+      failed_when: false
+      changed_when: false
+      when: ansible_os_family == 'Debian'
+    - name: Create users
+      user:
+        name: "{{ item }}"
+        groups: users
+        append: true
+      with_items:
+        - usr1
+        - usr2
+        - timemachine
+  vars:
+    samba_netbios_name: SAMBA_TEST
+    samba_server_string: 'Welcome to the test file server'
+    samba_workgroup: TESTGROUP
+    samba_global_include: global-include.conf
+    samba_load_homes: true
+    samba_load_printers: false
+    samba_create_varwww_symlinks: true
+    samba_log: /var/log/samba.log
+    samba_log_size: 60000
+    samba_log_level: '3 passdb:5 auth:10 winbind:2 '
+    # The smbclient version of the Travis CI environment crashes when `min
+    # protocol' is set:
+    #    protocol negotiation failed: NT_STATUS_INVALID_NETWORK_RESPONSE
+    # Uncomment the following lines if you want to test this setting locally.
+    #
+    # samba_server_min_protocol: SMB2
+    # samba_server_max_protocol: SMB3
+    samba_map_to_guest: Never
+    samba_users:
+      - name: usr1
+        password: usr1
+      - name: usr2
+        password: usr2
+      - name: timemachine
+        password: timemachine
+    samba_username_map:
+      - from: 'User Two'
+        to: usr2
+    samba_shares_root: /srv/samba
+    samba_shares:
+      - name: restrictedshare
+      - name: privateshare
+        comment: 'Only readable/writeable by usr1'
+        valid_users: usr1
+        write_list: usr1
+        group: usr1
+        browseable: 'no'
+      - name: protectedshare
+        public: 'yes'
+        comment: 'Public, but only writeable by usr2'
+        write_list: usr2
+        group: users
+        browseable: 'yes'
+        include_file: protectedshare-include.conf
+      - name: publicshare
+        comment: 'Public share, writeable by all members of group ‘users’'
+        public: 'yes'
+        write_list: +users
+        group: users
+        setype: public_content_t
+        browseable: 'yes'
+      - name: guestshare
+        comment: 'Share accessible for guests'
+        guest_ok: 'yes'
+        writable: 'yes'
+        browseable: 'yes'
+      - name: TimeMachine
+        comment: 'Share useable as a TimeMachine backup target on MacOS'
+        vfs_objects:
+          - name: fruit
+            options:
+              - name: time machine
+                value: 'yes'
+          - name: streams_xattr
+        path: /srv/timemachine
+        write_list: timemachine
+        owner: timemachine
+        group: timemachine
+        public: 'no'
+        guest_ok: 'no'
+        browseable: 'no'
+  roles:
+    - role: bertvv.samba

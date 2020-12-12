@@ -1,38 +1,43 @@
-# .travis.yml Execution script for role tests on Travis-CI
 ---
+language: python
+
+# Use the new container infrastructure
 sudo: required
 
 env:
+  global:
+    - ROLE_NAME: samba
   matrix:
-    - DISTRIBUTION: centos
-      VERSION: 7
-    - DISTRIBUTION: ubuntu
-      VERSION: 18.04
-    - DISTRIBUTION: debian
-      VERSION: 9
-    - DISTRIBUTION: fedora
-      VERSION: 29
+    - MOLECULE_DISTRO: centos7
+    - MOLECULE_DISTRO: debian9
+    - MOLECULE_DISTRO: fedora29
+    - MOLECULE_DISTRO: ubuntu1804
 
+#Enable docker support
 services:
   - docker
 
-before_install:
-  # Install latest Git
+install:
   - sudo apt-get update
-  - sudo apt-get install --only-upgrade git
-  - sudo apt-get install smbclient
-  # Allow fetching other branches than master
-  - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-  # Fetch the branch with test code
-  - git fetch origin docker-tests
-  - git worktree add docker-tests origin/docker-tests
+  - sudo apt-get install bats curl smbclient samba-testsuite
+  # Install dependencies for Molecule test
+  - python3 -m pip install molecule yamllint ansible-lint docker
+  # Check ansible, molecule and nmblookup version
+  - ansible --version
+  - molecule --version
+  - nmblookup --version
+  # Create ansible.cfg with correct roles_path
+  - printf '[defaults]\nroles_path=../' >ansible.cfg
+
+before_script:
+  #Renames ansible-role-bind to bertvv.bind to make it match with Ansible Galaxy
+  - cd ../
+  - mv ansible-role-$ROLE_NAME bertvv.$ROLE_NAME
+  - cd bertvv.$ROLE_NAME
 
 script:
-  # Create container and apply test playbook
-  - ./docker-tests/docker-tests.sh
-
-  # Run functional tests on the container
-  - SUT_IP=172.17.0.2 ./docker-tests/functional-tests.sh
+  #Run molecule test
+  - molecule test 
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
