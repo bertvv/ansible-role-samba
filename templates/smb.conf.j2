@@ -37,6 +37,11 @@
   username map = {{ samba_username_map_file }}
 {% endif %}
 
+{% if samba_old_auth is defined %}
+  lanman auth = yes
+  ntlm auth = yes
+{% endif %}
+
 {% if samba_server_min_protocol is defined %}
   # Minimum protocol version offered by the server
   server min protocol = {{ samba_server_min_protocol }}
