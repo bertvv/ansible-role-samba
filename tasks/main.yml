@@ -59,7 +59,7 @@
     owner: root
     group: root
     mode: '0755'
-  when: samba_shares|length > 0
+  when: samba_shares|length > 0 and samba_create_directories|bool
   tags: samba
 
 - name: Create share directories
@@ -71,6 +71,7 @@
     group: "{{ item.group|default('users') }}"
     mode: "{{ item.directory_mode|default('0775') }}"
     setype: "{{ item.setype|default('samba_share_t') }}"
+  when: samba_create_directories|bool
   tags: samba
 
 - name: Ensure webserver document root exists
