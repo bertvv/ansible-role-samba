@@ -4,6 +4,7 @@
 - name: Include OS specific variables
   include_vars: "{{ item }}"
   with_first_found:
+    - "os_{{ ansible_os_family }}_{{ ansible_distribution_major_version }}.yml"
     - "os_{{ ansible_distribution }}.yml"
     - "os_{{ ansible_os_family }}.yml"
   tags: samba
