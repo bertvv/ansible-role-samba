@@ -1,5 +1,9 @@
 # roles/samba/defaults/main.yml
 ---
+samba_git: https://gitlab.com/samba-team/samba.git
+samba_install_dir: /opt/samba
+samba_configure_options: ""
+samba_configure_mandatory_options: "--prefix=/usr/local --sysconfdir=/etc --enable-fhs --enable-selftest"
 
 samba_workgroup: 'WORKGROUP'
 samba_server_string: 'Fileserver %m'

@@ -1,6 +1,16 @@
 # roles/samba/vars/os_Archlinux.yml
 ---
 
+samba_build_packages:
+  - git
+  - base-devel
+  - python
+  - gnutls
+  #- libacl1-devel 
+  #- libldap2-devel 
+  - pam
+  - jansson
+
 samba_packages:
   - samba
   - smbclient

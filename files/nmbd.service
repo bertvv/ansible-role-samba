@@ -1,0 +1,17 @@
+[Unit]
+Description=Samba NMB Daemon
+Documentation=man:nmbd(8) man:samba(7) man:smb.conf(5)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+NotifyAccess=all
+PIDFile=/var/run/samba/nmbd.pid
+EnvironmentFile=-/etc/default/samba
+ExecStart=/usr/local/sbin/nmbd --foreground --no-process-group $NMBDOPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+LimitCORE=infinity
+
+[Install]
+WantedBy=multi-user.target

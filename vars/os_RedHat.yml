@@ -1,6 +1,46 @@
 # roles/samba/vars/os_RedHat.yml
 ---
 
+samba_build_packages:
+  - git
+  - gcc
+  - gcc-c++
+  - kernel-devel
+  - make
+  - python
+  - docbook-style-xsl
+  - gdb
+  - gnutls-devel
+  - gpgme-devel
+  - jansson-devel
+  - keyutils-libs-devel
+  - krb5-workstation
+  - libacl-devel
+  - libaio-devel
+  - libarchive-devel
+  - libattr-devel
+  - libblkid-devel
+  - libtasn1
+  - libtasn1-tools
+  - libxml2-devel
+  - libxslt
+  - lmdb-devel
+  - openldap-devel
+  - pam-devel
+  - perl
+  - perl-ExtUtils-MakeMaker
+  - perl-Parse-Yapp
+  - popt-devel
+  - python3-cryptography
+  - python3-dns
+  - python3-gpg
+  - python36-devel
+  - readline-devel
+  - rpcgen
+  - systemd-devel
+  - tar
+  - zlib-devel
+
 samba_packages:
   - samba-common
   - samba
@@ -20,7 +60,7 @@ samba_configuration: "{{ samba_configuration_dir }}/smb.conf"
 samba_username_map_file: "{{ samba_configuration_dir }}/smbusers"
 
 samba_services:
-  - smb
-  - nmb
+  - smbd
+  - nmbd
 
 samba_www_documentroot: /var/www/html

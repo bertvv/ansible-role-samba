@@ -1,64 +1,106 @@
-# roles/samba/vars/os_Debian.yml
+# roles/samba/vars/os_Ubunut_20.04.yml
 ---
 
 samba_build_packages:
-  - git
-  - build-essential
-  - python
   - acl
+  - apt-utils
   - attr
   - autoconf
   - bind9utils
+  - binutils
   - bison
   - build-essential
+  - ccache
+  - chrpath
+  - curl
   - debhelper
   - dnsutils
   - docbook-xml
   - docbook-xsl
   - flex
+  - gcc
   - gdb
-  - libjansson-dev
+  - git
+  - glusterfs-common
+  - gzip
+  - heimdal-multidev
+  - hostname
+  - htop
+  - krb5-config
+  - krb5-kdc
   - krb5-user
+  - language-pack-en
+  - lcov
   - libacl1-dev
-  - libaio-dev
   - libarchive-dev
   - libattr1-dev
+  - libavahi-common-dev
   - libblkid-dev
   - libbsd-dev
   - libcap-dev
+  - libcephfs-dev
   - libcups2-dev
+  - libdbus-1-dev
+  - libglib2.0-dev
   - libgnutls28-dev
-  - libgpgme-dev
+  - libgpgme11-dev
+  - libicu-dev
+  - libjansson-dev
+  - libjs-jquery
   - libjson-perl
+  - libkrb5-dev
   - libldap2-dev
+  - liblmdb-dev
   - libncurses5-dev
   - libpam0g-dev
   - libparse-yapp-perl
+  - libpcap-dev
   - libpopt-dev
   - libreadline-dev
-  - nettle-dev
+  - libsystemd-dev
+  - libtasn1-bin
+  - libtasn1-dev
+  - libtracker-sparql-2.0-dev
+  - libunwind-dev
+  - lmdb-utils
+  - locales
+  - lsb-release
+  - make
+  - mawk
+  - mingw-w64
+  - patch
   - perl
   - perl-modules
   - pkg-config
-  - python-all-dev
-  - python-crypto
-  - python-dbg
-  - python-dev
-  - python-dnspython
-  - python3-dnspython
-  - python-gpg
-  - python3-gpg
-  - python-markdown
-  - python3-markdown
+  - procps
+  - psmisc
+  - python3
+  - python3-cryptography
+  - python3-dbg
   - python3-dev
+  - python3-dnspython
+  - python3-gpg
+  - python3-iso8601
+  - python3-markdown
+  - python3-matplotlib
+  - python3-pexpect
+  - python3-pyasn1
+  - python3-setproctitle
+  - rng-tools
+  - rsync
+  - sed
+  - sudo
+  - tar
+  - tree
+  - uuid-dev
+  - wget
+  - xfslibs-dev
   - xsltproc
   - zlib1g-dev
-  - liblmdb-dev
-  - lmdb-utils
+
 
 samba_packages:
   - samba-common
-  - samba
   - samba-client
 
 samba_vfs_packages:
@@ -74,7 +116,8 @@ samba_username_map_file: "{{ samba_configuration_dir }}/smbusers"
 # The name of the Samba service in older releases (Ubuntu 14.04,
 # Debian <8) is "samba".
 samba_services:
-  - smbd
   - nmbd
+  - smbd
+  
 
 samba_www_documentroot: /var/www
