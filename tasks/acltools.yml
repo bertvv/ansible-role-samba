@@ -1,0 +1,7 @@
+---
+- name: Install Samba packages
+  package:
+    name: "{{ samba_acl_packages }}"
+    state: present
+  when:
+    - samba_acl_enabled | bool

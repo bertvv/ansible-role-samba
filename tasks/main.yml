@@ -1,5 +1,7 @@
 # File: roles/samba/tasks/main.yml
 ---
+- name: include assert
+  include: assert.yml
 
 - name: Include OS specific variables
   include_vars: "{{ item }}"
@@ -159,3 +161,27 @@
   register: create_user_output
   changed_when: "'Added user' in create_user_output.stdout"
   tags: samba
+
+# this need to be installed before modification to fstab, because fstab.yml
+# needs chacl tool installed
+- name: include installation of acl tools
+  include: acltools.yml
+  when:
+    - samba_acl_enabled | bool
+  tags:
+    - acl
+
+- name: include modifications in fstab
+  include: fstab.yml
+  with_items: "{{ samba_acl_mountpoints }}"
+  when:
+    - samba_acl_enabled | bool
+  tags:
+    - acl
+
+- name: include configuration of ACL
+  include: acl.yml
+  when:
+    - samba_acl_enabled | bool
+  tags:
+    - acl

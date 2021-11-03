@@ -65,6 +65,8 @@ No specific requirements
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                                                                         |
 | `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                                                                                   |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                                                                                |
+| `samba_acl_enabled`            | true                     | Enable extended ACL on samba shares.                                                                                         |
+| `samba_acl_mountpoints`        | []                       | List of fstab mountpoints which need to be mounted with extended ACL enabled.                                                |
 
 ### Defining users
 
@@ -171,6 +173,26 @@ A complete overview of share options follows below. Only `name` is required, the
 | `vfs_objects`          | -                               | See the Samba documentation for details.                                                       |
 | `writable`             | -                               | Writable for guests.                                                                           |
 | `write_list`           | -                               | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
+| `acl`                  | {}                              | List of default ACL permissions to be set on share directory.                                  |
+
+Example structure of the `acl` field:
+
+```yaml
+- name: username
+  type: user
+  permission: rwx
+  default: true
+- name: groupname
+  type: group
+  permission: r
+  default: true
+- name: mask
+  type: mask
+  permission: rwx
+```
+
+In case acl is enabled, acl field need to be set on each share as an empty list if it is not used for the specific share.
+
 
 The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
 

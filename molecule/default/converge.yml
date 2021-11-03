@@ -1,6 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  become: true
   pre_tasks:
     - name: Ensure package database is up-to-date
       apt:
@@ -8,15 +9,32 @@
       failed_when: false
       changed_when: false
       when: ansible_os_family == 'Debian'
+    - name: Create groups
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - testgroup
+        - timemachine
+        - usr1
     - name: Create users
       user:
-        name: "{{ item }}"
-        groups: users
+        name: "{{ item.user }}"
+        group: "{{ item.group }}"
+        groups: "{{ item.groups | default(omit) }}"
         append: true
       with_items:
-        - usr1
-        - usr2
-        - timemachine
+        - user: usr1
+          group: users
+        - user: usr2
+          group: users
+        - user: timemachine
+          group: users
+        - user: testuser
+          group: testgroup
+        - user: testuser2
+          group: users
+
   vars:
     samba_netbios_name: SAMBA_TEST
     samba_server_string: 'Welcome to the test file server'
@@ -36,6 +54,27 @@
     # samba_server_min_protocol: SMB2
     # samba_server_max_protocol: SMB3
     samba_map_to_guest: Never
+    samba_acl_enabled: true
+    samba_acl_mountpoints:
+      - /
+
+    vault_sambauser_testuser: test
+    vault_sambauser_testuser2: test
+
+    samba_vfs_objects_full_audit:
+      - name: full_audit
+        options:
+          - name: prefix
+            value: "%u|%I|%m|%S"
+          - name: success
+            value: "mkdir rename unlink rmdir pwrite sendfile write read open"
+          - name: failure
+            value: "none"
+          - name: facility
+            value: LOCAL7
+          - name: priority
+            value: NOTICE
+
     samba_users:
       - name: usr1
         password: usr1
@@ -43,18 +82,25 @@
         password: usr2
       - name: timemachine
         password: timemachine
+      - name: testuser
+        password: "{{ vault_sambauser_testuser }}"
+      - name: testuser2
+        password: "{{ vault_sambauser_testuser2 }}"
     samba_username_map:
       - from: 'User Two'
         to: usr2
     samba_shares_root: /srv/samba
+
     samba_shares:
       - name: restrictedshare
+        acl: []
       - name: privateshare
         comment: 'Only readable/writeable by usr1'
         valid_users: usr1
         write_list: usr1
         group: usr1
         browseable: 'no'
+        acl: []
       - name: protectedshare
         public: 'yes'
         comment: 'Public, but only writeable by usr2'
@@ -62,6 +108,7 @@
         group: users
         browseable: 'yes'
         include_file: protectedshare-include.conf
+        acl: []
       - name: publicshare
         comment: 'Public share, writeable by all members of group ‘users’'
         public: 'yes'
@@ -69,11 +116,13 @@
         group: users
         setype: public_content_t
         browseable: 'yes'
+        acl: []
       - name: guestshare
         comment: 'Share accessible for guests'
         guest_ok: 'yes'
         writable: 'yes'
         browseable: 'yes'
+        acl: []
       - name: TimeMachine
         comment: 'Share useable as a TimeMachine backup target on MacOS'
         vfs_objects:
@@ -89,5 +138,24 @@
         public: 'no'
         guest_ok: 'no'
         browseable: 'no'
+        acl: []
+      - name: testshare
+        comment: share
+        path: /data/testshare
+        owner: testuser
+        group: testgroup
+        mode: "0775"
+        acl:
+          - name: testuser2
+            type: user
+            permission: rwx
+            default: true
+          - name: testgroup
+            type: group
+            permission: rwx
+            default: true
+        write_list: testuser testuser2
+        vfs_objects: "{{ samba_vfs_objects_full_audit }}"
+
   roles:
     - role: bertvv.samba
