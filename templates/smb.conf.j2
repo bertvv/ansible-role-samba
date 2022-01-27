@@ -48,7 +48,8 @@
 
 {% endif %}
 {% if samba_interfaces|length > 0 %}
-  interfaces = {{ samba_interfaces }}
+  bind interfaces only = yes
+  interfaces = 127.0.0.1 {{ samba_interfaces|join(' ') }}
 
 {% endif %}
   # Name resolution: make sure \\NETBIOS_NAME\ works
