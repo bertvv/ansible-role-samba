@@ -79,7 +79,7 @@
 {% endif %}
 
 {% if samba_global_include is defined %}
-  include = {{ samba_configuration_dir }}/{{ samba_global_include }}
+  include = {{ samba_configuration_dir }}/{{ samba_global_include | basename }}
 {% endif %}
 
 {% if samba_load_homes %}
@@ -138,7 +138,7 @@
   directory mode = {{ share.directory_mode|default('0775') }}
   force directory mode = {{ share.force_directory_mode|default('0775') }}
 {% if share.include_file is defined %}
-  include = {{ samba_configuration_dir }}/{{ share.include_file }}
+  include = {{ samba_configuration_dir }}/{{ share.include_file | basename }}
 {% endif %}
 
 {% endfor %}
