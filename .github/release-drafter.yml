@@ -1,0 +1,47 @@
+---
+name-template: 'Release v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+
+categories:
+  - title: '🚨 Breaking changes'
+    labels:
+      - breaking
+  - title: '✨ Enhancements'
+    labels:
+      - enhancement
+      - security
+      - refactor
+  - title: '🐛 Bug fixes'
+    labels:
+      - bug
+  - title: '📚 Documentation'
+    labels:
+      - documentation
+  - title: '📦 Dependency Updates'
+    labels:
+      - dependencies
+
+version-resolver:
+  major:
+    labels:
+      - major
+      - breaking
+  minor:
+    labels:
+      - minor
+      - enhancement
+      - security
+  patch:
+    labels:
+      - bug
+      - refactor
+      - dependencies
+      - documentation
+      - deprecated
+  default: patch
+
+template: |
+  ## What’s changed
+
+  $CHANGES

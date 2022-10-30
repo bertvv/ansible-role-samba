@@ -254,23 +254,28 @@ SUT_IP=172.17.0.2 bats molecule/default/files/samba.bats
 
 You need to initialise the variable `SUT_IP`, the system under test's IP address. The server, `smb1`, should have IP address 172.17.0.2.
 
-## Contributing
+## Changelog & Releases
 
-Issues, feature requests, ideas are appreciated and can be posted in the Issues section.
+This repository keeps a change log using [GitHub's releases](releases)
+functionality.
 
-Pull requests are also very welcome. The best way to submit a PR is by first creating a fork of this Github project, then creating a topic branch for the suggested change and pushing that branch to your own fork. Github can then easily create a PR based on that branch. Don't forget to add yourself to the list of contributors below!
+Releases are based on [Semantic Versioning](https://semver.org/), and use the format
+of `MAJOR.MINOR.PATCH`. The version will be incremented
+based on the following:
 
-## License
+- `MAJOR`: Incompatible or major changes
+- `MINOR`: Backwards-compatible new features and enhancements
+- `PATCH`: Backwards-compatible bugfixes and package updates
 
-2-clause BSD license, see [LICENSE.md](LICENSE.md)
+## Contribute
+
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](.github/CODE_OF_CONDUCT.md)
+
+Contributions are always welcome! Please read the [contribution guidelines](.github/CONTRIBUTING.md) and the [code of conduct](.github/CODE_OF_CONDUCT.md).
 
 ## Contributors
 
-This role could only have been realized thanks to the contributions of the people listed below. If you have an idea to improve it even further, don't hesitate to pitch in!
-
-Issues, feature requests, ideas, suggestions, etc. can be posted in the Issues section.
-
-Pull requests are also very welcome. Please create a topic branch for your proposed changes. If you don't, this will create conflicts in your fork after the merge. Don't hesitate to add yourself to the contributor list below in your PR!
+This role could only have been realized thanks to the contributions of the people listed below. If you have an idea to improve it even further, don't hesitate to pitch in! Please create a topic branch for your proposed changes. If you don't, this will create conflicts in your fork after the merge. Don't hesitate to add yourself to the contributor list below in your PR!
 
 [Ben Tomasik](https://github.com/tomislacker),
 [Bengt Giger](https://github.com/BenGig),
@@ -284,9 +289,14 @@ Pull requests are also very welcome. Please create a topic branch for your propo
 [Karl Goetz](https://github.com/goetzk),
 [morbidick](https://github.com/morbidick),
 [Paul Montero](https://github.com/lpaulmp),
+[Robin Ophalvens](https://github.com/RobinOphalvens),
 [Slavek Jurkowski](https://github.com/slavekjurkowski2),
 [Sven Eeckeman](https://github.com/SvenEeckeman),
 [Tiemo Kieft](https://github.com/blubber),
 [Tobias Wolter](https://github.com/towo),
 [Tomohiko Ozawa](https://github.com/kota65535),
-[Robin Ophalvens](https://github.com/RobinOphalvens).
+[Vlad Ghinea](https://github.com/vladgh/) (maintainer),
+
+## License
+
+2-clause BSD license, see [LICENSE.md](LICENSE.md)
