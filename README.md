@@ -256,6 +256,19 @@ SUT_IP=172.17.0.2 bats molecule/default/files/samba.bats
 
 You need to initialise the variable `SUT_IP`, the system under test's IP address. The server, `smb1`, should have IP address 172.17.0.2.
 
+## Changelog & Releases
+
+This repository keeps a change log using [GitHub's releases](releases)
+functionality.
+
+Releases are based on [Semantic Versioning](https://semver.org/), and use the format
+of `MAJOR.MINOR.PATCH`. The version will be incremented
+based on the following:
+
+- `MAJOR`: Incompatible or major changes
+- `MINOR`: Backwards-compatible new features and enhancements
+- `PATCH`: Backwards-compatible bugfixes and package updates
+
 ## Contributing
 
 Issues, feature requests, ideas are appreciated and can be posted in the Issues section.
