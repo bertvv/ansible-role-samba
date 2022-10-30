@@ -3,12 +3,11 @@
   hosts: all
   become: yes
   pre_tasks:
-    - name: Add the user 'myuser'
+    - name: Add test users
       ansible.builtin.user:
         name: "{{ item }}"
         groups: users
         append: true
-        shell: /sbin/nologin
       with_items:
         - usr1
         - usr2
