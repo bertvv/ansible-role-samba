@@ -1,6 +1,6 @@
 # Change log
 
-This file contains al notable changes to the bertvv.samba Ansible role.
+This file contains al notable changes to the bertvv.samba Ansible role, up to verision `2.7.1`. Newer changes will be logged using [GitHub's releases](releases) functionality.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/). "GH-X" refers to the X'th issue or pull request on the Github project.
 
