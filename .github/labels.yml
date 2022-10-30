@@ -1,0 +1,62 @@
+---
+- color: d73a4a
+  name: breaking
+  description: Introduces a breaking change
+
+- color: a2eeef
+  name: enhancement
+  description: New feature or request
+- color: b20b02
+  name: security
+  description: Security fixes
+
+- color: d73a4a
+  name: bug
+  description: Something isn't working
+- color: 7057ff
+  name: dependencies
+  description: Updates a dependency
+- name: refactor
+  color: 1d76db
+  description: Improvement of existing code, not introducing new features
+
+- color: 0366d6
+  name: documentation
+  description: Improvements or additions to documentation
+
+- color: e4e669
+  name: deprecated
+  description: Will be removed soon
+
+- color: 7057ff
+  name: good first issue
+  description: Good for newcomers
+- color: 008672
+  name: help wanted
+  description: Extra attention is needed
+- color: d876e3
+  name: question
+  description: Further information is requested
+
+- color: cfd3d7
+  name: duplicate
+  description: This issue or pull request already exists
+- color: ffffff
+  name: wontfix
+  description: This will not be worked on
+- color: e4e669
+  name: invalid
+  description: This doesn't seem right
+- color: e4e669
+  name: ignore
+  description: This will be ignored
+- color: cfd3d7
+  name: stale
+  description: This issue or pull request has been marked 'stale' due to lack of recent activity
+
+- name: major
+  color: b60205
+  description: This causes a major version bump in the version number
+- name: minor
+  color: 0e8a16
+  description: This causes a minor version bump in the version number
