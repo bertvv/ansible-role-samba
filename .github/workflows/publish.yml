@@ -1,0 +1,31 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    name: Publish collection to Ansible Galaxy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Get the version name from the tags
+        run: echo "RELEASE_VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      - name: Change collection version to match tag
+        run: |
+          sed -Ei "s/^version: .*/version: ${{ env.RELEASE_VERSION }}/" galaxy.yml
+      - name: Commit galaxy.yml
+        uses: stefanzweifel/git-auto-commit-action@v4.15.3
+        with:
+          branch: main
+          commit_message: "Update galaxy.yml for ${{ env.RELEASE_VERSION }}"
+          file_pattern: galaxy.yml
+      - name: Publish collection
+        uses: docker://ghcr.io/artis3n/ansible_galaxy_collection:v2.8.2
+        with:
+          api_key: '${{ secrets.ANSIBLE_GALAXY_API_KEY }}'
+          galaxy_version: '${{ env.RELEASE_VERSION }}'
