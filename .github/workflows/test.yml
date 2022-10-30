@@ -1,0 +1,44 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - 'v*.*.*'
+  pull_request:
+    branches:
+      - '*'
+  release:
+    types:
+      - published
+
+jobs:
+  test:
+    name: "Test on ${{ matrix.os }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu2204
+          - ubuntu2004
+          - debian11
+          - debian10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: ansible_collections/vladgh/samba
+      - name: Molecule test
+        uses: gofrolist/molecule-action@v2
+        with:
+          molecule_command: test
+          molecule_working_dir: ansible_collections/vladgh/samba
+        env:
+          PY_COLORS: 1
+          ANSIBLE_FORCE_COLOR: 1
+          MOLECULE_DISTRO: ${{ matrix.os }}
+      #   continue-on-error: true
+      # - name: Debugging with tmate
+      #   uses: mxschmitt/action-tmate@v3.11

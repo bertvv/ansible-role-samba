@@ -1,10 +1,15 @@
 ---
 - name: Converge
   hosts: all
-  become: yes
   pre_tasks:
-    - name: Add test users
-      ansible.builtin.user:
+    - name: Ensure package database is up-to-date
+      apt:
+        update-cache: true
+      failed_when: false
+      changed_when: false
+      when: ansible_os_family == 'Debian'
+    - name: Create users
+      user:
         name: "{{ item }}"
         groups: users
         append: true
@@ -13,9 +18,9 @@
         - usr2
         - timemachine
   vars:
-    samba_netbios_name: NAS
-    samba_server_string: NAS
-    samba_workgroup: WORKGROUP
+    samba_netbios_name: SAMBA_TEST
+    samba_server_string: 'Welcome to the test file server'
+    samba_workgroup: TESTGROUP
     samba_global_include: global-include.conf
     samba_load_homes: true
     samba_load_printers: false
@@ -23,6 +28,13 @@
     samba_log: /var/log/samba.log
     samba_log_size: 60000
     samba_log_level: '3 passdb:5 auth:10 winbind:2 '
+    # The smbclient version of the Travis CI environment crashes when `min
+    # protocol' is set:
+    #    protocol negotiation failed: NT_STATUS_INVALID_NETWORK_RESPONSE
+    # Uncomment the following lines if you want to test this setting locally.
+    #
+    # samba_server_min_protocol: SMB2
+    # samba_server_max_protocol: SMB3
     samba_map_to_guest: Never
     samba_users:
       - name: usr1
@@ -78,4 +90,4 @@
         guest_ok: 'no'
         browseable: 'no'
   roles:
-    - ./roles/server
+    - role: bertvv.samba

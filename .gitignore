@@ -11,6 +11,15 @@
 
 # Compiled Python
 *.pyc
+*/__pycache__
 
 # Test directories. These are Git worktrees to separate test branches
 *-tests/
+
+# Ansible Galaxy Collections
+*.tar.gz
+
+# Other
+.env
+.cache
+*.retry
