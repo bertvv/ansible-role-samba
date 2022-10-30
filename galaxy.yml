@@ -1,0 +1,19 @@
+---
+namespace: vladgh
+name: samba
+version: 3.0.0
+readme: README.md
+authors:
+  - Vlad Ghinea <vlad@ghn.me> (https://ghn.me)
+  - Bert Van Vreckem
+description: Ansible collection used to install and configure Samba.
+license_file: LICENSE
+tags:
+  - samba
+  - system
+  - networking
+dependencies: {}
+repository: https://github.com/vladgh/ansible-collection-vladgh-samba
+documentation: https://github.com/vladgh/ansible-collection-vladgh-samba
+homepage: https://github.com/vladgh/ansible-collection-vladgh-samba
+issues: https://github.com/vladgh/ansible-collection-vladgh-samba/issues
