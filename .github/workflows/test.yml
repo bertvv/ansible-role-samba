@@ -34,7 +34,7 @@ jobs:
         uses: gofrolist/molecule-action@v2
         with:
           molecule_command: test
-          molecule_working_dir: ansible_collections/vladgh/system
+          molecule_working_dir: ansible_collections/vladgh/samba
         env:
           PY_COLORS: 1
           ANSIBLE_FORCE_COLOR: 1
