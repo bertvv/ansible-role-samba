@@ -2,7 +2,7 @@
 
 ![Test Status](https://github.com/vladgh/ansible-collection-vladgh-samba/actions/workflows/test.yml/badge.svg)
 
-An Ansible role for setting up Samba as a file server. It is tested on CentOS, Debian, Ubuntu and Arch Linux. Specifically, the responsibilities of this role are to:
+An Ansible role for setting up Samba as a file server. It is tested on Ubuntu, Debian. Specifically, the responsibilities of this role are to:
 
 - Install the necessary packages
 - Configure SELinux settings (when SELinux is active)
@@ -211,7 +211,7 @@ See the [test playbook](molecule/default/converge.yml)
 
 ## Testing
 
-This role is tested using [Ansible Molecule](https://molecule.readthedocs.io/). Tests are launched automatically via [GitHub Actions](actions) after each commit and PR.
+This role is tested using [Ansible Molecule](https://molecule.readthedocs.io/). Tests are launched automatically via [GitHub Actions](https://github.com/vladgh/ansible-collection-vladgh-samba/actions) after each commit and PR.
 
 This Molecule configuration will:
 
@@ -225,39 +225,30 @@ This process is repeated for the supported Linux distributions.
 
 If you want to set up a local test environment, you can use this reproducible setup based on Vagrant+VirtualBox: <https://github.com/bertvv/ansible-testenv>. Steps to install the necessary tools manually:
 
-1. Docker, BATS and smbclient should be installed on your machine (assumed to run Linux). No Docker containers should be running when you start the test.
+1. Docker and Python >= 3.8 should be installed on your machine (assumed to run Linux).
 2. As recommended by Molecule, create a python virtual environment
-3. Install the software tools `python3 -m pip install molecule docker yamllint ansible-lint`
+3. Install the software tools `python3 -m pip install --user --upgrade pip ansible ansible-lint molecule docker`
 4. Navigate to the root of the role directory and run `molecule test`
 
 Molecule automatically deletes the containers after a test. If you would like to check out the containers yourself, run `molecule converge` followed by `molecule login --host HOSTNAME`.
 
 The Docker containers are based on images created by [Jeff Geerling](https://hub.docker.com/u/geerlingguy), specifically for Ansible testing (look for images named `geerlingguy/docker-DISTRO-ansible`). You can use any of his images, but only the distributions mentioned in [meta/main.yml](meta/main.yml) are supported.
 
-The default config will start a Centos 7 container. Choose another distro by setting the `MOLECULE_DISTRO` variable with the command, e.g.:
+The default config will start an Ubuntu 22.04 container. Choose another distro by setting the `MOLECULE_DISTRO` variable with the command, e.g.:
 
-``` bash
-MOLECULE_DISTRO=debian9 molecule test
+```bash
+MOLECULE_DISTRO=debian11 molecule test
 ```
 
 or
 
-``` bash
-MOLECULE_DISTRO=debian9 molecule converge
+```bash
+MOLECULE_DISTRO=debian11 molecule converge
 ```
-
-You can run the acceptance tests on both servers with `molecule verify` or manually with
-
-```console
-SUT_IP=172.17.0.2 bats molecule/default/files/samba.bats
-```
-
-You need to initialise the variable `SUT_IP`, the system under test's IP address. The server, `smb1`, should have IP address 172.17.0.2.
 
 ## Changelog & Releases
 
-This repository keeps a change log using [GitHub's releases](releases)
-functionality.
+This repository keeps a change log using [GitHub's releases](https://github.com/vladgh/ansible-collection-vladgh-samba/releases) functionality.
 
 Releases are based on [Semantic Versioning](https://semver.org/), and use the format
 of `MAJOR.MINOR.PATCH`. The version will be incremented
