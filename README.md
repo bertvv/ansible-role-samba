@@ -1,6 +1,6 @@
-# Ansible role `bertvv.samba`
+# Ansible collection - `vladgh.samba`
 
-[![Build Status](https://travis-ci.org/bertvv/ansible-role-samba.svg?branch=master)](https://travis-ci.org/bertvv/ansible-role-samba)
+![Test Status](https://github.com/vladgh/ansible-collection-vladgh-samba/actions/workflows/test.yml/badge.svg)
 
 An Ansible role for setting up Samba as a file server. It is tested on CentOS, Debian, Ubuntu and Arch Linux. Specifically, the responsibilities of this role are to:
 
@@ -199,7 +199,7 @@ samba_shares:
     include_file: piratecove-include.conf
 ```
 
-The [test playbook](https://github.com/bertvv/ansible-role-samba/blob/docker-tests/test.yml) has some examples. The custom configuration files can be found in the [docker-tests](https://github.com/bertvv/ansible-role-samba/tree/docker-tests) branch.
+The [test playbook](molecule/default/converge.yml) has some examples.
 
 ## Dependencies
 
@@ -207,19 +207,17 @@ No dependencies.
 
 ## Example Playbook
 
-See the [test playbook](https://github.com/bertvv/ansible-role-samba/blob/docker-tests/test.yml)
+See the [test playbook](molecule/default/converge.yml)
 
 ## Testing
 
-This role is tested using [Ansible Molecule](https://molecule.readthedocs.io/). Tests are launched automatically on [Travis CI](https://travis-ci.org/bertvv/ansible-role-samba) after each commit and PR.
+This role is tested using [Ansible Molecule](https://molecule.readthedocs.io/). Tests are launched automatically via [GitHub Actions](actions) after each commit and PR.
 
 This Molecule configuration will:
 
-- Run Yamllint and Ansible Lint
 - Create a Docker container
 - Run a syntax check
 - Apply the role with a [test playbook](molecule/default/converge.yml)
-- Run acceptance tests with [BATS](https://github.com/bats-core/bats-core/)
 
 This process is repeated for the supported Linux distributions.
 
