@@ -12,7 +12,8 @@ tags:
   - samba
   - system
   - networking
-dependencies: {}
+dependencies:
+  ansible.posix: "*"
 repository: https://github.com/vladgh/ansible-collection-vladgh-samba
 documentation: https://github.com/vladgh/ansible-collection-vladgh-samba
 homepage: https://github.com/vladgh/ansible-collection-vladgh-samba
