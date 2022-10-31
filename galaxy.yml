@@ -7,7 +7,7 @@ authors:
   - Vlad Ghinea <vlad@ghn.me> (https://ghn.me)
   - Bert Van Vreckem
 description: Ansible collection used to install and configure Samba.
-license_file: LICENSE.md
+license_file: LICENSE
 tags:
   - samba
   - system
