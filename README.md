@@ -27,11 +27,54 @@ You can explicitly disable the fix if necessary, by setting the role variable `s
 
 More info: <https://access.redhat.com/security/cve/cve-2017-7494>
 
-## Requirements
+## Using this collection
 
-No specific requirements
+### Installing the Collection from Ansible Galaxy
 
-## Role Variables
+Install it with the Ansible Galaxy CLI:
+
+```sh
+ansible-galaxy collection install vladgh.samba  --upgrade
+```
+
+You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml`, using the format:
+
+```yaml
+---
+collections:
+  - name: vladgh.samba
+```
+
+Using the GitHub repository and branch
+
+```yaml
+collections:
+  - name: https://github.com/vladgh/ansible-collection-vladgh-samba
+    version: main
+    type: git
+```
+
+### Import Roles
+
+```yaml
+---
+- name: Common
+  hosts: all
+  become: yes
+  roles:
+    - role: vladgh.samba.server
+```
+
+### Import Playbooks
+
+```yaml
+---
+- import_playbook: vladgh.samba.server
+```
+
+See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
+
+## Server Role Variables
 
 | Variable                       | Default                  | Comments                                                                                                                     |
 | :---                           | :---                     | :---                                                                                                                         |
@@ -203,11 +246,7 @@ The [test playbook](molecule/default/converge.yml) has some examples.
 
 ## Dependencies
 
-No dependencies.
-
-## Example Playbook
-
-See the [test playbook](molecule/default/converge.yml)
+- [Ansible Posix](https://docs.ansible.com/ansible/latest/collections/ansible/posix/)
 
 ## Testing
 
