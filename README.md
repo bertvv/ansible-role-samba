@@ -2,7 +2,7 @@
 
 ![Test Status](https://github.com/vladgh/ansible-collection-vladgh-samba/actions/workflows/test.yml/badge.svg)
 
-An Ansible role for setting up Samba as a file server. It is tested on Ubuntu, Debian. Specifically, the responsibilities of this role are to:
+`An Ansible role for setting up Samba as a file server. It is tested on Ubuntu, Debian, CentOS and Arch Linux. Specifically, the responsibilities of this role are to:
 
 - Install the necessary packages
 - Configure SELinux settings (when SELinux is active)
