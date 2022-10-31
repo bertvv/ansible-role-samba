@@ -14,9 +14,27 @@ on:
       - published
 
 jobs:
-  test:
-    name: "Test on ${{ matrix.os }}"
+  changes:
+    name: Detect file changes
     runs-on: ubuntu-latest
+    outputs:
+      scenario: ${{ steps.filter.outputs.changes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+      - name: Detect changes
+        uses: dorny/paths-filter@v2.11.1
+        id: filter
+        with:
+          filters: |
+            default:
+              - roles/server/**/!(**.md)
+              - molecule/default/**
+  test:
+    name: "Test scenario ${{ matrix.scenario }} on ${{ matrix.os }}"
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.scenario != '[]' && needs.changes.outputs.scenario != '' }}
     strategy:
       fail-fast: true
       matrix:
@@ -25,6 +43,7 @@ jobs:
           - ubuntu2004
           - debian11
           - debian10
+        scenario: ${{ fromJSON(needs.changes.outputs.scenario) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,6 +53,7 @@ jobs:
         uses: gofrolist/molecule-action@v2
         with:
           molecule_command: test
+          molecule_args: --scenario-name ${{ matrix.scenario }}
           molecule_working_dir: ansible_collections/vladgh/samba
         env:
           PY_COLORS: 1
