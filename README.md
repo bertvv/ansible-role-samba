@@ -301,4 +301,5 @@ Pull requests are also very welcome. Please create a topic branch for your propo
 [Tiemo Kieft](https://github.com/blubber),
 [Tobias Wolter](https://github.com/towo),
 [Tomohiko Ozawa](https://github.com/kota65535),
-[Robin Ophalvens](https://github.com/RobinOphalvens).
+[Robin Ophalvens](https://github.com/RobinOphalvens),
+[Furragen](https://github.com/Furragen).
