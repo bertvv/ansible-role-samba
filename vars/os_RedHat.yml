@@ -8,8 +8,11 @@ samba_packages:
 
 samba_vfs_packages: []
 
-samba_selinux_packages:
+samba_python2_selinux_packages:
   - libsemanage-python
+
+samba_selinux_packages:
+  - python3-libsemanage
 
 samba_selinux_booleans:
   - samba_enable_home_dirs

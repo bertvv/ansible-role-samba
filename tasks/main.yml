@@ -12,6 +12,7 @@
   package:
     name: "{{ samba_packages }}"
     state: present
+  become: yes
   tags: samba
 
 - name: Install Samba VFS extensions packages
@@ -19,6 +20,7 @@
     name: "{{ samba_vfs_packages }}"
     state: present
   when: samba_vfs_packages is defined
+  become: yes
   tags: samba
 
 - name: Register Samba version
@@ -31,16 +33,26 @@
   changed_when: false
   tags: samba
 
-# - name: "Installed Samba version:"
-#   debug:
-#     msg: "{{ samba_version }}"
-#   tags: samba
+- name: "Installed Samba version:"
+  debug:
+    msg: "{{ samba_version }}"
+    verbosity: 2
+  tags: samba
+
+- name: Install SELinux package for Python 2
+  package:
+    name: "{{ samba_python2_selinux_packages }}"
+    state: present
+  when: ansible_selinux is defined and ansible_selinux.status == 'enabled' and samba_python2
+  become: yes
+  tags: samba
 
 - name: Install SELinux package
   package:
     name: "{{ samba_selinux_packages }}"
     state: present
-  when: ansible_selinux is defined and ansible_selinux.status == 'enabled'
+  when: ansible_selinux is defined and ansible_selinux.status == 'enabled' and not samba_python2
+  become: yes
   tags: samba
 
 - name: Make sure SELinux boolean settings are correct
@@ -50,6 +62,7 @@
     persistent: true
   with_items: "{{ samba_selinux_booleans }}"
   when: ansible_selinux is defined and ansible_selinux.status == 'enabled'
+  become: yes
   tags: samba
 
 - name: Create Samba shares root directory
@@ -60,6 +73,7 @@
     group: root
     mode: '0755'
   when: samba_shares|length > 0
+  become: yes
   tags: samba
 
 - name: Create share directories
@@ -71,6 +85,7 @@
     group: "{{ item.group|default('users') }}"
     mode: "{{ item.directory_mode|default('0775') }}"
     setype: "{{ item.setype|default('samba_share_t') }}"
+  become: yes
   tags: samba
 
 - name: Ensure webserver document root exists
@@ -78,6 +93,7 @@
     name: "{{ samba_www_documentroot }}"
     state: directory
   when: samba_create_varwww_symlinks|bool
+  become: yes
   tags: samba
 
 - name: Create link to shares in webserver document root
@@ -87,6 +103,7 @@
     src: "{{ item.path|default([samba_shares_root,item.name]|join('/')) }}"
   with_items: "{{ samba_shares }}"
   when: samba_create_varwww_symlinks|bool
+  become: yes
   tags: samba
 
 - name: Samba configuration
@@ -96,6 +113,7 @@
     validate: 'testparm -s %s'
   notify:
     - Restart Samba services
+  become: yes
   tags: samba
 
 - name: Install global include file
@@ -106,6 +124,7 @@
   when: samba_global_include is defined
   notify:
     - Restart Samba services
+  become: yes
   tags: samba
 
 - name: Install home include file
@@ -116,6 +135,7 @@
   when: samba_homes_include is defined
   notify:
     - Restart Samba services
+  become: yes
   tags: samba
 
 - name: Install share specific include files
@@ -127,6 +147,7 @@
   notify:
     - Restart Samba services
   with_items: "{{ samba_shares }}"
+  become: yes
   tags: samba
 
 - name: Create username map file if needed
@@ -136,6 +157,7 @@
   notify:
     - Restart Samba services
   when: samba_username_map is defined
+  become: yes
   tags: samba
 
 - name: Start Samba service(s)
@@ -144,18 +166,20 @@
     state: started
     enabled: true
   with_items: "{{ samba_services }}"
+  become: yes
   tags: samba
 
 - name: Create Samba users if they don't exist yet
   shell: >
     set -o nounset -o pipefail -o errexit &&
-    (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
-    || (echo {{ item.password }}; echo {{ item.password }}) \
-    | smbpasswd -s -a {{ item.name }}
+    (pdbedit --user='{{ item.name }}' 2>&1 > /dev/null) \
+    || (echo '{{ item.password }}'; echo '{{ item.password }}') \
+    | smbpasswd -s -a '{{ item.name }}'
   args:
     executable: /bin/bash
   with_items: "{{ samba_users }}"
   no_log: true
   register: create_user_output
   changed_when: "'Added user' in create_user_output.stdout"
+  become: yes
   tags: samba
