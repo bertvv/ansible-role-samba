@@ -22,6 +22,9 @@ galaxy_info:
     - name: ArchLinux
       versions:
         - all
+    - name: AIX
+      versions:
+        - 72
   galaxy_tags:
     - system
     - networking

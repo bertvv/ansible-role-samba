@@ -45,8 +45,10 @@ No specific requirements
 
 | Variable                       | Default                  | Comments                                                                                                                     |
 | :---                           | :---                     | :---                                                                                                                         |
-| `samba_apple_extensions`       | no                       | When yes, enables support for Apple specific SMB extensions. Required for Time Machine support to work (see below)       |
-| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in web docroot to the shares. (`var/www/` or `/var/www/html` depending on platform) |
+| `samba_apple_extensions`       | no                       | When yes, enables support for Apple specific SMB extensions. Required for Time Machine support to work (see below)        |
+| `samba_bin_dir`                | -                        | Directory where samba tools are stored.  If not set will seach $PATH.                                                        |
+| `samba_sbin_dir`               | -                        | Directory where samba daemons are stored.  If not set will seach $PATH.                                                      |
+| `samba_create_varwww_symlinks` | false                    | When true, symlinks are created in web docroot to the shares. (`var/www/` or `/var/www/html` depending on platform)          |
 | `samba_cups_server`            | localhost:631            | Value for the global option `cups server` (only needed when `samba_printer_type` is "cups")                                  |
 | `samba_domain_master`          | true                     | When true, smbd enables WAN-wide browse list collation                                                                       |
 | `samba_global_include`         | -                        | Samba-compatible configuration file with options to be loaded to [global] section (see below)                                |
@@ -213,6 +215,12 @@ The [test playbook](https://github.com/bertvv/ansible-role-samba/blob/docker-tes
 
 ## Dependencies
 
+### AIX
+
+This role assumes that the target AIX server is using the [AIX Toolbox for Linux](https://www.ibm.com/developerworks/aix/library/aix-toolbox) implementation of Yum with access to the `samba` and `samba-client` packages.
+
+### Other
+
 No dependencies.
 
 ## Example Playbook
@@ -289,6 +297,7 @@ Pull requests are also very welcome. Please create a topic branch for your propo
 [Bert Van Vreckem](https://github.com/bertvv/) (maintainer),
 [Birgit Croux](https://github.com/birgitcroux),
 [DarkStar1973](https://github.com/DarkStar1973),
+[David Little](https://github.com/d-little),
 [George Hartzell](https://github.com/hartzell),
 [Ian Young](https://github.com/iangreenleaf),
 [Jonas Heinrich](https://github.com/onny),

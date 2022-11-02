@@ -24,7 +24,7 @@
 - name: Register Samba version
   shell: >
     set -o nounset -o pipefail -o errexit &&
-    smbd --version | sed 's/Version //'
+    {{ samba_sbin_dir | default('') }}smbd --version | sed 's/Version //'
   args:
     executable: /bin/bash
   register: samba_version
@@ -53,11 +53,13 @@
   tags: samba
 
 - name: Create Samba shares root directory
+  vars: 
+    group: "{{ 'system' if ansible_os_family == 'AIX' else 'root'  }}"
   file:
     state: directory
     path: "{{ samba_shares_root }}"
     owner: root
-    group: root
+    group: "{{ group }}"
     mode: '0755'
   when: samba_shares|length > 0
   tags: samba
@@ -93,7 +95,7 @@
   template:
     dest: "{{ samba_configuration }}"
     src: smb.conf.j2
-    validate: 'testparm -s %s'
+    validate: "{{ samba_bin_dir | default('') }}testparm -s %s"
   notify:
     - Restart Samba services
   tags: samba
@@ -102,7 +104,7 @@
   template:
     src: "{{ samba_global_include }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: 'testparm -s %s'
+    validate: "{{ samba_bin_dir | default('') }}testparm -s %s"
   when: samba_global_include is defined
   notify:
     - Restart Samba services
@@ -112,7 +114,7 @@
   template:
     src: "{{ samba_homes_include }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: 'testparm -s %s'
+    validate: "{{ samba_bin_dir | default('') }}testparm -s %s"
   when: samba_homes_include is defined
   notify:
     - Restart Samba services
@@ -122,7 +124,7 @@
   template:
     src: "{{ item.include_file }}"
     dest: "{{ samba_configuration_dir }}"
-    validate: 'testparm -s %s'
+    validate: "{{ samba_bin_dir | default('') }}testparm -s %s"
   when: item.include_file is defined
   notify:
     - Restart Samba services
@@ -145,11 +147,22 @@
     enabled: true
   with_items: "{{ samba_services }}"
   tags: samba
+  when:
+    - ansible_os_family != 'AIX'
+
+- name: Start Samba services (AIX)
+  shell: >
+    ( /etc/rc.d/init.d/{{ item }} status| grep -q 'Samba {{ item }} daemon is not running.' ) && /etc/rc.d/init.d/{{ item }} start || true
+  register: status
+  changed_when: "' daemon... done.' in status.stdout"
+  with_items: "{{ samba_services }}"
+  when: 
+    - ansible_os_family == 'AIX'
 
 - name: Create Samba users if they don't exist yet
   shell: >
     set -o nounset -o pipefail -o errexit &&
-    (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
+    ({{ samba_bin_dir|default('') }}pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
     || (echo {{ item.password }}; echo {{ item.password }}) \
     | smbpasswd -s -a {{ item.name }}
   args:
