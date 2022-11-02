@@ -1,8 +1,18 @@
 # Ansible role `bertvv.samba`
 
-[![Build Status](https://travis-ci.org/bertvv/ansible-role-samba.svg?branch=master)](https://travis-ci.org/bertvv/ansible-role-samba)
+An Ansible role for setting up Samba as a file server.
 
-An Ansible role for setting up Samba as a file server. It is tested on CentOS, Debian, Ubuntu and Arch Linux. Specifically, the responsibilities of this role are to:
+Due to lack of time and resources, I have handed over the maintenance of this role to @vladgh. I am no longer able to follow up on Issues and PRs and to make sure that new releases are of sufficiently high quality to be actually usable.
+
+- The new Github repo can be found here: <https://github.com/vladgh/ansible-collection-vladgh-samba>
+- Ansible Galaxy page: <https://galaxy.ansible.com/vladgh/samba>
+- Install with `ansible-galaxy collection install vladgh.samba  --upgrade`
+
+Thanks to everyone who showed their support during the years, to all contributors and especially to @vladgh for graciously volunteering to take over maintenance.
+
+---
+
+The responsibilities of this role are to:
 
 - Install the necessary packages
 - Configure SELinux settings (when SELinux is active)
