@@ -108,7 +108,7 @@
 {% if obj.options is defined %}
 {% if obj.options|length > 0 %}
 {% for opt in obj.options %}
-  {{ obj.name }}:{{ opt.name }} = {{ opt.value }}
+  {{ obj.prefix | default(obj.name) }}:{{ opt.name }} = {{ opt.value }}
 {% endfor %}
 {% endif %}
 {% endif %}

@@ -159,6 +159,24 @@ samba_shares:
     group: tomcat
 ```
 
+This is an example of configuring the shadow copy vfs object module for sharing a ZFS dataset. This will allow Windows clients to use the `Previous Versions` tab in the share's properties.
+
+```Yaml
+samba_shares:
+  - name: ISO
+    path: /mnt/Tank/ISO
+    vfs_objects:
+      - name: shadow_copy2
+        prefix: shadow
+        options:
+          - name: snapdir
+            value: .zfs/snapshot
+          - name: sort
+            value: desc
+          - name: format
+            value: auto-%Y-%m-%d_%H-%M
+```
+
 A complete overview of share options follows below. Only `name` is required, the rest is optional.
 
 | Option                 | Default                         | Comment                                                                                        |
