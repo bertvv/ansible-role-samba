@@ -46,11 +46,11 @@ jobs:
         scenario: ${{ fromJSON(needs.changes.outputs.scenario) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.1.0
         with:
           path: ansible_collections/vladgh/samba
       - name: Molecule test
-        uses: gofrolist/molecule-action@v2
+        uses: gofrolist/molecule-action@v2.3.4
         with:
           molecule_command: test
           molecule_args: --scenario-name ${{ matrix.scenario }}

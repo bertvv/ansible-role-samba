@@ -1,4 +1,5 @@
 {
+  "includeForks": true,
   "extends": [
     "config:base"
   ],
