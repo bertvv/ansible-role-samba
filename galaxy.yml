@@ -1,7 +1,7 @@
 ---
 namespace: vladgh
 name: samba
-version: 3.0.0
+version: 3.0.1
 readme: README.md
 authors:
   - Vlad Ghinea <vlad@ghn.me> (https://ghn.me)
