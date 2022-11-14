@@ -30,6 +30,7 @@ jobs:
             default:
               - roles/server/**/!(**.md)
               - molecule/default/**
+              - .github/workflows/test.yml
   test:
     name: "Test scenario ${{ matrix.scenario }} on ${{ matrix.os }}"
     runs-on: ubuntu-latest
