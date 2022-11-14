@@ -43,6 +43,8 @@ jobs:
           - ubuntu2004
           - debian11
           - debian10
+          - centos8
+          - fedora36
         scenario: ${{ fromJSON(needs.changes.outputs.scenario) }}
     steps:
       - name: Checkout
