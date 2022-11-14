@@ -30,6 +30,7 @@ jobs:
             default:
               - roles/server/**/!(**.md)
               - molecule/default/**
+              - .github/workflows/test.yml
   test:
     name: "Test scenario ${{ matrix.scenario }} on ${{ matrix.os }}"
     runs-on: ubuntu-latest
@@ -43,6 +44,8 @@ jobs:
           - ubuntu2004
           - debian11
           - debian10
+          - centos8
+          - fedora36
         scenario: ${{ fromJSON(needs.changes.outputs.scenario) }}
     steps:
       - name: Checkout
