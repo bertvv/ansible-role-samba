@@ -2,9 +2,8 @@
 ---
 
 samba_packages:
-  - samba-common
   - samba
-  - samba-client
+  - smbclient
 
 samba_vfs_packages:
   - samba-vfs-modules
@@ -16,8 +15,6 @@ samba_configuration_dir: /etc/samba
 samba_configuration: "{{ samba_configuration_dir }}/smb.conf"
 samba_username_map_file: "{{ samba_configuration_dir }}/smbusers"
 
-# The name of the Samba service in older releases (Ubuntu 14.04,
-# Debian <8) is "samba".
 samba_services:
   - smbd
   - nmbd

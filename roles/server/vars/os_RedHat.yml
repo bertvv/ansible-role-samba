@@ -2,7 +2,6 @@
 ---
 
 samba_packages:
-  - samba-common
   - samba
   - samba-client
 
