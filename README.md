@@ -2,7 +2,7 @@
 
 ![Test Status](https://github.com/vladgh/ansible-collection-vladgh-samba/actions/workflows/test.yml/badge.svg)
 
-`An Ansible role for setting up Samba as a file server. It is tested on Ubuntu, Debian, CentOS and Arch Linux. Specifically, the responsibilities of this role are to:
+An Ansible collection for setting up Samba as a file server. It is tested on Ubuntu, Debian, CentOS and Arch Linux. Specifically, the responsibilities of this collection are to:
 
 - Install the necessary packages
 - Configure SELinux settings (when SELinux is active)
@@ -10,20 +10,20 @@
 - Manage Samba users and passwords
 - Manage access to shares
 
-The following are not considered concerns of this role, and you should configure these using another role (e.g. [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base/):
+The following are not considered concerns of this collection, and you should configure these using another collection:
 
 - Managing firewall settings.
 - Creating system users. Samba users should already exist as system users.
 
-**If you like/use this role, please consider giving it a star! Thanks!**
+**If you like/use this collection, please consider giving it a star! Thanks!**
 
 ## CVE-2017-7494
 
 A remote code execution vulnerability may affect your Samba server installation. Samba versions 3.5.0 and before 4.6.4 are affected. If SELinux is enabled on your system, it is **NOT** vulnerable.
 
-This role will check if the installed version of Samba is affected by the vulnerability and apply the proposed workaround: adding `nt pipe support = no` to the `[global]` section of the configuration. Remark that this disables share browsing by Windows clients.
+This collection will check if the installed version of Samba is affected by the vulnerability and apply the proposed workaround: adding `nt pipe support = no` to the `[global]` section of the configuration. Remark that this disables share browsing by Windows clients.
 
-You can explicitly disable the fix if necessary, by setting the role variable `samba_mitigate_cve_2017_7494` to `false`.
+You can explicitly disable the fix if necessary, by setting the server role variable `samba_mitigate_cve_2017_7494` to `false`.
 
 More info: <https://access.redhat.com/security/cve/cve-2017-7494>
 
@@ -45,7 +45,7 @@ collections:
   - name: vladgh.samba
 ```
 
-Using the GitHub repository and branch
+Using the GitHub repository and specific branch or release:
 
 ```yaml
 collections:
@@ -113,7 +113,7 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
 
 In order to allow users to access the shares, they need to get a password specifically for Samba:
 
-```Yaml
+```yaml
 samba_users:
   - name: alice
     password: ecila
@@ -123,38 +123,35 @@ samba_users:
     password: eilrahc
 ```
 
-Unfortunately, passwords have to be in plain text for now. Also, remark that this role will not change the password of an existing user.
+It is recommended to [encrypt the password content with Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html). Also, remark that this collection will not change the password of an existing user.
 
-These users should already have an account on the host! Creating system users is not a concern of this role, so you should do this separately. A possibility is my role [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base/). An example:
+These users should already have an account on the host! Creating system users is not a concern of this collection, so you should do this separately:
 
-```Yaml
-rhbase_users:
-  - name: alice
-    comment: 'Alice'
-    password: !!
-    shell: /sbin/nologin
-    groups:
-      [...]
+```yaml
+- name: Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
+  ansible.builtin.user:
+    name: james
+    shell: /bin/bash
+    groups: admins,developers
+    append: yes
 ```
-
-This user is not allowed to log in on the system (e.g. with SSH) and would only get access to the Samba shares.
 
 ### Defining shares
 
-Defining Samba shares and configuring access control can be challenging, since it involves not only getting the Samba configuration right, but also user and file permissions, and SELinux settings. This role attempts to simplify the process.
+Defining Samba shares and configuring access control can be challenging, since it involves not only getting the Samba configuration right, but also user and file permissions, and SELinux settings. This collection attempts to simplify the process.
 
 To specify a share, you should at least give it a name:
 
-```Yaml
+```yaml
 samba_shares:
   - name: readonlyshare
 ```
 
 This will create a share with only read access for registered users. Guests will not be able to see the contents of the share.
 
-A good way to configure write access for a share is to create a system user group, add users to that group, and make sure they have write access to the directory of the share. This role assumes groups are already set up and users are members of the groups that control write access. Let's assume you have two users `jack` and `teach`, members of the group `pirates`. This share definition will give both read and write access to the `pirates`:
+A good way to configure write access for a share is to create a system user group, add users to that group, and make sure they have write access to the directory of the share. This collection assumes groups are already set up and users are members of the groups that control write access. Let's assume you have two users `jack` and `teach`, members of the group `pirates`. This share definition will give both read and write access to the `pirates`:
 
-```Yaml
+```yaml
 samba_shares:
   - name: piratecove
     comment: 'A place for pirates to hang out'
@@ -164,9 +161,9 @@ samba_shares:
 
 Guests have no access to this share, registered users can read. You can further tweak access control. Read access can be extended to guests (add `public: yes`) or restricted to specified users or groups (add `valid_users: +pirates`). Write access can be restricted to individual pirates (e.g. `write_list: jack`). Files added to the share will be added to the specified group and group write access will be granted by default.
 
-This is an example of configuring multiple vfs object modules to share a glusterfs volume. VFS object options are optional. The necessary VFS object modules must be present/installed outside this role. In this case samba-glusterfs was installed on centos. See samba documentation for how to install or what the default VFS object modules are.
+This is an example of configuring multiple vfs object modules to share a glusterfs volume. VFS object options are optional. The necessary VFS object modules must be present/installed outside this collection. In this case samba-glusterfs was installed on centos. See samba documentation for how to install or what the default VFS object modules are.
 
-```Yaml
+```yaml
 samba_shares:
   - name: gluster-app_deploys
     comment: 'For samba share of volume app_deploys'
@@ -219,7 +216,7 @@ The values for `valid_users` and `write_list` should be a comma separated list o
 
 ## Adding arbitrary configuration files
 
-You can add settings that are not supported by this role out-of-the-box through custom configuration files that will be included from the main configuration file. There are three types of include files: for the global section, for the homes section, and for individual shares. Put your custom configuration files in a subdirectory `templates`, relative to your master playbook location. Then, specify them in the variables `samba_global_include`, `samba_homes_include`, or `include_file` in the `samba_shares` definition.
+You can add settings that are not supported by this collection out-of-the-box through custom configuration files that will be included from the main configuration file. There are three types of include files: for the global section, for the homes section, and for individual shares. Put your custom configuration files in a subdirectory `templates`, relative to your master playbook location. Then, specify them in the variables `samba_global_include`, `samba_homes_include`, or `include_file` in the `samba_shares` definition.
 
 Your custom configuration files are considered to be Jinja templates, so you can use Ansible variables inside them. The configuration files will be validated to ensure they are syntactically correct.
 
@@ -250,24 +247,25 @@ The [test playbook](molecule/default/converge.yml) has some examples.
 
 ## Testing
 
-This role is tested using [Ansible Molecule](https://molecule.readthedocs.io/). Tests are launched automatically via [GitHub Actions](https://github.com/vladgh/ansible-collection-vladgh-samba/actions) after each commit and PR.
+This collection is tested using [Ansible Molecule](https://molecule.readthedocs.io/). Tests are launched automatically via [GitHub Actions](https://github.com/vladgh/ansible-collection-vladgh-samba/actions) after each commit and PR.
 
 This Molecule configuration will:
 
 - Create a Docker container
 - Run a syntax check
 - Apply the role with a [test playbook](molecule/default/converge.yml)
+- Run idempotence check
 
 This process is repeated for the supported Linux distributions.
 
 ### Local test environment
 
-If you want to set up a local test environment, you can use this reproducible setup based on Vagrant+VirtualBox: <https://github.com/bertvv/ansible-testenv>. Steps to install the necessary tools manually:
+Steps to install the necessary tools manually:
 
 1. Docker and Python >= 3.8 should be installed on your machine (assumed to run Linux).
 2. As recommended by Molecule, create a python virtual environment
 3. Install the software tools `python3 -m pip install --user --upgrade pip ansible ansible-lint molecule docker`
-4. Navigate to the root of the role directory and run `molecule test`
+4. Navigate to the root of the collection directory and run `molecule test`
 
 Molecule automatically deletes the containers after a test. If you would like to check out the containers yourself, run `molecule converge` followed by `molecule login --host HOSTNAME`.
 
@@ -277,12 +275,6 @@ The default config will start an Ubuntu 22.04 container. Choose another distro b
 
 ```bash
 MOLECULE_DISTRO=debian11 molecule test
-```
-
-or
-
-```bash
-MOLECULE_DISTRO=debian11 molecule converge
 ```
 
 ## Changelog & Releases
@@ -305,7 +297,7 @@ Contributions are always welcome! Please read the [contribution guidelines](.git
 
 ## Contributors
 
-This role could only have been realized thanks to the contributions of the people listed below. If you have an idea to improve it even further, don't hesitate to pitch in! Please create a topic branch for your proposed changes. If you don't, this will create conflicts in your fork after the merge. Don't hesitate to add yourself to the contributor list below in your PR!
+This collection could only have been realized thanks to the contributions of the people listed below. If you have an idea to improve it even further, don't hesitate to pitch in! Please create a topic branch for your proposed changes. If you don't, this will create conflicts in your fork after the merge. Don't hesitate to add yourself to the contributor list below in your PR!
 
 [Ben Tomasik](https://github.com/tomislacker),
 [Bengt Giger](https://github.com/BenGig),
