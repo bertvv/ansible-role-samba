@@ -1,0 +1,64 @@
+---
+- block:
+    - name: Create tmpfile
+      tempfile:
+        state: file
+      register: tmpfile
+      changed_when: false
+      tags:
+        - samba
+        - samba_user
+
+    - name: Ensure more secure file permissions
+      file:
+        path: "{{ tmpfile.path }}"
+        mode: "0600"
+      tags:
+        - samba
+        - samba_user
+
+    - name: Store password in tmpfile
+      copy:
+        content: |
+          {{ user.password }}
+          {{ user.password }}
+        dest: "{{ tmpfile.path }}"
+      changed_when: false
+      no_log: true
+      tags:
+        - samba
+        - samba_user
+
+    - name: Create/update samba users
+      shell: >
+        set -o nounset -o pipefail -o errexit &&
+        (
+          (pdbedit --user={{ user.name }} \
+            --configfile={{ samba_configuration }} \
+            2>&1 > /dev/null
+          ) \
+          && \
+          ( \
+            cat "{{ tmpfile.path }}" \
+            | smbpasswd -s {{ user.name }} \
+          ) \
+        ) \
+        || cat "{{ tmpfile.path }}" \
+        | smbpasswd -s -a {{ user.name }}
+      args:
+        executable: /bin/bash
+      register: create_user_output
+      changed_when: "'Added user' in create_user_output.stdout"
+      tags:
+        - samba
+        - samba_user
+
+  always:
+    - name: Remove tmpfile
+      file:
+        path: "{{ tmpfile.path }}"
+        state: absent
+      changed_when: false
+      tags:
+        - samba
+        - samba_user
