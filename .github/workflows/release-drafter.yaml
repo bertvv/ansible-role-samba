@@ -10,7 +10,7 @@ on:
 jobs:
   update_release_draft:
     name: Draft release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Run Release Drafter
         uses: release-drafter/release-drafter@v5.21.1
