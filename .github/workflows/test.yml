@@ -16,7 +16,7 @@ on:
 jobs:
   changes:
     name: Detect file changes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       scenario: ${{ steps.filter.outputs.changes }}
     steps:
@@ -33,7 +33,7 @@ jobs:
               - .github/workflows/test.yml
   test:
     name: "Test scenario ${{ matrix.scenario }} on ${{ matrix.os }}"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: changes
     if: ${{ needs.changes.outputs.scenario != '[]' && needs.changes.outputs.scenario != '' }}
     strategy:
