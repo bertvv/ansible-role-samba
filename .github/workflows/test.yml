@@ -54,7 +54,7 @@ jobs:
         with:
           path: ansible_collections/vladgh/samba
       - name: Molecule test
-        uses: gofrolist/molecule-action@v2.3.6
+        uses: gofrolist/molecule-action@v2.3.7
         with:
           molecule_command: test
           molecule_args: --scenario-name ${{ matrix.scenario }}
