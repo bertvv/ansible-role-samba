@@ -1,0 +1,14 @@
+---
+samba_acl_types:
+  - user
+  - group
+  - mask
+samba_acl_permissions:
+  - r
+  - w
+  - x
+  - rw
+  - rx
+  - wx
+  - rwx
+  

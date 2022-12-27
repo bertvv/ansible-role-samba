@@ -7,6 +7,7 @@ driver:
 lint: |
   yamllint .
   ansible-lint --exclude=molecule/default/verify.yml
+  flake8 --exclude .cache
 platforms:
   #Set name and hostname
   - name: smb1
@@ -30,4 +31,7 @@ provisioner:
   name: ansible
 #Runs the verify.yml playbook. Testinfra is also a supported method. Check the Molecule documention for more information. 
 verifier:
-  name: ansible
+  name: testinfra
+  options:
+    v: 1
+    sudo: true

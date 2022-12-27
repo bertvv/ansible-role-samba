@@ -1,0 +1,14 @@
+---
+- name: "samba | ACL | Set extended ACL on shares"
+  ansible.posix.acl:
+    path: "{{ item[0].path }}"
+    entity: "{{ item[1].name }}"
+    etype: "{{ item[1].type }}"
+    permissions: "{{ item[1].permission }}"
+    default: "{{ item[1].default | default(false) }}"
+    state: present
+  with_subelements:
+    - "{{ samba_shares }}"
+    - "acl"
+  when:
+    - samba_acl_enabled | bool

@@ -1,0 +1,62 @@
+---
+- name: if acl is enabled, samba_acl_mountpoints need to be set
+  assert:
+    that:
+      - samba_acl_mountpoints is defined and samba_acl_mountpoints is iterable
+    msg: "'samba_acl_mountpoints' must be a list of mount points!"
+    quiet: true
+  when:
+    - samba_acl_enabled | bool
+
+- name: if acl is enabled, check if acls are defined
+  assert:
+    that:
+      - item.acl is defined and item.acl is iterable
+    msg: "'acl' field of samba_share '{{ item.name }}' must be a list!"
+    quiet: true
+  with_items:
+    - "{{ samba_shares }}"
+  when:
+    - samba_acl_enabled | bool
+
+- name: if acl is enabled, check if all acls have required fields set
+  assert:
+    that:
+      - item[1].name is defined and item[1].name is string
+      - item[1].type is defined and item[1].type is string
+      - item[1].permission is defined and item[1].permission is string
+    msg: "'acl' of samba_share '{{ item[0].name }}' must be list of of entries \
+    which contain 'name', 'type' and 'permission' field!"
+    quiet: true
+  with_subelements:
+    - "{{ samba_shares }}"
+    - "acl"
+  when:
+    - samba_acl_enabled | bool
+
+- name: if acl is enabled, check if all acls have required fields set
+  assert:
+    that:
+      - item[1].type is defined and item[1].type in samba_acl_types
+    msg: "'acl' type of samba_share '{{ item[0].name }}' must be one of: \
+    '{{ samba_acl_types }}, got '{{ item[1].type | default(omit) }}'!"
+    quiet: true
+  with_subelements:
+    - "{{ samba_shares }}"
+    - "acl"
+  when:
+    - samba_acl_enabled | bool
+
+- name: if acl is enabled, check if all acls have correct permissions set
+  assert:
+    that:
+      - item[1].permission is defined and item[1].permission in samba_acl_permissions
+    msg: "'permission' type of samba_share '{{ item[0].name }}' must be one \
+    of: '{{ samba_acl_permissions }}, got \
+    '{{ item[1].permission | default(omit) }}'!"
+    quiet: true
+  with_subelements:
+    - "{{ samba_shares }}"
+    - "acl"
+  when:
+    - samba_acl_enabled | bool

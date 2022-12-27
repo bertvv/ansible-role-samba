@@ -1,0 +1,15 @@
+---
+- name: "Check if chacl is working on {{ item }}"
+  shell: |
+    chacl -l {{ item }}
+  register:
+    return_chacl
+  changed_when: false
+
+- name: "Remount device {{ item }} and add -o acl"
+  ansible.posix.mount:
+    state: remounted
+    opts: acl
+    path: "{{ item }}"
+  when:
+    - return_chacl.rc != 0

@@ -24,3 +24,6 @@ samba_services:
   - nmb
 
 samba_www_documentroot: /var/www/html
+
+samba_acl_packages:
+  - acl
