@@ -19,11 +19,14 @@ The responsibilities of this role are to:
 - Create share directories
 - Manage Samba users and passwords
 - Manage access to shares
+- Connect with LDAP server (ONLY tested on RedHat & CentOS)
 
 The following are not considered concerns of this role, and you should configure these using another role (e.g. [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base/):
 
 - Managing firewall settings.
 - Creating system users. Samba users should already exist as system users.
+
+(System users & groups, created by an LDAP server, for creation of samba users and shares, could be added to samba fileserver when authenticating to LDAP server)
 
 **If you like/use this role, please consider giving it a star! Thanks!**
 
@@ -75,6 +78,9 @@ No specific requirements
 | `samba_users`                  | []                       | List of dicts defining users that can access shares.                                                                         |
 | `samba_wins_support`           | true                     | When true, Samba will act as a WINS server                                                                                   |
 | `samba_workgroup`              | `WORKGROUP`              | Name of the server workgroup.                                                                                                |
+| `samba_ldap_auth`              | false                    | When true, openLDAP packages will be installed and authentication to LDAP server will be possible                            |
+| `samba_openldap_server_ip_address`              | -                        | LDAP server ip address (when samba_ldap_auth = true) for LDAP server authentication                         |
+| `samba_openldap_server_domain_name`             | -                        | LDAP server domain name (when samba_ldap_auth = true) for LDAP server authentication                        |
 
 ### Defining users
 
@@ -183,6 +189,21 @@ A complete overview of share options follows below. Only `name` is required, the
 | `write_list`           | -                               | Controls write access for registered users. Use the syntax of the corresponding Samba setting. |
 
 The values for `valid_users` and `write_list` should be a comma separated list of users. Names prepended with `+` or `@` are interpreted as groups. The documentation for the [Samba configuration](https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html) has more details on these options.
+
+### Authenticating with LDAP server
+
+You may want to authenticate with an LDAP server that has defined system users and groups, so you could create samba users and shares from these system users and groups. Authenticating to an LDAP server, can be done by using the following variables. 
+When the first defined variable, `samba_ldap_auth` is set to true, the necessary OpenLDAP packages will be installed and a connection (when the other two variables are set as well) to an LDAP server will be made.
+
+```Yaml
+samba_ldap_auth: true
+samba_openldap_server_ip_address: 192.168.0.1
+samba_openldap_server_domain_name: example.local
+```
+
+Use the following commands to check if you have access to the LDAP's server created users: `getent passwd`
+
+Use the following commands to check if you have access to the LDAP's server created group: `ldapsearch -x -LLL`
 
 ## Adding arbitrary configuration files
 

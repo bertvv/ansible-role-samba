@@ -1,0 +1,14 @@
+- name: Install OpenLDAP and its packages for RedHat
+  yum:
+    name: "{{ openldap_client_packages }}"
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+
+- name: Conect to LDAP server
+  shell: authconfig 
+        --enableldap 
+        --enableldapauth 
+        --ldapserver={{ samba_openldap_server_ip_address }} 
+        --ldapbasedn="dc={{ samba_openldap_server_domain_name.split('.')[0] }},dc={{ samba_openldap_server_domain_name.split('.')[1] }}" 
+        --enablemkhomedir --updateall
